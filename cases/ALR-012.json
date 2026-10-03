@@ -1,0 +1,147 @@
+{
+  "case_id": "ALR-012",
+  "case": {
+    "status": "closed_legitimate",
+    "verdict": "legitimate",
+    "fraud_probability": 0.01,
+    "pattern": "none",
+    "pattern_description": "",
+    "affected_txn_ids": [],
+    "first_suspicious_txn_id": "",
+    "connected_card_ids": [],
+    "connected_device_profiles": [],
+    "exposure_usd": 0.0,
+    "evidence": [
+      {
+        "claim": "Bank model scored the transaction 0.55. In the bank's memory, all 900 alerts raised by the score alone were cleared as false alarms, so the score is treated as a reason to look only",
+        "source": "graph",
+        "ref": "txn_context",
+        "entity_ids": [
+          "3553342"
+        ]
+      },
+      {
+        "claim": "Case-memory model (trained on the bank's closed cases, AUC 0.91 on an October hold-out vs 0.87 for the bank score) gives this transaction 0.001, a calibrated fraud rate of 0.4%",
+        "source": "graph",
+        "ref": "txn.model_score",
+        "entity_ids": [
+          "3553342"
+        ]
+      },
+      {
+        "claim": "Billing region 494 is routine for this card (21 earlier purchases)",
+        "source": "graph",
+        "ref": "card_profile",
+        "entity_ids": [
+          "C05876-K2"
+        ]
+      },
+      {
+        "claim": "Card has 1 earlier confirmed fraud case(s) (card_not_present_fraud), most recent 2016-08-20; the card was reissued each time, so this is context, not proof",
+        "source": "graph",
+        "ref": "prior_cases",
+        "entity_ids": [
+          "CC-2370"
+        ]
+      },
+      {
+        "claim": "Card also has 1 cleared alert(s) (e.g. Case CC-0003: model scored a $442.92 transaction at 0.91. Cardholder confirmed travel to t)",
+        "source": "graph",
+        "ref": "prior_cases",
+        "entity_ids": [
+          "CC-0003"
+        ]
+      },
+      {
+        "claim": "Case memory: similar prior investigations retrieved - CC-0003 (cleared, none, $0.00): Case CC-0003: model scored a $442.92 transaction at 0.91. Cardholder confirmed travel to the billing region in; CC-0972 (cleared, none, $0.00): Case CC-0972: model scored a $150.00 transaction at 0.81. Cardholder confirmed travel to the billing region in; CC-1464 (cleared, none, $0.00): Case CC-1464: model scored a $49.98 transaction at 0.86. Cardholder confirmed travel to the billing region in ",
+        "source": "graph",
+        "ref": "similar_closed_cases + prior_cases + device_cases",
+        "entity_ids": [
+          "CC-0003",
+          "CC-0972",
+          "CC-1464",
+          "CC-1402",
+          "CC-1365"
+        ]
+      },
+      {
+        "claim": "Earlier agent cases with a similar profile: CASE-2016-0001 (legitimate, none); CASE-2016-0007 (legitimate, none); CASE-2016-0015 (legitimate, none)",
+        "source": "graph",
+        "ref": "similar_agent_cases",
+        "entity_ids": [
+          "CASE-2016-0001",
+          "CASE-2016-0007",
+          "CASE-2016-0015"
+        ]
+      },
+      {
+        "claim": "Investigator note (LLM): Prior case lookup confirmed one past confirmed fraud case and one cleared travel alert on card C05876-K2. The current transaction is a small, in-person purchase ($30.91) in a routine billing region with a very low case-memory fraud rate. Similar past alerts on this card and peer transactions were cleared as legitimate travel or false positives. The historical fraud on the card involves a card-not-present pattern, whereas this transaction is in-person.",
+        "source": "graph",
+        "ref": "llm_investigator",
+        "entity_ids": [
+          "3553342"
+        ]
+      }
+    ],
+    "similar_prior_cases": [
+      "CC-0003",
+      "CC-0972",
+      "CC-1464",
+      "CC-1402",
+      "CC-1365"
+    ],
+    "summary": "This case was triggered when the real-time model scored transaction 3553342 for $30.91 in billing region 494.0 at 0.55. The graph and case-memory model showed a calibrated fraud rate of 0.4% (0.001 probability), noting that billing region 494 is routine for this card with 21 earlier purchases and that similar transactions show no fraud indicators. The verdict is legitimate and the case was closed as no fraud because the evidence supports a legitimate transaction with probability <= 0.15 on two independent lines of evidence under Policy 6. The transaction was allowed and the case closed automatically.",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-2016-0012"
+  },
+  "evidence_requests": [],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "ALLOW_TRANSACTION",
+        "route": "auto",
+        "reason": "Policy 6: probability <= 0.15 on two independent lines of evidence"
+      },
+      {
+        "action": "GENERATE_REPORT",
+        "route": "auto",
+        "reason": "Internal write-up of the review; no case needed (probability < 0.30, no dispute)"
+      },
+      {
+        "action": "CLOSE_NO_FRAUD",
+        "route": "auto",
+        "reason": "Policy 6: stop, the evidence supports a legitimate transaction"
+      }
+    ],
+    "final": [
+      {
+        "action": "ALLOW_TRANSACTION",
+        "route": "auto",
+        "reason": "Policy 6: probability <= 0.15 on two independent lines of evidence"
+      },
+      {
+        "action": "GENERATE_REPORT",
+        "route": "auto",
+        "reason": "Internal write-up of the review; no case needed (probability < 0.30, no dispute)"
+      },
+      {
+        "action": "CLOSE_NO_FRAUD",
+        "route": "auto",
+        "reason": "Policy 6: stop, the evidence supports a legitimate transaction"
+      }
+    ],
+    "what_changed": "nothing"
+  },
+  "sar": {
+    "file": false,
+    "reason": "No report: activity not confirmed or strongly suspected as fraud (policy 3a).",
+    "narrative": "",
+    "subjects": [],
+    "total_amount_usd": 0,
+    "activity_dates": []
+  },
+  "stop_reason": "Stopped under policy section 6: probability 0.01 with at least two independent lines of evidence; further steps would not change the decision.",
+  "tool_calls": 11,
+  "tokens": 3947,
+  "latency_s": 5.1
+}

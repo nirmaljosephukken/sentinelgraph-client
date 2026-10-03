@@ -1,0 +1,161 @@
+{
+  "case_id": "ALR-004",
+  "case": {
+    "status": "closed_fraud",
+    "verdict": "fraud",
+    "fraud_probability": 0.73,
+    "pattern": "card_not_present_new_device",
+    "pattern_description": "",
+    "affected_txn_ids": [
+      "3583227"
+    ],
+    "first_suspicious_txn_id": "3583227",
+    "connected_card_ids": [],
+    "connected_device_profiles": [],
+    "exposure_usd": 128.33,
+    "evidence": [
+      {
+        "claim": "Cardholder reported the transaction as unauthorised. In the bank's memory, all 4,665 cardholder-reported cases were confirmed fraud",
+        "source": "customer",
+        "ref": "trigger:customer_report",
+        "entity_ids": [
+          "C08106",
+          "3583227"
+        ]
+      },
+      {
+        "claim": "Case-memory model (trained on the bank's closed cases, AUC 0.91 on an October hold-out vs 0.87 for the bank score) gives this transaction 0.003, a calibrated fraud rate of 0.5%",
+        "source": "graph",
+        "ref": "txn.model_score",
+        "entity_ids": [
+          "3583227"
+        ]
+      },
+      {
+        "claim": "Identity record marks the device as New for this account",
+        "source": "graph",
+        "ref": "txn_context",
+        "entity_ids": [
+          "3583227"
+        ]
+      },
+      {
+        "claim": "Card has 3 earlier confirmed fraud case(s) (card_not_present_fraud), most recent 2016-09-21; the card was reissued each time, so this is context, not proof",
+        "source": "graph",
+        "ref": "prior_cases",
+        "entity_ids": [
+          "CC-3778",
+          "CC-1736",
+          "CC-2121"
+        ]
+      },
+      {
+        "claim": "Card also has 1 cleared alert(s) (e.g. Case CC-0696: model scored a $13.68 transaction at 0.83. Cardholder confirmed travel to th)",
+        "source": "graph",
+        "ref": "prior_cases",
+        "entity_ids": [
+          "CC-0696"
+        ]
+      },
+      {
+        "claim": "Case memory: similar prior investigations retrieved - CC-1123 (confirmed_fraud, card_not_present_new_device, $150.07): Case CC-1123: cardholder C11429 reported unrecognized activity on card C11429-K1. 1 transaction(s) between 201; CC-2948 (confirmed_fraud, card_not_present_new_device, $449.85): Case CC-2948: cardholder C06175 reported unrecognized activity on card C06175-K1. 4 transaction(s) between 201; CC-2753 (confirmed_fraud, card_not_present_new_device, $309.94): Case CC-2753: cardholder C11388 reported unrecognized activity on card C11388-K1. 3 transaction(s) between 201",
+        "source": "graph",
+        "ref": "similar_closed_cases + prior_cases + device_cases",
+        "entity_ids": [
+          "CC-1123",
+          "CC-2948",
+          "CC-2753",
+          "CC-1414",
+          "CC-0232"
+        ]
+      },
+      {
+        "claim": "Earlier agent cases with a similar profile: CASE-2016-0011 (fraud, card_not_present_new_device); CASE-2016-0016 (fraud, card_not_present_new_device); CASE-2016-0009 (fraud, card_not_present_fraud)",
+        "source": "graph",
+        "ref": "similar_agent_cases",
+        "entity_ids": [
+          "CASE-2016-0011",
+          "CASE-2016-0016",
+          "CASE-2016-0009"
+        ]
+      },
+      {
+        "claim": "Investigator note (LLM): Prior cases lookup for customer C08106 confirmed three previous fraud cases on card C08106-K1 between July and September 2016, all categorized as card-not-present fraud. The current online transaction shares this exact CNP pattern and occurs on a new device profile. Although previous reissues occurred following each past fraud case, compromise of the card details appears persistent. Some uncertainty remains regarding whether static credential leakage or broader account takeover is driving the repeated unauthorized activity.",
+        "source": "graph",
+        "ref": "llm_investigator",
+        "entity_ids": [
+          "3583227"
+        ]
+      },
+      {
+        "claim": "Cardholder denied the transaction when contacted (simulated reply; assumption recorded in evidence_requests)",
+        "source": "customer",
+        "ref": "evidence_request:1",
+        "entity_ids": [
+          "3583227"
+        ]
+      }
+    ],
+    "similar_prior_cases": [
+      "CC-1123",
+      "CC-2948",
+      "CC-2753",
+      "CC-1414",
+      "CC-0232"
+    ],
+    "summary": "This case was triggered by customer C08106 reporting an unauthorized online purchase of $128.33 on transaction 3583227 using card C08106-K1 on 2016-12-29. The graph and case-memory data highlighted that the card has three earlier confirmed fraud cases between July and September 2016, and the current transaction occurred on a new device profile. The final verdict is fraud with a final fraud probability of 0.73, supported by the cardholder's denial and historical precedent. The recommended actions include blocking the card (routed L1, pending approval) and creating a case to record the investigation in the graph (auto).",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-2016-0004"
+  },
+  "evidence_requests": [
+    {
+      "type": "customer_validation",
+      "asked_after_step": 19,
+      "assumed_response": "Assumed: the cardholder confirms they still hold the card and did not make or authorise transaction 3583227 ($128.33). Basis: the cardholder's own report, although the graph evidence alone points to normal use (graph-only probability 0.01)."
+    }
+  ],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "Policy 3a: probability >= 0.30, evidence requested or customer dispute"
+      },
+      {
+        "action": "VERIFY_WITH_CUSTOMER",
+        "route": "auto",
+        "reason": "R1: probability 0.25 < 0.85 and the graph evidence does not yet confirm the denial; confirm card possession and the disputed details before blocking"
+      },
+      {
+        "action": "MONITOR_CARD",
+        "route": "auto",
+        "reason": "Raise monitoring while the cardholder confirms"
+      }
+    ],
+    "final": [
+      {
+        "action": "BLOCK_CARD",
+        "route": "L1",
+        "reason": "R2: cardholder denies the activity; exposure $128.33 <= $2,500 -> L1"
+      },
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "R2: record the investigation and write it to the graph"
+      }
+    ],
+    "what_changed": "The cardholder's (assumed) denial moved the fraud probability from 0.25 to 0.73, so R2 now applies: added BLOCK_CARD; dropped VERIFY_WITH_CUSTOMER, MONITOR_CARD."
+  },
+  "sar": {
+    "file": false,
+    "reason": "No report (policy 3a): fraud is confirmed but exposure $128.33 is under $1,000, no shared device/region/ring link and the pattern is documented. Case only.",
+    "narrative": "",
+    "subjects": [],
+    "total_amount_usd": 0,
+    "activity_dates": []
+  },
+  "stop_reason": "Stopped after the evidence request: the cardholder's denial settles the next step under policy section 6 (probability 0.73); further queries would not change the actions.",
+  "tool_calls": 12,
+  "tokens": 4481,
+  "latency_s": 5.5
+}

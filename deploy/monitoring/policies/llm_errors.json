@@ -1,0 +1,40 @@
+{
+ "displayName": "SentinelGraph {{SERVICE}}: Gemini unavailable",
+ "severity": "WARNING",
+ "combiner": "OR",
+ "conditions": [
+  {
+   "displayName": "Gemini errors > 10 in 15 min",
+   "conditionThreshold": {
+    "filter": "metric.type=\"logging.googleapis.com/user/{{PREFIX}}_llm_errors\" AND resource.type=\"cloud_run_revision\"",
+    "aggregations": [
+     {
+      "alignmentPeriod": "900s",
+      "perSeriesAligner": "ALIGN_SUM",
+      "crossSeriesReducer": "REDUCE_SUM"
+     }
+    ],
+    "comparison": "COMPARISON_GT",
+    "thresholdValue": 10,
+    "duration": "0s",
+    "trigger": {
+     "count": 1
+    }
+   }
+  }
+ ],
+ "alertStrategy": {
+  "autoClose": "1800s"
+ },
+ "documentation": {
+  "mimeType": "text/markdown",
+  "content": "Gemini calls are failing. Investigations still complete (decisions never depend on the model) but case write-ups use templates and dispute messages are read by rules. Check Vertex AI quota and status.\n\nConsole: {{CONSOLE_URL}} \u00b7 Logs: Cloud Logging, filter `jsonPayload.event=\"llm_error\"` on services `{{SERVICE}}*`."
+ },
+ "notificationChannels": [
+  "{{CHANNEL}}"
+ ],
+ "userLabels": {
+  "app": "sentinelgraph",
+  "check": "llm-errors"
+ }
+}

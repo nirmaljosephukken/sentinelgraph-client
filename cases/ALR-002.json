@@ -1,0 +1,137 @@
+{
+  "case_id": "ALR-002",
+  "case": {
+    "status": "closed_legitimate",
+    "verdict": "legitimate",
+    "fraud_probability": 0.01,
+    "pattern": "none",
+    "pattern_description": "",
+    "affected_txn_ids": [],
+    "first_suspicious_txn_id": "",
+    "connected_card_ids": [],
+    "connected_device_profiles": [],
+    "exposure_usd": 0.0,
+    "evidence": [
+      {
+        "claim": "Bank model scored the transaction 0.79. In the bank's memory, all 900 alerts raised by the score alone were cleared as false alarms, so the score is treated as a reason to look only",
+        "source": "graph",
+        "ref": "txn_context",
+        "entity_ids": [
+          "3478782"
+        ]
+      },
+      {
+        "claim": "Case-memory model (trained on the bank's closed cases, AUC 0.91 on an October hold-out vs 0.87 for the bank score) gives this transaction 0.033, a calibrated fraud rate of 2.0%",
+        "source": "graph",
+        "ref": "txn.model_score",
+        "entity_ids": [
+          "3478782"
+        ]
+      },
+      {
+        "claim": "Amount $292.36 is well above this card's 90th percentile ($74.60)",
+        "source": "graph",
+        "ref": "card_profile",
+        "entity_ids": [
+          "C11891-K1"
+        ]
+      },
+      {
+        "claim": "Card has 1 earlier confirmed fraud case(s) (card_not_present_fraud), most recent 2016-09-30; the card was reissued each time, so this is context, not proof",
+        "source": "graph",
+        "ref": "prior_cases",
+        "entity_ids": [
+          "CC-4160"
+        ]
+      },
+      {
+        "claim": "Case memory: similar prior investigations retrieved - CC-4160 (confirmed_fraud, card_not_present_fraud, $90.54): Case CC-4160: cardholder C11891 reported unrecognized activity on card C11891-K1. 1 transaction(s) between 201; CC-4871 (confirmed_fraud, card_not_present_fraud, $28.95): Case CC-4871: cardholder C13147 reported unrecognized activity on card C13147-K1. 1 transaction(s) between 201; CC-5286 (confirmed_fraud, card_not_present_fraud, $109.41): Case CC-5286: cardholder C13147 reported unrecognized activity on card C13147-K1. 1 transaction(s) between 201",
+        "source": "graph",
+        "ref": "similar_closed_cases + prior_cases + device_cases",
+        "entity_ids": [
+          "CC-4160",
+          "CC-4871",
+          "CC-5286",
+          "CC-4323",
+          "CC-3376"
+        ]
+      },
+      {
+        "claim": "Investigator note (LLM): Prior cases confirmed one previous card-not-present fraud on card C11891-K1 in September 2016. A 24-hour window check on the same card showed no other recent transactions leading up to the flagged event. The amount ($292.36) significantly exceeds the card's historical 90th percentile, and the case memory assigns a low calibrated fraud rate of 2.0%. Uncertainty remains regarding whether the cardholder authorized this online purchase or if repeat compromise occurred.",
+        "source": "graph",
+        "ref": "llm_investigator",
+        "entity_ids": [
+          "3478782"
+        ]
+      },
+      {
+        "claim": "Cardholder confirmed the transaction as their own (simulated reply; assumption recorded in evidence_requests)",
+        "source": "customer",
+        "ref": "evidence_request:1",
+        "entity_ids": [
+          "3478782"
+        ]
+      }
+    ],
+    "similar_prior_cases": [],
+    "summary": "This case was triggered by the real-time model scoring online transaction 3478782 ($292.36) at 0.79. The graph and case analysis noted that while the amount is well above the card's 90th percentile ($74.60) and the card has 1 earlier confirmed fraud case, the case-memory model gives a calibrated fraud rate of 2.0%. The verdict is legitimate because the cardholder confirmed the transaction as their own during step-up authentication. Consequently, the transaction was allowed and the case was closed with no fraud.",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-2016-0002"
+  },
+  "evidence_requests": [
+    {
+      "type": "step_up_auth",
+      "asked_after_step": 19,
+      "assumed_response": "Assumed: the cardholder passes step-up authentication (one-time passcode) and confirms transaction 3478782. Basis: fraud probability 0.04; the bank's memory shows score-only alerts like this are usually confirmed (new phone, travel)."
+    }
+  ],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "Policy 3a: probability >= 0.30, evidence requested or customer dispute"
+      },
+      {
+        "action": "STEP_UP_AUTH",
+        "route": "auto",
+        "reason": "Policy 6 / R1: probability 0.04 is low but rests on only 1 independent line(s) of evidence; confirm with the cardholder before closing"
+      },
+      {
+        "action": "MONITOR_CARD",
+        "route": "auto",
+        "reason": "Monitor for 72h while verification is pending"
+      }
+    ],
+    "final": [
+      {
+        "action": "ALLOW_TRANSACTION",
+        "route": "auto",
+        "reason": "R3: cardholder confirmed the transaction"
+      },
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "Policy 3a: case opened when evidence was requested; closed as legitimate"
+      },
+      {
+        "action": "CLOSE_NO_FRAUD",
+        "route": "auto",
+        "reason": "R3: cardholder confirmed; confirmation noted in the case file"
+      }
+    ],
+    "what_changed": "The cardholder's (assumed) confirmation moved the fraud probability from 0.04 to 0.01, so R3 now applies: added ALLOW_TRANSACTION, CLOSE_NO_FRAUD; dropped STEP_UP_AUTH, MONITOR_CARD."
+  },
+  "sar": {
+    "file": false,
+    "reason": "No report: activity not confirmed or strongly suspected as fraud (policy 3a).",
+    "narrative": "",
+    "subjects": [],
+    "total_amount_usd": 0,
+    "activity_dates": []
+  },
+  "stop_reason": "Stopped after the evidence request: the cardholder's confirmation settles the next step under policy section 6 (probability 0.01); further queries would not change the actions.",
+  "tool_calls": 12,
+  "tokens": 4020,
+  "latency_s": 5.5
+}

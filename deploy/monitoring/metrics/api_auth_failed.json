@@ -1,0 +1,5 @@
+{
+ "name": "{{PREFIX}}_api_auth_failed",
+ "description": "Intake API calls with a missing, invalid or revoked key",
+ "filter": "resource.type=\"cloud_run_revision\" AND resource.labels.service_name:\"{{SERVICE}}\" AND jsonPayload.event=\"api_auth_failed\""
+}

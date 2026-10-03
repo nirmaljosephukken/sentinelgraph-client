@@ -1,0 +1,27 @@
+# core agent
+requests>=2.31
+pandas>=2.0
+numpy>=1.24
+# TigerGraph MCP (the agent talks to the graph through it; falls back to RESTPP if unavailable)
+mcp>=1.2,<2
+tigergraph-mcp>=1.0
+# Google ADK agent (Gemini on Vertex AI or AI Studio)
+google-adk>=2.11,<3
+# live alert stream on Google Cloud (Pub/Sub + Firestore); the worker uses FastAPI from google-adk
+google-cloud-pubsub>=2.21
+google-cloud-firestore>=2.16
+# google-adk 2.11 needs OpenTelemetry <= 1.42.1; pin it so pip does not pick a newer one for the cloud libraries
+opentelemetry-api>=1.39,<=1.42.1
+opentelemetry-sdk>=1.39,<=1.42.1
+# sign-in (Streamlit OpenID Connect)
+Authlib>=1.3.2
+# analyst console
+streamlit>=1.37
+# only needed to retrain the case-memory model (prep/train_memory_model.py)
+scikit-learn>=1.3
+PyYAML>=6
+# Excel uploads on the Data intake page
+openpyxl>=3.1
+
+# for running the Playwright UI smoke test (optional)
+# playwright

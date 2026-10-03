@@ -1,0 +1,37 @@
+# Example of a real-world export that looks nothing like ours: Indian date format, amounts in paise, scores as
+# percentages, channel codes, full email addresses, PIN codes and Y/N flags. Copy this file per client.
+title: Example Bank card feed
+description: Daily card transaction export and fraud-rule alerts from a fictional Indian bank (samples/example_bank).
+timezone: Asia/Kolkata          # file times are local; SentinelGraph stores UTC
+max_rejected_share: 0.05        # refuse the whole file if more than 5% of rows fail the checks
+
+# Patterns of the client's ids, so the language-model guardrail can spot an id that is not in the evidence.
+id_patterns:
+  - '\bTXN\d{9}\b'
+  - '\bCT[0-9A-F]{10}\b'
+  - '\bCIF\d{7}\b'
+
+transactions:
+  id: TXN_REF
+  ts: {column: TXN_DATE_TIME, format: "%d/%m/%Y %H:%M:%S"}
+  amount: {column: AMOUNT_PAISE, scale: 0.01}
+  card_id: CARD_TOKEN
+  customer_id: CIF
+  channel: {column: CHANNEL, values: {ECOM: online, UPI: online, POS: in_person, ATM: in_person, "*": in_person}}
+  product: MCC
+  risk_score: {column: RULE_SCORE, scale: 0.01}
+  addr1: {column: BILLING_PIN, prefix: 3}
+  p_email: {column: CUSTOMER_EMAIL, email_domain: true, lower: true}
+  device_profile: DEVICE_FINGERPRINT
+  device_type: {column: DEVICE_CLASS, values: {MOB: mobile, WEB: desktop, "*": ""}}
+  device_status: {column: DEVICE_SEEN_BEFORE, values: {Y: Found, N: New, "*": ""}}
+  proxy: {column: VPN_FLAG, values: {"1": "IP_PROXY:ANONYMOUS", "0": "", "*": ""}}
+  network: SCHEME
+  card_type: {column: CARD_KIND, lower: true}
+
+alerts:
+  case_id: ALERT_ID
+  flagged_txn_id: TXN_REF
+  trigger_type: {column: ALERT_TYPE, values: {RULE: risk_score, MODEL: risk_score, DISPUTE: customer_report, "*": analyst_request}}
+  trigger_text: ALERT_TEXT
+  opened_at: {column: ALERT_TIME, format: "%d/%m/%Y %H:%M:%S"}

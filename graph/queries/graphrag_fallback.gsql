@@ -1,0 +1,30 @@
+// Fallback GraphRAG retrieval for servers without vector attributes: brute-force cosine similarity
+// in GSQL over LIST<DOUBLE> embeddings (5.6k closed cases, a few hundred chunks: fast enough).
+USE GRAPH FraudGraph
+
+CREATE OR REPLACE QUERY similar_closed_cases(LIST<DOUBLE> qv, INT k) FOR GRAPH FraudGraph {
+  SumAccum<DOUBLE> @score;
+  All = {ClosedCase.*};
+  R = SELECT s FROM All:s
+      POST-ACCUM FOREACH i IN RANGE[0, qv.size()-1] DO s.@score += qv.get(i) * s.emb_list.get(i) END
+      ORDER BY s.@score DESC LIMIT k;
+  PRINT R AS hits;
+}
+
+CREATE OR REPLACE QUERY similar_agent_cases(LIST<DOUBLE> qv, INT k) FOR GRAPH FraudGraph {
+  SumAccum<DOUBLE> @score;
+  All = {FraudCase.*};
+  R = SELECT s FROM All:s WHERE s.emb_list.size() == qv.size()
+      POST-ACCUM FOREACH i IN RANGE[0, qv.size()-1] DO s.@score += qv.get(i) * s.emb_list.get(i) END
+      ORDER BY s.@score DESC LIMIT k;
+  PRINT R AS hits;
+}
+
+CREATE OR REPLACE QUERY policy_search(LIST<DOUBLE> qv, INT k) FOR GRAPH FraudGraph {
+  SumAccum<DOUBLE> @score;
+  All = {PolicyChunk.*};
+  R = SELECT s FROM All:s
+      POST-ACCUM FOREACH i IN RANGE[0, qv.size()-1] DO s.@score += qv.get(i) * s.emb_list.get(i) END
+      ORDER BY s.@score DESC LIMIT k;
+  PRINT R AS hits;
+}

@@ -1,0 +1,43 @@
+{
+ "displayName": "SentinelGraph {{SERVICE}}: intake API unreachable",
+ "severity": "ERROR",
+ "combiner": "OR",
+ "conditions": [
+  {
+   "displayName": "uptime check failing",
+   "conditionThreshold": {
+    "filter": "metric.type=\"monitoring.googleapis.com/uptime_check/check_passed\" AND resource.type=\"uptime_url\" AND metric.label.check_id=\"{{API_CHECK}}\"",
+    "aggregations": [
+     {
+      "alignmentPeriod": "1200s",
+      "perSeriesAligner": "ALIGN_NEXT_OLDER",
+      "crossSeriesReducer": "REDUCE_COUNT_FALSE",
+      "groupByFields": [
+       "resource.label.*"
+      ]
+     }
+    ],
+    "comparison": "COMPARISON_GT",
+    "thresholdValue": 1,
+    "duration": "600s",
+    "trigger": {
+     "count": 1
+    }
+   }
+  }
+ ],
+ "alertStrategy": {
+  "autoClose": "1800s"
+ },
+ "documentation": {
+  "mimeType": "text/markdown",
+  "content": "The client intake API (`{{SERVICE}}-api`) has failed its health check for 10 minutes. The client's systems cannot send transactions or alerts; they should retry later.\n\nCheck Cloud Run > {{SERVICE}}-api > Logs."
+ },
+ "notificationChannels": [
+  "{{CHANNEL}}"
+ ],
+ "userLabels": {
+  "app": "sentinelgraph",
+  "check": "api-down"
+ }
+}

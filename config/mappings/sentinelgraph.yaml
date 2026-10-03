@@ -1,0 +1,37 @@
+# SentinelGraph's own column names: use this when a client exports straight to our format (docs/data_intake.md).
+title: SentinelGraph standard format
+description: Columns already named as SentinelGraph fields. Times as YYYY-MM-DD HH:MM:SS in UTC.
+max_rejected_share: 0.05
+
+transactions:
+  id: txn_id
+  ts: {column: ts, format: "%Y-%m-%d %H:%M:%S"}
+  amount: amount
+  card_id: card_id
+  customer_id: customer_id
+  channel: channel
+  product: product
+  risk_score: risk_score
+  model_score: model_score
+  addr1: addr1
+  addr2: addr2
+  dist1: dist1
+  p_email: p_email
+  r_email: r_email
+  device_status: device_status
+  proxy: proxy
+  device_profile: device_profile
+  device_type: device_type
+  client_id: client_id
+  network: network
+  card_type: card_type
+
+alerts:
+  case_id: alert_id
+  flagged_txn_id: txn_id
+  trigger_type: trigger_type
+  trigger_text: trigger_text
+  opened_at: {column: opened_at, format: "%Y-%m-%d %H:%M:%S"}
+  card_id: card_id
+  customer_id: customer_id
+  risk_score: risk_score

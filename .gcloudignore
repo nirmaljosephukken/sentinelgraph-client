@@ -1,0 +1,24 @@
+# Files gcloud leaves out of the Cloud Build upload. Without this file gcloud would use .gitignore,
+# which also drops .streamlit/config.toml (the console theme).
+.git
+.gitignore
+.env
+.env.*
+.venv/
+venv/
+__pycache__/
+*.pyc
+_to_delete/
+_wheels/
+_va_tmp.py
+data/agent_cases_local/
+.streamlit/secrets.toml
+docs/*.mp4
+docs/*.mov
+data/live/
+data/access/
+data/client/
+data/agent_cases_client/
+tests/
+.github/
+.ruff_cache/

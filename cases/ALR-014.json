@@ -1,0 +1,269 @@
+{
+  "case_id": "ALR-014",
+  "case": {
+    "status": "escalated",
+    "verdict": "fraud",
+    "fraud_probability": 0.89,
+    "pattern": "undocumented",
+    "pattern_description": "This undocumented pattern involves a coordinated shared-device scheme where numerous distinct cards make online purchases using the exact same rare mobile device profile behind an anonymous proxy. It affects multiple customer accounts and was uncovered through analyst-requested graph network analysis linking transactions across multiple cards and historical closed cases.",
+    "affected_txn_ids": [
+      "3460634",
+      "3478561",
+      "3489320"
+    ],
+    "first_suspicious_txn_id": "3460634",
+    "connected_card_ids": [
+      "C01289-K1",
+      "C01996-K2",
+      "C02910-K1",
+      "C02975-K1",
+      "C03676-K2",
+      "C04108-K2",
+      "C04274-K1",
+      "C05448-K2",
+      "C06031-K2",
+      "C06650-K2",
+      "C06710-K1",
+      "C07472-K1",
+      "C08168-K1",
+      "C08972-K2",
+      "C09049-K1",
+      "C09195-K1",
+      "C09906-K1",
+      "C09975-K1",
+      "C10020-K1",
+      "C10193-K2",
+      "C10326-K1",
+      "C11082-K1",
+      "C11670-K2",
+      "C11702-K1",
+      "C12645-K1",
+      "C12796-K1",
+      "C13291-K1"
+    ],
+    "connected_device_profiles": [
+      "SM-G935F Build/NRD90M | Android 7.0 | chrome 62.0 for android | 1920x1080"
+    ],
+    "exposure_usd": 439.61,
+    "evidence": [
+      {
+        "claim": "Fraud analyst asked for a review of related activity",
+        "source": "external",
+        "ref": "trigger:analyst_request",
+        "entity_ids": [
+          "3478561"
+        ]
+      },
+      {
+        "claim": "Case-memory model (trained on the bank's closed cases, AUC 0.91 on an October hold-out vs 0.87 for the bank score) gives this transaction 0.010, a calibrated fraud rate of 0.7%",
+        "source": "graph",
+        "ref": "txn.model_score",
+        "entity_ids": [
+          "3478561"
+        ]
+      },
+      {
+        "claim": "Identity record marks the device as New for this account",
+        "source": "graph",
+        "ref": "txn_context",
+        "entity_ids": [
+          "3478561"
+        ]
+      },
+      {
+        "claim": "Connection through a anonymous proxy",
+        "source": "graph",
+        "ref": "txn_context",
+        "entity_ids": [
+          "3478561"
+        ]
+      },
+      {
+        "claim": "Shared device: profile 'SM-G935F Build/NRD90M | Android 7.0 | chrome 62.0 for android | 1920x1080' (only 114 uses in the whole dataset) was used on 27 other card(s) within +-10 days: marked New on 51/51 uses; behind a proxy on 51/51 uses; high memory-model scores on 2 of those cards; linked to 4 confirmed closed case(s)",
+        "source": "graph",
+        "ref": "device_fanout",
+        "entity_ids": [
+          "SM-G935F Build/NRD90M | Android 7.0 | chrome 62.0 for android | 1920x1080",
+          "C01289-K1",
+          "C01996-K2",
+          "C02910-K1",
+          "C02975-K1",
+          "C03676-K2",
+          "C04108-K2",
+          "C04274-K1",
+          "C05448-K2",
+          "C06031-K2",
+          "C06650-K2",
+          "C06710-K1",
+          "C07472-K1",
+          "C08168-K1",
+          "C08972-K2",
+          "C09049-K1",
+          "C09195-K1",
+          "C09906-K1",
+          "C09975-K1",
+          "C10020-K1",
+          "C10193-K2",
+          "C10326-K1",
+          "C11082-K1",
+          "C11670-K2",
+          "C11702-K1",
+          "C12645-K1"
+        ]
+      },
+      {
+        "claim": "Case memory: this device profile is on confirmed closed case(s) CC-2985, CC-2649, CC-2971, CC-3035 (analysts labelled 4 of them as an undocumented pattern)",
+        "source": "graph",
+        "ref": "device_cases",
+        "entity_ids": [
+          "CC-2985",
+          "CC-2649",
+          "CC-2971",
+          "CC-3035"
+        ]
+      },
+      {
+        "claim": "Case memory: similar prior investigations retrieved - CC-2985 (confirmed_fraud, undocumented, $381.40): Case CC-2985: cardholder C06617 reported 3 online purchase(s) they did not make. The purchases came from a Sam; CC-2649 (confirmed_fraud, undocumented, $390.04): Case CC-2649: cardholder C03528 reported 3 online purchase(s) they did not make. The purchases came from a Sam; CC-2971 (confirmed_fraud, undocumented, $108.36): Case CC-2971: cardholder C09998 reported 2 online purchase(s) they did not make. The purchases came from a Sam",
+        "source": "graph",
+        "ref": "similar_closed_cases + prior_cases + device_cases",
+        "entity_ids": [
+          "CC-2985",
+          "CC-2649",
+          "CC-2971",
+          "CC-3035"
+        ]
+      },
+      {
+        "claim": "Earlier agent cases with a similar profile: CASE-2016-ADHOC-414 (fraud, undocumented); CASE-2016-0006 (fraud, undocumented); CASE-2016-PRO-001 (fraud, undocumented)",
+        "source": "graph",
+        "ref": "similar_agent_cases",
+        "entity_ids": [
+          "CASE-2016-ADHOC-414",
+          "CASE-2016-0006",
+          "CASE-2016-PRO-001"
+        ]
+      },
+      {
+        "claim": "Investigator note (LLM): Device fanout confirms the exact mobile profile was used across numerous distinct cards in rapid succession, all via anonymous proxy and flagged as new devices. Card history for C13487 shows a prior online purchase from the same profile 7 days earlier with matching billing attributes. The pattern strongly mirrors the shared-device fraud ring documented in prior cases (CC-2985, CC-2649). Remaining uncertainty lies in distinguishing whether this specific cardholder is a willing participant or an account-takeover victim.",
+        "source": "graph",
+        "ref": "llm_investigator",
+        "entity_ids": [
+          "3478561"
+        ]
+      }
+    ],
+    "similar_prior_cases": [
+      "CC-2985",
+      "CC-2649",
+      "CC-2971",
+      "CC-3035"
+    ],
+    "summary": "This case was triggered by an analyst request to review transaction 3478561 on card C13487-K1 and related activity showing purchases from an unusual device profile. The graph showed the flagged card connected to 27 other cards through a shared device profile, which was also linked to four confirmed closed cases. The verdict is fraud with an initial and final fraud probability of 0.89, based on multiple independent lines of evidence including an anonymous proxy, new device status, and historical case matches. The case has been escalated for analyst review, and initial actions include blocking the card pending approval.",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-2016-0014"
+  },
+  "evidence_requests": [],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "BLOCK_CARD",
+        "route": "L1",
+        "reason": "Fraud probability >= 0.85 on two or more independent lines of evidence (policy 6); exposure $439.61 <= $2,500 -> L1"
+      },
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "Policy 3a: record the investigation and write it to the graph"
+      },
+      {
+        "action": "FILE_REPORT",
+        "route": "L2",
+        "reason": "policy 3a, R6, R9: fraud confirmed or strongly suspected and the activity is linked to fraud on 27 other card(s) (27 via same rare device profile); the pattern is coordinated and undocumented (R9)"
+      },
+      {
+        "action": "MONITOR_CONNECTED_CARDS",
+        "route": "auto",
+        "reason": "R6: 27 other card(s) are linked to this activity (27 via same rare device profile)"
+      },
+      {
+        "action": "ESCALATE_TO_ANALYST",
+        "route": "auto",
+        "reason": "R9: undocumented coordinated pattern, analyst review of the wider scheme"
+      }
+    ],
+    "final": [
+      {
+        "action": "BLOCK_CARD",
+        "route": "L1",
+        "reason": "Fraud probability >= 0.85 on two or more independent lines of evidence (policy 6); exposure $439.61 <= $2,500 -> L1"
+      },
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "Policy 3a: record the investigation and write it to the graph"
+      },
+      {
+        "action": "FILE_REPORT",
+        "route": "L2",
+        "reason": "policy 3a, R6, R9: fraud confirmed or strongly suspected and the activity is linked to fraud on 27 other card(s) (27 via same rare device profile); the pattern is coordinated and undocumented (R9)"
+      },
+      {
+        "action": "MONITOR_CONNECTED_CARDS",
+        "route": "auto",
+        "reason": "R6: 27 other card(s) are linked to this activity (27 via same rare device profile)"
+      },
+      {
+        "action": "ESCALATE_TO_ANALYST",
+        "route": "auto",
+        "reason": "R9: undocumented coordinated pattern, analyst review of the wider scheme"
+      }
+    ],
+    "what_changed": "nothing"
+  },
+  "sar": {
+    "file": true,
+    "reason": "File (policy 3a, R6, R9): fraud confirmed or strongly suspected and the activity is linked to fraud on 27 other card(s) (27 via same rare device profile); the pattern is coordinated and undocumented (R9).",
+    "narrative": "Customer C13487 holding card C13487-K1 was identified conducting online transactions using a new device profile behind an anonymous proxy in billing region 191. Between 2016-11-15 and 2016-11-26, three affected transactions totaling $439.61 were processed via the online channel using a rare mobile device profile. How the 27 connected card(s) are linked: 27 card(s) use the same rare device profile as this card. This activity is suspicious due to the use of an anonymous proxy, new device status, and strong ties to prior confirmed fraud cases CC-2985, CC-2649, CC-2971, and CC-3035 involving the same profile. The total exposure amounts to $439.61. Actions taken include a recommended block on the card pending approval under policy 6, creating the case, filing a report under policy 3a, R6, and R9, monitoring connected cards automatically, and escalating to an analyst.",
+    "subjects": [
+      "C13487",
+      "C13487-K1",
+      "C01289-K1",
+      "C01996-K2",
+      "C02910-K1",
+      "C02975-K1",
+      "C03676-K2",
+      "C04108-K2",
+      "C04274-K1",
+      "C05448-K2",
+      "C06031-K2",
+      "C06650-K2",
+      "C06710-K1",
+      "C07472-K1",
+      "C08168-K1",
+      "C08972-K2",
+      "C09049-K1",
+      "C09195-K1",
+      "C09906-K1",
+      "C09975-K1",
+      "C10020-K1",
+      "C10193-K2",
+      "C10326-K1",
+      "C11082-K1",
+      "C11670-K2",
+      "C11702-K1",
+      "C12645-K1",
+      "C12796-K1",
+      "C13291-K1",
+      "SM-G935F Build/NRD90M | Android 7.0 | chrome 62.0 for android | 1920x1080"
+    ],
+    "total_amount_usd": 439.61,
+    "activity_dates": [
+      "2016-11-15",
+      "2016-11-26"
+    ]
+  },
+  "stop_reason": "Stopped under policy section 6: probability 0.89 with at least two independent lines of evidence; further steps would not change the decision.",
+  "tool_calls": 14,
+  "tokens": 10389,
+  "latency_s": 16.6
+}

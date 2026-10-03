@@ -1,0 +1,160 @@
+{
+  "case_id": "ALR-015",
+  "case": {
+    "status": "closed_legitimate",
+    "verdict": "legitimate",
+    "fraud_probability": 0.01,
+    "pattern": "none",
+    "pattern_description": "",
+    "affected_txn_ids": [],
+    "first_suspicious_txn_id": "",
+    "connected_card_ids": [],
+    "connected_device_profiles": [],
+    "exposure_usd": 0.0,
+    "evidence": [
+      {
+        "claim": "Bank model scored the transaction 0.77. In the bank's memory, all 900 alerts raised by the score alone were cleared as false alarms, so the score is treated as a reason to look only",
+        "source": "graph",
+        "ref": "txn_context",
+        "entity_ids": [
+          "3464869"
+        ]
+      },
+      {
+        "claim": "Case-memory model (trained on the bank's closed cases, AUC 0.91 on an October hold-out vs 0.87 for the bank score) gives this transaction 0.010, a calibrated fraud rate of 0.6%",
+        "source": "graph",
+        "ref": "txn.model_score",
+        "entity_ids": [
+          "3464869"
+        ]
+      },
+      {
+        "claim": "Identity record marks the device as New for this account",
+        "source": "graph",
+        "ref": "txn_context",
+        "entity_ids": [
+          "3464869"
+        ]
+      },
+      {
+        "claim": "Amount $599.94 is well above this card's 90th percentile ($324.96)",
+        "source": "graph",
+        "ref": "card_profile",
+        "entity_ids": [
+          "C03042-K1"
+        ]
+      },
+      {
+        "claim": "Card has 2 earlier confirmed fraud case(s) (card_not_present_new_device), most recent 2016-09-24; the card was reissued each time, so this is context, not proof",
+        "source": "graph",
+        "ref": "prior_cases",
+        "entity_ids": [
+          "CC-3886",
+          "CC-0615"
+        ]
+      },
+      {
+        "claim": "Card also has 1 cleared alert(s) (e.g. Case CC-1313: model scored a $100.08 transaction at 0.87. Cardholder confirmed travel to t)",
+        "source": "graph",
+        "ref": "prior_cases",
+        "entity_ids": [
+          "CC-1313"
+        ]
+      },
+      {
+        "claim": "Case memory: similar prior investigations retrieved - CC-1313 (cleared, none, $0.00): Case CC-1313: model scored a $100.08 transaction at 0.87. Cardholder confirmed travel to the billing region in; CC-0681 (cleared, none, $0.00): Case CC-0681: model scored a $299.98 transaction at 0.81. Cardholder confirmed the purchase from a new phone. ; CC-0546 (cleared, none, $0.00): Case CC-0546: model scored a $100.05 transaction at 0.91. Cardholder confirmed the purchase from a new phone. ",
+        "source": "graph",
+        "ref": "similar_closed_cases + prior_cases + device_cases",
+        "entity_ids": [
+          "CC-1313",
+          "CC-0681",
+          "CC-0546",
+          "CC-0317",
+          "CC-0413"
+        ]
+      },
+      {
+        "claim": "Investigator note (LLM): Card C03042-K1's window lookup shows multiple in-person transactions and one online transaction around the flagged date. The online transaction at addr1 327 matches the flagged amount and device profile. Prior card history includes legitimate travel and new phone verifications. Uncertainty remains as the device is new for this account and amount exceeds typical spend percentiles.",
+        "source": "graph",
+        "ref": "llm_investigator",
+        "entity_ids": [
+          "3464869"
+        ]
+      },
+      {
+        "claim": "Cardholder confirmed the transaction as their own (simulated reply; assumption recorded in evidence_requests)",
+        "source": "customer",
+        "ref": "evidence_request:1",
+        "entity_ids": [
+          "3464869"
+        ]
+      }
+    ],
+    "similar_prior_cases": [
+      "CC-1313",
+      "CC-0681",
+      "CC-0546",
+      "CC-0317",
+      "CC-0413"
+    ],
+    "summary": "This case was triggered when the real-time model scored online transaction 3464869 at 0.77 for $599.94. The graph and case-memory analysis showed similar prior cleared cases and confirmed that the cardholder verified the purchase, resulting in a final fraud probability of 0.01. The verdict is legitimate and the case is closed with no fraud exposure. The transaction was allowed to proceed after cardholder confirmation.",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-2016-0015"
+  },
+  "evidence_requests": [
+    {
+      "type": "step_up_auth",
+      "asked_after_step": 20,
+      "assumed_response": "Assumed: the cardholder passes step-up authentication (one-time passcode) and confirms transaction 3464869. Basis: fraud probability 0.02; the bank's memory shows score-only alerts like this are usually confirmed (new phone, travel)."
+    }
+  ],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "Policy 3a: probability >= 0.30, evidence requested or customer dispute"
+      },
+      {
+        "action": "STEP_UP_AUTH",
+        "route": "auto",
+        "reason": "Policy 6 / R1: probability 0.02 is low but rests on only 1 independent line(s) of evidence; confirm with the cardholder before closing"
+      },
+      {
+        "action": "MONITOR_CARD",
+        "route": "auto",
+        "reason": "Monitor for 72h while verification is pending"
+      }
+    ],
+    "final": [
+      {
+        "action": "ALLOW_TRANSACTION",
+        "route": "auto",
+        "reason": "R3: cardholder confirmed the transaction"
+      },
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "Policy 3a: case opened when evidence was requested; closed as legitimate"
+      },
+      {
+        "action": "CLOSE_NO_FRAUD",
+        "route": "auto",
+        "reason": "R3: cardholder confirmed; confirmation noted in the case file"
+      }
+    ],
+    "what_changed": "The cardholder's (assumed) confirmation moved the fraud probability from 0.02 to 0.01, so R3 now applies: added ALLOW_TRANSACTION, CLOSE_NO_FRAUD; dropped STEP_UP_AUTH, MONITOR_CARD."
+  },
+  "sar": {
+    "file": false,
+    "reason": "No report: activity not confirmed or strongly suspected as fraud (policy 3a).",
+    "narrative": "",
+    "subjects": [],
+    "total_amount_usd": 0,
+    "activity_dates": []
+  },
+  "stop_reason": "Stopped after the evidence request: the cardholder's confirmation settles the next step under policy section 6 (probability 0.01); further queries would not change the actions.",
+  "tool_calls": 13,
+  "tokens": 4371,
+  "latency_s": 5.6
+}

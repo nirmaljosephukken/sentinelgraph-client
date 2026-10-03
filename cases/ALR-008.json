@@ -1,0 +1,183 @@
+{
+  "case_id": "ALR-008",
+  "case": {
+    "status": "closed_fraud",
+    "verdict": "fraud",
+    "fraud_probability": 0.99,
+    "pattern": "card_not_present_fraud",
+    "pattern_description": "",
+    "affected_txn_ids": [
+      "3557979",
+      "3557987",
+      "3558054"
+    ],
+    "first_suspicious_txn_id": "3557979",
+    "connected_card_ids": [
+      "C11642-K1"
+    ],
+    "connected_device_profiles": [],
+    "exposure_usd": 166.97,
+    "evidence": [
+      {
+        "claim": "Cardholder reported the transaction as unauthorised. In the bank's memory, all 4,665 cardholder-reported cases were confirmed fraud",
+        "source": "customer",
+        "ref": "trigger:customer_report",
+        "entity_ids": [
+          "C13171",
+          "3558054"
+        ]
+      },
+      {
+        "claim": "Case-memory model (trained on the bank's closed cases, AUC 0.91 on an October hold-out vs 0.87 for the bank score) gives this transaction 0.951, a calibrated fraud rate of 69.9%",
+        "source": "graph",
+        "ref": "txn.model_score",
+        "entity_ids": [
+          "3558054"
+        ]
+      },
+      {
+        "claim": "Device profile ' |  | chrome 66.0 | ' already used 9 times on this card",
+        "source": "graph",
+        "ref": "card_profile",
+        "entity_ids": [
+          "C13171-K2"
+        ]
+      },
+      {
+        "claim": "What happened on other cards: 2 transaction(s) on 1 other card(s) (C11642-K1) within 48h at the same amount (+-1.5%), same product code and shared device profile, each scored >= 0.5 by the memory model",
+        "source": "graph",
+        "ref": "peer_txns",
+        "entity_ids": [
+          "3560722",
+          "3560780",
+          "C11642-K1"
+        ]
+      },
+      {
+        "claim": "Burst: 2 other online transaction(s) on this card within 48h from the same device/email ($55.60, $55.69), also scored as likely fraud",
+        "source": "graph",
+        "ref": "card_window(burst)",
+        "entity_ids": [
+          "3557979",
+          "3557987"
+        ]
+      },
+      {
+        "claim": "Card has 18 earlier confirmed fraud case(s) (card_not_present_fraud, card_not_present_new_device), most recent 2016-10-19; the card was reissued each time, so this is context, not proof",
+        "source": "graph",
+        "ref": "prior_cases",
+        "entity_ids": [
+          "CC-0467",
+          "CC-2059",
+          "CC-1925",
+          "CC-5010"
+        ]
+      },
+      {
+        "claim": "Card also has 1 cleared alert(s) (e.g. Case CC-4819: model scored a $66.52 transaction at 0.92. Cardholder confirmed the purchase)",
+        "source": "graph",
+        "ref": "prior_cases",
+        "entity_ids": [
+          "CC-4819"
+        ]
+      },
+      {
+        "claim": "Case memory: similar prior investigations retrieved - CC-3728 (confirmed_fraud, card_not_present_fraud, $113.95): Case CC-3728: cardholder C13171 reported unrecognized activity on card C13171-K2. 3 transaction(s) between 201; CC-3566 (confirmed_fraud, card_not_present_fraud, $88.07): Case CC-3566: cardholder C13171 reported unrecognized activity on card C13171-K2. 2 transaction(s) between 201; CC-3422 (confirmed_fraud, card_not_present_fraud, $124.24): Case CC-3422: cardholder C13171 reported unrecognized activity on card C13171-K2. 2 transaction(s) between 201",
+        "source": "graph",
+        "ref": "similar_closed_cases + prior_cases + device_cases",
+        "entity_ids": [
+          "CC-3728",
+          "CC-3566",
+          "CC-3422",
+          "CC-1659",
+          "CC-3334"
+        ]
+      },
+      {
+        "claim": "Investigator note (LLM): Device fanout showed widespread multi-card usage of the profile across distinct accounts, while card C11642-K1 had no activity in the queried window. This context highlights broader device sharing or proxy usage patterns. The card's extensive prior fraud history heavily biases the prior probability. Remaining uncertainty centres on whether this specific online transaction is legitimate cardholder activity or part of the ongoing compromise cycle.",
+        "source": "graph",
+        "ref": "llm_investigator",
+        "entity_ids": [
+          "3558054"
+        ]
+      }
+    ],
+    "similar_prior_cases": [
+      "CC-3728",
+      "CC-3566",
+      "CC-3422",
+      "CC-1659",
+      "CC-3334"
+    ],
+    "summary": "This case was triggered by a customer report from C13171 stating, 'I never made this $55.68 purchase. Please check my card.' Referring to transaction 3558054. The graph showed connections to 1 other card via near-identical purchases within 48 hours with the same purchaser and recipient email domains. The verdict is fraud with a final fraud probability of 0.99, because the cardholder reported the transaction as unauthorised and historical cases confirm similar activity. The case was closed as fraud with actions including blocking the card, creating the case, filing a report, and monitoring connected cards.",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-2016-0008"
+  },
+  "evidence_requests": [],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "BLOCK_CARD",
+        "route": "L1",
+        "reason": "R2: cardholder denies the activity; exposure $166.97 <= $2,500 -> L1"
+      },
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "R2: record the investigation and write it to the graph"
+      },
+      {
+        "action": "FILE_REPORT",
+        "route": "L2",
+        "reason": "policy 3a, R6: fraud confirmed or strongly suspected and the activity is linked to fraud on 1 other card(s) (1 via near-identical purchase with the same email domains)"
+      },
+      {
+        "action": "MONITOR_CONNECTED_CARDS",
+        "route": "auto",
+        "reason": "R6: 1 other card(s) are linked to this activity (1 via near-identical purchase with the same email domains)"
+      }
+    ],
+    "final": [
+      {
+        "action": "BLOCK_CARD",
+        "route": "L1",
+        "reason": "R2: cardholder denies the activity; exposure $166.97 <= $2,500 -> L1"
+      },
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "R2: record the investigation and write it to the graph"
+      },
+      {
+        "action": "FILE_REPORT",
+        "route": "L2",
+        "reason": "policy 3a, R6: fraud confirmed or strongly suspected and the activity is linked to fraud on 1 other card(s) (1 via near-identical purchase with the same email domains)"
+      },
+      {
+        "action": "MONITOR_CONNECTED_CARDS",
+        "route": "auto",
+        "reason": "R6: 1 other card(s) are linked to this activity (1 via near-identical purchase with the same email domains)"
+      }
+    ],
+    "what_changed": "nothing"
+  },
+  "sar": {
+    "file": true,
+    "reason": "File (policy 3a, R6): fraud confirmed or strongly suspected and the activity is linked to fraud on 1 other card(s) (1 via near-identical purchase with the same email domains).",
+    "narrative": "This Suspicious Activity Report details fraudulent activity involving customer C13171 using card C13171-K2 in the online channel. On 2016-12-19, three unauthorised online transactions occurred totaling an exposure of $166.97, specifically transaction ID 3557979 for $55.60, transaction ID 3557987 for $55.69, and transaction ID 3558054 for $55.68, all utilizing the device profile chrome 66.0. The activity is suspicious because the cardholder reported the transactions as unauthorised, and the case-memory model assigns a calibrated fraud rate of 69.9%. Furthermore, the activity is linked to 1 other card (C11642-K1) via near-identical purchases within 48 hours with the same purchaser and recipient email domains (hotmail.com). The card also has 18 earlier confirmed fraud cases. Actions taken include automatically creating the case and monitoring connected cards under rule R6, recommending block card under rule R2 (exposure $166.97 <= $2,500 routed L1, pending approval), and recommending filing a report under policy 3a, R6 (routed L2, pending approval). How the 1 connected card(s) are linked: 1 card(s) made a near-identical purchase within 48 hours with the same purchaser and recipient email domains. None of them shares a device profile with this card.",
+    "subjects": [
+      "C13171",
+      "C13171-K2",
+      "C11642-K1"
+    ],
+    "total_amount_usd": 166.97,
+    "activity_dates": [
+      "2016-12-19",
+      "2016-12-19"
+    ]
+  },
+  "stop_reason": "Stopped under policy section 6: probability 0.99 with at least two independent lines of evidence; further steps would not change the decision.",
+  "tool_calls": 13,
+  "tokens": 7422,
+  "latency_s": 7.1
+}

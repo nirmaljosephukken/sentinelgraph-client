@@ -1,0 +1,5 @@
+{
+ "name": "{{PREFIX}}_investigation_errors",
+ "description": "Alerts whose investigation failed (status error)",
+ "filter": "resource.type=\"cloud_run_revision\" AND resource.labels.service_name:\"{{SERVICE}}\" AND jsonPayload.event=\"investigation_error\""
+}

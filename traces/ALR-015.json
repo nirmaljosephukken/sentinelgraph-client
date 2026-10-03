@@ -1,0 +1,589 @@
+{
+ "case": {
+  "case_id": "ALR-015",
+  "opened_at": "2016-11-17 19:03:36",
+  "trigger_type": "risk_score",
+  "trigger_text": "Real-time model scored transaction 3464869 ($599.94, online) at 0.77. Review and decide.",
+  "flagged_txn_id": "3464869",
+  "card_id": "C03042-K1",
+  "customer_id": "C03042",
+  "risk_score": "0.77"
+ },
+ "events": [
+  {
+   "step": 1,
+   "ts": "2016-11-17 19:03:36",
+   "kind": "trigger",
+   "title": "Risk Score: Real-time model scored transaction 3464869 ($599.94, online) at 0.77. Review and decide.",
+   "detail": {
+    "case_id": "ALR-015",
+    "flagged_txn_id": "3464869",
+    "card_id": "C03042-K1",
+    "customer_id": "C03042",
+    "risk_score": "0.77"
+   },
+   "elapsed_s": 0.0
+  },
+  {
+   "step": 2,
+   "ts": "2016-11-17 19:04:36",
+   "kind": "case",
+   "title": "Case CASE-2016-0015 opened for alert ALR-015 (status: investigating)",
+   "detail": {
+    "graph_case_id": "CASE-2016-0015"
+   },
+   "elapsed_s": 0.0
+  },
+  {
+   "step": 3,
+   "ts": "2016-11-17 19:05:06",
+   "kind": "tool",
+   "title": "txn_context(txn_id=3464869)",
+   "detail": {
+    "args": {
+     "txn_id": "3464869"
+    },
+    "result": {
+     "txn": 24,
+     "card": 6,
+     "customer": 2,
+     "customer_cards": 1
+    },
+    "latency_s": 0.473,
+    "transport": "mcp"
+   },
+   "elapsed_s": 0.47
+  },
+  {
+   "step": 4,
+   "ts": "2016-11-17 19:05:36",
+   "kind": "tool",
+   "title": "card_window(card_id=C03042-K1, t0=2016-07-20 14:03:36, t1=2016-11-24 14:03:36)",
+   "detail": {
+    "args": {
+     "card_id": "C03042-K1",
+     "t0": "2016-07-20 14:03:36",
+     "t1": "2016-11-24 14:03:36"
+    },
+    "result": {
+     "rows": 45
+    },
+    "latency_s": 0.139,
+    "transport": "mcp"
+   },
+   "elapsed_s": 0.61
+  },
+  {
+   "step": 5,
+   "ts": "2016-11-17 19:06:06",
+   "kind": "tool",
+   "title": "card_profile(card_id=C03042-K1, before=2016-11-17 14:03:36)",
+   "detail": {
+    "args": {
+     "card_id": "C03042-K1",
+     "before": "2016-11-17 14:03:36"
+    },
+    "result": {
+     "n": 68,
+     "amount_sum": 9017.67,
+     "amount_max": 550.03,
+     "products": 5,
+     "regions": 22,
+     "devices": 39,
+     "emails": 13,
+     "channels": 2,
+     "first_ts": "2016-07-02 21:33:32",
+     "last_ts": "2016-11-16 15:09:17"
+    },
+    "latency_s": 0.118,
+    "transport": "mcp"
+   },
+   "elapsed_s": 0.73
+  },
+  {
+   "step": 6,
+   "ts": "2016-11-17 19:06:36",
+   "kind": "tool",
+   "title": "client_history(client_id=C03042-K1|327|138)",
+   "detail": {
+    "args": {
+     "client_id": "C03042-K1|327|138"
+    },
+    "result": {
+     "rows": 1
+    },
+    "latency_s": 0.119,
+    "transport": "mcp"
+   },
+   "elapsed_s": 0.85
+  },
+  {
+   "step": 7,
+   "ts": "2016-11-17 19:07:06",
+   "kind": "tool",
+   "title": "device_fanout(device=Trident/7.0 | Windows 8.1 | ie 11.0 for desktop | 1680x1050, t0=2016-11-07 14:03:36, t1=2016-11-27 14:03:36)",
+   "detail": {
+    "args": {
+     "device": "Trident/7.0 | Windows 8.1 | ie 11.0 for desktop | 1680x1050",
+     "t0": "2016-11-07 14:03:36",
+     "t1": "2016-11-27 14:03:36"
+    },
+    "result": {
+     "device": 2,
+     "txns": 1
+    },
+    "latency_s": 0.117,
+    "transport": "mcp"
+   },
+   "elapsed_s": 0.97
+  },
+  {
+   "step": 8,
+   "ts": "2016-11-17 19:07:36",
+   "kind": "tool",
+   "title": "device_cases(device=Trident/7.0 | Windows 8.1 | ie 11.0 for desktop | 1680x1050)",
+   "detail": {
+    "args": {
+     "device": "Trident/7.0 | Windows 8.1 | ie 11.0 for desktop | 1680x1050"
+    },
+    "result": {
+     "closed_cases": 0,
+     "agent_cases": 1
+    },
+    "latency_s": 0.12,
+    "transport": "mcp"
+   },
+   "elapsed_s": 1.09
+  },
+  {
+   "step": 9,
+   "ts": "2016-11-17 19:08:06",
+   "kind": "tool",
+   "title": "peer_txns(txn_id=3464869, t0=2016-11-15 14:03:36, t1=2016-11-19 14:03:36, lo=590.94, hi=608.94, use_email=True)",
+   "detail": {
+    "args": {
+     "txn_id": "3464869",
+     "t0": "2016-11-15 14:03:36",
+     "t1": "2016-11-19 14:03:36",
+     "lo": 590.94,
+     "hi": 608.94,
+     "use_email": true
+    },
+    "result": {
+     "rows": 1
+    },
+    "latency_s": 0.129,
+    "transport": "mcp"
+   },
+   "elapsed_s": 1.22
+  },
+  {
+   "step": 10,
+   "ts": "2016-11-17 19:08:36",
+   "kind": "tool",
+   "title": "prior_cases(customer_id=C03042)",
+   "detail": {
+    "args": {
+     "customer_id": "C03042"
+    },
+    "result": {
+     "closed_cases": 3,
+     "connected_closed_cases": 0,
+     "agent_cases": 1
+    },
+    "latency_s": 0.116,
+    "transport": "mcp"
+   },
+   "elapsed_s": 1.33
+  },
+  {
+   "step": 11,
+   "ts": "2016-11-17 19:09:06",
+   "kind": "evidence",
+   "title": "Graph evidence collected: 7 findings",
+   "detail": [
+    {
+     "claim": "Bank model scored the transaction 0.77. In the bank's memory, all 900 alerts raised by the score alone were cleared as false alarms, so the score is treated as a reason to look only",
+     "source": "graph",
+     "ref": "txn_context",
+     "entity_ids": [
+      "3464869"
+     ],
+     "lr": 1.0,
+     "family": "trigger",
+     "direction": "neutral",
+     "step": 10
+    },
+    {
+     "claim": "Case-memory model (trained on the bank's closed cases, AUC 0.91 on an October hold-out vs 0.87 for the bank score) gives this transaction 0.010, a calibrated fraud rate of 0.6%",
+     "source": "graph",
+     "ref": "txn.model_score",
+     "entity_ids": [
+      "3464869"
+     ],
+     "lr": 1.0,
+     "family": "ml",
+     "direction": "neutral",
+     "step": 10
+    },
+    {
+     "claim": "Identity record marks the device as New for this account",
+     "source": "graph",
+     "ref": "txn_context",
+     "entity_ids": [
+      "3464869"
+     ],
+     "lr": 1.6,
+     "family": "device",
+     "direction": "fraud",
+     "step": 10
+    },
+    {
+     "claim": "1 similar transactions on other cards (same email/device, amount within 1.5%, +-48h) show no fraud indicators",
+     "source": "graph",
+     "ref": "peer_txns",
+     "entity_ids": [
+      "3460124"
+     ],
+     "lr": 1.0,
+     "family": "network",
+     "direction": "neutral",
+     "step": 10
+    },
+    {
+     "claim": "Amount $599.94 is well above this card's 90th percentile ($324.96)",
+     "source": "graph",
+     "ref": "card_profile",
+     "entity_ids": [
+      "C03042-K1"
+     ],
+     "lr": 1.4,
+     "family": "behaviour",
+     "direction": "fraud",
+     "step": 10
+    },
+    {
+     "claim": "Card has 2 earlier confirmed fraud case(s) (card_not_present_new_device), most recent 2016-09-24; the card was reissued each time, so this is context, not proof",
+     "source": "graph",
+     "ref": "prior_cases",
+     "entity_ids": [
+      "CC-3886",
+      "CC-0615"
+     ],
+     "lr": 1.3,
+     "family": "history",
+     "direction": "fraud",
+     "step": 10
+    },
+    {
+     "claim": "Card also has 1 cleared alert(s) (e.g. Case CC-1313: model scored a $100.08 transaction at 0.87. Cardholder confirmed travel to t)",
+     "source": "graph",
+     "ref": "prior_cases",
+     "entity_ids": [
+      "CC-1313"
+     ],
+     "lr": 0.85,
+     "family": "history",
+     "direction": "legit",
+     "step": 10
+    }
+   ],
+   "elapsed_s": 1.33
+  },
+  {
+   "step": 12,
+   "ts": "2016-11-17 19:09:36",
+   "kind": "tool",
+   "title": "similar_closed_cases(vec=<vector 256>, k=8)",
+   "detail": {
+    "args": {
+     "vec": "<vector 256>",
+     "k": 8
+    },
+    "result": {
+     "rows": 8
+    },
+    "latency_s": 0.073,
+    "transport": "mcp"
+   },
+   "elapsed_s": 1.41
+  },
+  {
+   "step": 13,
+   "ts": "2016-11-17 19:10:06",
+   "kind": "tool",
+   "title": "similar_agent_cases(vec=<vector 256>, k=6)",
+   "detail": {
+    "args": {
+     "vec": "<vector 256>",
+     "k": 6
+    },
+    "result": {
+     "rows": 6
+    },
+    "latency_s": 0.075,
+    "transport": "mcp"
+   },
+   "elapsed_s": 1.48
+  },
+  {
+   "step": 14,
+   "ts": "2016-11-17 19:10:36",
+   "kind": "tool",
+   "title": "policy_search(vec=<vector 256>, k=4)",
+   "detail": {
+    "args": {
+     "vec": "<vector 256>",
+     "k": 4
+    },
+    "result": {
+     "rows": 4
+    },
+    "latency_s": 0.068,
+    "transport": "mcp"
+   },
+   "elapsed_s": 1.55
+  },
+  {
+   "step": 15,
+   "ts": "2016-11-17 19:11:06",
+   "kind": "tool",
+   "title": "llm:card_window(card_id=C03042-K1, t0=2016-11-15 14:03:36, t1=2016-11-19 14:03:36)",
+   "detail": {
+    "args": {
+     "card_id": "C03042-K1",
+     "t0": "2016-11-15 14:03:36",
+     "t1": "2016-11-19 14:03:36"
+    },
+    "result": {
+     "rows": 5
+    },
+    "latency_s": 0.139,
+    "transport": "mcp"
+   },
+   "elapsed_s": 2.81
+  },
+  {
+   "step": 16,
+   "ts": "2016-11-17 19:11:36",
+   "kind": "llm",
+   "title": "LLM investigator (gemini-3.5-flash-lite): 1 extra tool call(s)",
+   "detail": {
+    "calls": [
+     {
+      "tool": "card_window",
+      "args": {
+       "t0": "2016-11-15 14:03:36",
+       "card_id": "C03042-K1",
+       "t1": "2016-11-19 14:03:36"
+      }
+     }
+    ],
+    "notes": "Card C03042-K1's window lookup shows multiple in-person transactions and one online transaction around the flagged date. The online transaction at addr1 327 matches the flagged amount and device profile. Prior card history includes legitimate travel and new phone verifications. Uncertainty remains as the device is new for this account and amount exceeds typical spend percentiles."
+   },
+   "elapsed_s": 4.22
+  },
+  {
+   "step": 17,
+   "ts": "2016-11-17 19:12:06",
+   "kind": "assess",
+   "title": "Fraud probability 0.02 (memory-model prior 0.01); confidence low (conflicting evidence); hypothesis card_not_present_new_device; exposure $599.94",
+   "detail": {
+    "prior": 0.0065,
+    "posterior": 0.0159,
+    "graph_only": 0.0159,
+    "log_lr_by_family": {
+     "device": 0.47,
+     "behaviour": 0.336,
+     "history": 0.1
+    },
+    "fraud_families": [
+     "device"
+    ],
+    "legit_families": [
+     "ml"
+    ],
+    "uncertainty": [
+     "Cardholder has not confirmed or denied the transaction",
+     "Device ownership not established (new device for this account)",
+     "Evidence conflicts: device point to fraud; ml point to legitimate use"
+    ]
+   },
+   "elapsed_s": 4.22
+  },
+  {
+   "step": 18,
+   "ts": "2016-11-17 19:12:36",
+   "kind": "decision",
+   "title": "Initial next best action: CREATE_CASE, STEP_UP_AUTH, MONITOR_CARD",
+   "detail": {
+    "actions": [
+     {
+      "action": "CREATE_CASE",
+      "route": "auto",
+      "reason": "Policy 3a: probability >= 0.30, evidence requested or customer dispute"
+     },
+     {
+      "action": "STEP_UP_AUTH",
+      "route": "auto",
+      "reason": "Policy 6 / R1: probability 0.02 is low but rests on only 1 independent line(s) of evidence; confirm with the cardholder before closing"
+     },
+     {
+      "action": "MONITOR_CARD",
+      "route": "auto",
+      "reason": "Monitor for 72h while verification is pending"
+     }
+    ],
+    "request": "step_up_auth",
+    "why_request": "Probability 0.02 is between the stop thresholds (0.15 / 0.85) and the case rests on too few independent signals to act; the cardholder's answer is the highest-value evidence.",
+    "policy_check": []
+   },
+   "elapsed_s": 4.22
+  },
+  {
+   "step": 19,
+   "ts": "2016-11-17 19:13:06",
+   "kind": "execute",
+   "title": "Executed 3 auto action(s); 0 queued for approval",
+   "detail": {
+    "executed": [
+     "CREATE_CASE",
+     "STEP_UP_AUTH",
+     "MONITOR_CARD"
+    ],
+    "awaiting": []
+   },
+   "elapsed_s": 4.22
+  },
+  {
+   "step": 20,
+   "ts": "2016-11-17 19:33:36",
+   "kind": "request",
+   "title": "Evidence requested: step_up_auth (policy 5, auto)",
+   "detail": {
+    "why": "Probability 0.02 is between the stop thresholds (0.15 / 0.85) and the case rests on too few independent signals to act; the cardholder's answer is the highest-value evidence."
+   },
+   "elapsed_s": 4.22
+  },
+  {
+   "step": 21,
+   "ts": "2016-11-17 21:03:36",
+   "kind": "response",
+   "title": "Reply (confirmed): Assumed: the cardholder passes step-up authentication (one-time passcode) and confirms transaction 3464869. Basis: fraud probability 0.02; the bank's memory shows score-only alerts like this are usually confirmed (new phone, travel).",
+   "detail": {
+    "lr": 0.03
+   },
+   "elapsed_s": 4.22
+  },
+  {
+   "step": 22,
+   "ts": "2016-11-17 19:14:36",
+   "kind": "assess",
+   "title": "Reassessed fraud probability 0.01 (was 0.02)",
+   "detail": {
+    "posterior": 0.01,
+    "log_lr_by_family": {
+     "device": 0.47,
+     "behaviour": 0.336,
+     "history": 0.1,
+     "customer": -3.507
+    }
+   },
+   "elapsed_s": 4.22
+  },
+  {
+   "step": 23,
+   "ts": "2016-11-17 19:15:06",
+   "kind": "decision",
+   "title": "Final next best action: ALLOW_TRANSACTION, CREATE_CASE, CLOSE_NO_FRAUD",
+   "detail": {
+    "actions": [
+     {
+      "action": "ALLOW_TRANSACTION",
+      "route": "auto",
+      "reason": "R3: cardholder confirmed the transaction"
+     },
+     {
+      "action": "CREATE_CASE",
+      "route": "auto",
+      "reason": "Policy 3a: case opened when evidence was requested; closed as legitimate"
+     },
+     {
+      "action": "CLOSE_NO_FRAUD",
+      "route": "auto",
+      "reason": "R3: cardholder confirmed; confirmation noted in the case file"
+     }
+    ],
+    "policy_check": []
+   },
+   "elapsed_s": 4.22
+  },
+  {
+   "step": 24,
+   "ts": "2016-11-17 19:15:36",
+   "kind": "llm",
+   "title": "Case narrative written by gemini-3.5-flash-lite (3/3 fields accepted)",
+   "detail": {
+    "summary": "This case was triggered when the real-time model scored online transaction 3464869 at 0.77 for $599.94. The graph and case-memory analysis showed similar prior cleared cases and confirmed that the cardholder verified the purchase, resulting in a final fraud probability of 0.01. The verdict is legiti",
+    "sar_narrative": "",
+    "pattern_description": ""
+   },
+   "elapsed_s": 5.5
+  },
+  {
+   "step": 25,
+   "ts": "2016-11-17 19:16:06",
+   "kind": "memory",
+   "title": "Case CASE-2016-0015 written to case memory (closed_legitimate, legitimate, none)",
+   "detail": {
+    "edges": {
+     "txns": 1,
+     "cards": 1,
+     "devices": 0,
+     "similar_closed_cases": [
+      "CC-1313",
+      "CC-0681",
+      "CC-0546",
+      "CC-0317",
+      "CC-0413"
+     ]
+    }
+   },
+   "elapsed_s": 5.51
+  }
+ ],
+ "transport": [
+  "mcp:txn_context:0.47s",
+  "mcp:card_window:0.11s",
+  "mcp:card_profile:0.11s",
+  "mcp:client_history:0.10s",
+  "mcp:device_fanout:0.15s",
+  "mcp:peer_txns:0.11s",
+  "mcp:prior_cases:0.09s",
+  "mcp:similar_closed_cases:0.05s",
+  "mcp:similar_agent_cases:0.05s",
+  "mcp:policy_search:0.05s",
+  "mcp:prior_cases:0.09s",
+  "mcp:card_window:0.09s",
+  "restpp:upsert_case",
+  "mcp:txn_context:0.47s",
+  "mcp:card_window:0.14s",
+  "mcp:card_profile:0.12s",
+  "mcp:client_history:0.12s",
+  "mcp:device_fanout:0.12s",
+  "mcp:device_cases:0.12s",
+  "mcp:peer_txns:0.13s",
+  "mcp:prior_cases:0.12s",
+  "mcp:similar_closed_cases:0.07s",
+  "mcp:similar_agent_cases:0.08s",
+  "mcp:policy_search:0.07s",
+  "mcp:card_window:0.14s",
+  "restpp:upsert_case"
+ ],
+ "llm": {
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite",
+  "calls": 3,
+  "errors": []
+ }
+}

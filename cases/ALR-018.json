@@ -1,0 +1,181 @@
+{
+  "case_id": "ALR-018",
+  "case": {
+    "status": "closed_legitimate",
+    "verdict": "legitimate",
+    "fraud_probability": 0.02,
+    "pattern": "none",
+    "pattern_description": "",
+    "affected_txn_ids": [],
+    "first_suspicious_txn_id": "",
+    "connected_card_ids": [],
+    "connected_device_profiles": [],
+    "exposure_usd": 0.0,
+    "evidence": [
+      {
+        "claim": "Cardholder reported the transaction as unauthorised. In the bank's memory, all 4,665 cardholder-reported cases were confirmed fraud",
+        "source": "customer",
+        "ref": "trigger:customer_report",
+        "entity_ids": [
+          "C02354",
+          "3491361"
+        ]
+      },
+      {
+        "claim": "Case-memory model (trained on the bank's closed cases, AUC 0.91 on an October hold-out vs 0.87 for the bank score) gives this transaction 0.193, a calibrated fraud rate of 16.9%",
+        "source": "graph",
+        "ref": "txn.model_score",
+        "entity_ids": [
+          "3491361"
+        ]
+      },
+      {
+        "claim": "Recurring charge: 6 earlier transactions of $39.08 (+-0.35) with the same product code W, billing region 126 and email, every ~10 days since 2016-08-21",
+        "source": "graph",
+        "ref": "card_window(recurring)",
+        "entity_ids": [
+          "3192989",
+          "3217257",
+          "3309755",
+          "3339176",
+          "3371084",
+          "3371579",
+          "3491361"
+        ]
+      },
+      {
+        "claim": "Home region: this cardholder profile (client C02354-K2|126|-185) made 13 earlier card-present purchases in billing region 126",
+        "source": "graph",
+        "ref": "client_history",
+        "entity_ids": [
+          "C02354-K2|126|-185",
+          "3351986",
+          "3364912",
+          "3484403",
+          "3485990"
+        ]
+      },
+      {
+        "claim": "Card has 19 earlier confirmed fraud case(s) (account_takeover, card_not_present_fraud, out_of_region_use), most recent 2016-11-01; the card was reissued each time, so this is context, not proof",
+        "source": "graph",
+        "ref": "prior_cases",
+        "entity_ids": [
+          "CC-3634",
+          "CC-1699",
+          "CC-2589",
+          "CC-2432"
+        ]
+      },
+      {
+        "claim": "Card also has 1 cleared alert(s) (e.g. Case CC-0405: model scored a $22.30 transaction at 0.94. Cardholder confirmed travel to th)",
+        "source": "graph",
+        "ref": "prior_cases",
+        "entity_ids": [
+          "CC-0405"
+        ]
+      },
+      {
+        "claim": "Case memory: similar prior investigations retrieved - CC-0405 (cleared, none, $0.00): Case CC-0405: model scored a $22.30 transaction at 0.94. Cardholder confirmed travel to the billing region in ; CC-0413 (cleared, none, $0.00): Case CC-0413: model scored a $39.95 transaction at 0.90. Cardholder confirmed the purchase from a new phone. D; CC-0010 (cleared, none, $0.00): Case CC-0010: model scored a $96.95 transaction at 0.83. Cardholder confirmed the purchase from a new phone. D",
+        "source": "graph",
+        "ref": "similar_closed_cases + prior_cases + device_cases",
+        "entity_ids": [
+          "CC-0405",
+          "CC-0413",
+          "CC-0010",
+          "CC-1887",
+          "CC-5262"
+        ]
+      },
+      {
+        "claim": "Earlier agent cases with a similar profile: CASE-2016-0015 (legitimate, none)",
+        "source": "graph",
+        "ref": "similar_agent_cases",
+        "entity_ids": [
+          "CASE-2016-0015"
+        ]
+      },
+      {
+        "claim": "Investigator note (LLM): Prior customer lookup confirmed 19 prior fraud cases on card C02354-K2, predominantly involving account takeover and out-of-region use. The current transaction matches a recurring charge pattern running every ~10 days since August 2016 in the home region. Despite the extensive fraud history and cardholder dispute, the recurring periodicity strongly points to a legitimate subscription. Uncertainty remains regarding whether the subscription was initially established by the genuine cardholder or an unauthorized third party.",
+        "source": "graph",
+        "ref": "llm_investigator",
+        "entity_ids": [
+          "3491361"
+        ]
+      },
+      {
+        "claim": "Cardholder confirmed the transaction as their own (simulated reply; assumption recorded in evidence_requests)",
+        "source": "customer",
+        "ref": "evidence_request:1",
+        "entity_ids": [
+          "3491361"
+        ]
+      }
+    ],
+    "similar_prior_cases": [
+      "CC-0405",
+      "CC-0413",
+      "CC-0010",
+      "CC-1887",
+      "CC-5262"
+    ],
+    "summary": "This case was triggered by a customer report regarding transaction 3491361 for $39.08. The graph and case evidence showed a recurring charge pattern of 6 earlier transactions of $39.08 with the same product code W, billing region 126, and email every ~10 days since 2016-08-21, alongside 13 earlier card-present purchases in billing region 126. The initial fraud probability was 0.42 and the final fraud probability was 0.02. The verdict is legitimate, and the case was closed as legitimate (status closed_legitimate) because the cardholder confirmed the transaction as their own (assumed reply; assumption recorded in evidence_requests).",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-2016-0018"
+  },
+  "evidence_requests": [
+    {
+      "type": "customer_validation",
+      "asked_after_step": 18,
+      "assumed_response": "Assumed: shown the every ~10 days history of identical $39.08 charges, the cardholder recognises the recurring merchant charge and withdraws the dispute. Basis: the recurring pattern in the graph (R7)."
+    }
+  ],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "R7 and 3a: a customer dispute always opens a case"
+      },
+      {
+        "action": "VERIFY_WITH_CUSTOMER",
+        "route": "auto",
+        "reason": "R7: charge matches the cardholder's own recurring pattern; confirm before any block"
+      },
+      {
+        "action": "WARN_CUSTOMER",
+        "route": "auto",
+        "reason": "R7: send a recurring-charge reminder"
+      }
+    ],
+    "final": [
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "R7/R3: dispute recorded; charge matches the cardholder's recurring pattern"
+      },
+      {
+        "action": "WARN_CUSTOMER",
+        "route": "auto",
+        "reason": "R7: recurring-charge reminder sent to the cardholder"
+      },
+      {
+        "action": "CLOSE_NO_FRAUD",
+        "route": "auto",
+        "reason": "R3: cardholder recognised the recurring charge; confirmation noted in the case"
+      }
+    ],
+    "what_changed": "The cardholder's (assumed) confirmation moved the fraud probability from 0.42 to 0.02, so R7/R3 now applies: added CLOSE_NO_FRAUD; dropped VERIFY_WITH_CUSTOMER."
+  },
+  "sar": {
+    "file": false,
+    "reason": "No report: activity not confirmed or strongly suspected as fraud (policy 3a).",
+    "narrative": "",
+    "subjects": [],
+    "total_amount_usd": 0,
+    "activity_dates": []
+  },
+  "stop_reason": "Stopped after the evidence request: the cardholder's confirmation settles the next step under policy section 6 (probability 0.02); further queries would not change the actions.",
+  "tool_calls": 11,
+  "tokens": 5651,
+  "latency_s": 21.5
+}

@@ -1,0 +1,40 @@
+{
+ "displayName": "SentinelGraph {{SERVICE}}: many manipulation attempts",
+ "severity": "WARNING",
+ "combiner": "OR",
+ "conditions": [
+  {
+   "displayName": "flagged inputs > 10 in 1 h",
+   "conditionThreshold": {
+    "filter": "metric.type=\"logging.googleapis.com/user/{{PREFIX}}_input_flagged\" AND resource.type=\"cloud_run_revision\"",
+    "aggregations": [
+     {
+      "alignmentPeriod": "3600s",
+      "perSeriesAligner": "ALIGN_SUM",
+      "crossSeriesReducer": "REDUCE_SUM"
+     }
+    ],
+    "comparison": "COMPARISON_GT",
+    "thresholdValue": 10,
+    "duration": "0s",
+    "trigger": {
+     "count": 1
+    }
+   }
+  }
+ ],
+ "alertStrategy": {
+  "autoClose": "1800s"
+ },
+ "documentation": {
+  "mimeType": "text/markdown",
+  "content": "More than ten inputs in an hour read like attempts to instruct the agent. They were treated as data and routed to analysts, but a burst can mean someone is probing the system.\n\nAudit log > *input flagged* shows sources; for an API source, consider revoking that key on Team & access.\n\nConsole: {{CONSOLE_URL}} \u00b7 Logs: Cloud Logging, filter `jsonPayload.event=\"input_flagged\"` on services `{{SERVICE}}*`."
+ },
+ "notificationChannels": [
+  "{{CHANNEL}}"
+ ],
+ "userLabels": {
+  "app": "sentinelgraph",
+  "check": "input-flagged-spike"
+ }
+}

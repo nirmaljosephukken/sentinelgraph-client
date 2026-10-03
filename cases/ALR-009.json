@@ -1,0 +1,114 @@
+{
+  "case_id": "ALR-009",
+  "case": {
+    "status": "closed_fraud",
+    "verdict": "fraud",
+    "fraud_probability": 0.98,
+    "pattern": "card_not_present_fraud",
+    "pattern_description": "",
+    "affected_txn_ids": [
+      "3581141"
+    ],
+    "first_suspicious_txn_id": "3581141",
+    "connected_card_ids": [],
+    "connected_device_profiles": [],
+    "exposure_usd": 30.02,
+    "evidence": [
+      {
+        "claim": "Cardholder reported the transaction as unauthorised. In the bank's memory, all 4,665 cardholder-reported cases were confirmed fraud",
+        "source": "customer",
+        "ref": "trigger:customer_report",
+        "entity_ids": [
+          "C08299",
+          "3581141"
+        ]
+      },
+      {
+        "claim": "Case-memory model (trained on the bank's closed cases, AUC 0.91 on an October hold-out vs 0.87 for the bank score) gives this transaction 0.995, a calibrated fraud rate of 71.8%",
+        "source": "graph",
+        "ref": "txn.model_score",
+        "entity_ids": [
+          "3581141"
+        ]
+      },
+      {
+        "claim": "Device profile ' |  |  | ' already used 5 times on this card",
+        "source": "graph",
+        "ref": "card_profile",
+        "entity_ids": [
+          "C08299-K1"
+        ]
+      },
+      {
+        "claim": "Case memory: similar prior investigations retrieved - CC-1659 (confirmed_fraud, card_not_present_fraud, $62.36): Case CC-1659: cardholder C08290 reported unrecognized activity on card C08290-K2. 1 transaction(s) between 201; CC-5307 (confirmed_fraud, card_not_present_fraud, $16.92): Case CC-5307: cardholder C11750 reported unrecognized activity on card C11750-K1. 1 transaction(s) between 201; CC-4154 (confirmed_fraud, card_not_present_fraud, $38.69): Case CC-4154: cardholder C12644 reported unrecognized activity on card C12644-K1. 2 transaction(s) between 201",
+        "source": "graph",
+        "ref": "similar_closed_cases + prior_cases + device_cases",
+        "entity_ids": [
+          "CC-1659",
+          "CC-5307",
+          "CC-4154",
+          "CC-5123",
+          "CC-0213"
+        ]
+      },
+      {
+        "claim": "Investigator note (LLM): Analyst notes: \nChecked prior customer cases for C08299, returning no history. The transaction matches card-testing or low-value unauthorized online usage with a high case-memory fraud score (0.995). The cardholder reported the transaction as unauthorized and connected cases show identical patterns. Uncertainty remains minimal given the strong historical indicators and high model score.",
+        "source": "graph",
+        "ref": "llm_investigator",
+        "entity_ids": [
+          "3581141"
+        ]
+      }
+    ],
+    "similar_prior_cases": [
+      "CC-1659",
+      "CC-5307",
+      "CC-4154",
+      "CC-5123",
+      "CC-0213"
+    ],
+    "summary": "This case was triggered by a customer report from C08299 stating they never made a $30.02 online purchase on card C08299-K1. The graph and case-memory model indicated a fraud probability of 0.98, supported by historical data showing similar confirmed fraud cases. The verdict is confirmed fraud, leading to a closed fraud status. The initial action to block the card was routed L1 and executed.",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-2016-0009"
+  },
+  "evidence_requests": [],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "BLOCK_CARD",
+        "route": "L1",
+        "reason": "R2: cardholder denies the activity; exposure $30.02 <= $2,500 -> L1"
+      },
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "R2: record the investigation and write it to the graph"
+      }
+    ],
+    "final": [
+      {
+        "action": "BLOCK_CARD",
+        "route": "L1",
+        "reason": "R2: cardholder denies the activity; exposure $30.02 <= $2,500 -> L1"
+      },
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "R2: record the investigation and write it to the graph"
+      }
+    ],
+    "what_changed": "nothing"
+  },
+  "sar": {
+    "file": false,
+    "reason": "No report (policy 3a): fraud is confirmed but exposure $30.02 is under $1,000, no shared device/region/ring link and the pattern is documented. Case only.",
+    "narrative": "",
+    "subjects": [],
+    "total_amount_usd": 0,
+    "activity_dates": []
+  },
+  "stop_reason": "Stopped under policy section 6: probability 0.98 with at least two independent lines of evidence; further steps would not change the decision.",
+  "tool_calls": 12,
+  "tokens": 3376,
+  "latency_s": 5.7
+}

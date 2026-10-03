@@ -1,0 +1,165 @@
+{
+  "case_id": "ALR-003",
+  "case": {
+    "status": "escalated",
+    "verdict": "uncertain",
+    "fraud_probability": 0.63,
+    "pattern": "out_of_region_use",
+    "pattern_description": "",
+    "affected_txn_ids": [
+      "3530164"
+    ],
+    "first_suspicious_txn_id": "3530164",
+    "connected_card_ids": [],
+    "connected_device_profiles": [],
+    "exposure_usd": 49.0,
+    "evidence": [
+      {
+        "claim": "Cardholder reported the transaction as unauthorised. In the bank's memory, all 4,665 cardholder-reported cases were confirmed fraud",
+        "source": "customer",
+        "ref": "trigger:customer_report",
+        "entity_ids": [
+          "C08623",
+          "3530164"
+        ]
+      },
+      {
+        "claim": "Case-memory model (trained on the bank's closed cases, AUC 0.91 on an October hold-out vs 0.87 for the bank score) gives this transaction 0.015, a calibrated fraud rate of 0.8%",
+        "source": "graph",
+        "ref": "txn.model_score",
+        "entity_ids": [
+          "3530164"
+        ]
+      },
+      {
+        "claim": "Billing region 330 is routine for this card (42 earlier purchases)",
+        "source": "graph",
+        "ref": "card_profile",
+        "entity_ids": [
+          "C08623-K2"
+        ]
+      },
+      {
+        "claim": "Card has 5 earlier confirmed fraud case(s) (account_takeover, out_of_region_use), most recent 2016-10-18; the card was reissued each time, so this is context, not proof",
+        "source": "graph",
+        "ref": "prior_cases",
+        "entity_ids": [
+          "CC-3327",
+          "CC-2817",
+          "CC-4957",
+          "CC-3682"
+        ]
+      },
+      {
+        "claim": "Card also has 1 cleared alert(s) (e.g. Case CC-1589: model scored a $99.91 transaction at 0.94. Cardholder confirmed travel to th)",
+        "source": "graph",
+        "ref": "prior_cases",
+        "entity_ids": [
+          "CC-1589"
+        ]
+      },
+      {
+        "claim": "Case memory: similar prior investigations retrieved - CC-4957 (confirmed_fraud, out_of_region_use, $48.02): Case CC-4957: cardholder C08623 reported unrecognized activity on card C08623-K2. 1 transaction(s) between 201; CC-3682 (confirmed_fraud, out_of_region_use, $300.51): Case CC-3682: cardholder C08623 reported unrecognized activity on card C08623-K2. 2 transaction(s) between 201; CC-2935 (confirmed_fraud, out_of_region_use, $238.00): Case CC-2935: cardholder C08623 reported unrecognized activity on card C08623-K2. 2 transaction(s) between 201",
+        "source": "graph",
+        "ref": "similar_closed_cases + prior_cases + device_cases",
+        "entity_ids": [
+          "CC-4957",
+          "CC-3682",
+          "CC-2935",
+          "CC-3028",
+          "CC-5133"
+        ]
+      },
+      {
+        "claim": "Earlier agent cases with a similar profile: CASE-2016-ADHOC-591 (fraud, out_of_region_use)",
+        "source": "graph",
+        "ref": "similar_agent_cases",
+        "entity_ids": [
+          "CASE-2016-ADHOC-591"
+        ]
+      },
+      {
+        "claim": "Investigator note (LLM): Prior case history confirms multiple compromised cards and frequent out-of-region fraud under customer ID C08623. The flagged $49.00 in-person transaction occurs in billing region 330, which is routine for this card. However, the recurring history of account takeover and fraud raises ongoing risk. Uncertainty remains whether this specific $49 charge is an isolated legitimate purchase or further compromise of card C08623-K2.",
+        "source": "graph",
+        "ref": "llm_investigator",
+        "entity_ids": [
+          "3530164"
+        ]
+      },
+      {
+        "claim": "Cardholder denied the transaction when contacted (simulated reply; assumption recorded in evidence_requests)",
+        "source": "customer",
+        "ref": "evidence_request:1",
+        "entity_ids": [
+          "3530164"
+        ]
+      }
+    ],
+    "similar_prior_cases": [
+      "CC-4957",
+      "CC-3682",
+      "CC-2935",
+      "CC-3028",
+      "CC-5133"
+    ],
+    "summary": "This case was triggered by a customer report regarding an unrecognized $49.00 purchase on card C08623-K2. The graph analysis showed that billing region 330 is routine for this card with 42 earlier purchases, yielding a case-memory model fraud rate of 0.8%, but the card has 5 earlier confirmed fraud cases and the simulated customer reply denied the transaction. The final verdict is uncertain with the fraud probability increasing from 0.17 to 0.63. The recommended actions include blocking the card (route L1, pending approval), creating a case (auto), and escalating to an analyst (auto).",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-2016-0003"
+  },
+  "evidence_requests": [
+    {
+      "type": "customer_validation",
+      "asked_after_step": 18,
+      "assumed_response": "Assumed: the cardholder confirms they still hold the card and did not make or authorise transaction 3530164 ($49.00). Basis: the cardholder's own report, although the graph evidence alone points to normal use (graph-only probability 0.01)."
+    }
+  ],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "Policy 3a: probability >= 0.30, evidence requested or customer dispute"
+      },
+      {
+        "action": "VERIFY_WITH_CUSTOMER",
+        "route": "auto",
+        "reason": "R1: probability 0.17 < 0.85 and the graph evidence does not yet confirm the denial; confirm card possession and the disputed details before blocking"
+      },
+      {
+        "action": "MONITOR_CARD",
+        "route": "auto",
+        "reason": "Raise monitoring while the cardholder confirms"
+      }
+    ],
+    "final": [
+      {
+        "action": "BLOCK_CARD",
+        "route": "L1",
+        "reason": "R2: cardholder denies the activity; exposure $49.00 <= $2,500 -> L1"
+      },
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "R2: record the investigation and write it to the graph"
+      },
+      {
+        "action": "ESCALATE_TO_ANALYST",
+        "route": "auto",
+        "reason": "R8: the cardholder's denial conflicts with graph evidence of normal use (probability 0.63); analyst to confirm while the card is blocked"
+      }
+    ],
+    "what_changed": "The cardholder's (assumed) denial moved the fraud probability from 0.17 to 0.63, so R2 now applies: added BLOCK_CARD, ESCALATE_TO_ANALYST; dropped VERIFY_WITH_CUSTOMER, MONITOR_CARD."
+  },
+  "sar": {
+    "file": false,
+    "reason": "No report: activity not confirmed or strongly suspected as fraud (policy 3a).",
+    "narrative": "",
+    "subjects": [],
+    "total_amount_usd": 0,
+    "activity_dates": []
+  },
+  "stop_reason": "Stopped after the evidence request: the cardholder's denial settles the next step under policy section 6 (probability 0.63); further queries would not change the actions.",
+  "tool_calls": 11,
+  "tokens": 4515,
+  "latency_s": 10.9
+}

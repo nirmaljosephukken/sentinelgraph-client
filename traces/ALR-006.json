@@ -1,0 +1,568 @@
+{
+ "case": {
+  "case_id": "ALR-006",
+  "opened_at": "2016-11-22 02:30:00",
+  "trigger_type": "customer_report",
+  "trigger_text": "Customer C07297 message: 'I never made this $482.12 purchase. Please check my card.' Refers to 3476682.",
+  "flagged_txn_id": "3476682",
+  "card_id": "C07297-K1",
+  "customer_id": "C07297",
+  "risk_score": ""
+ },
+ "events": [
+  {
+   "step": 1,
+   "ts": "2016-11-22 02:30:00",
+   "kind": "trigger",
+   "title": "Customer Report: Customer C07297 message: 'I never made this $482.12 purchase. Please check my card.' Refers to 3476682.",
+   "detail": {
+    "case_id": "ALR-006",
+    "flagged_txn_id": "3476682",
+    "card_id": "C07297-K1",
+    "customer_id": "C07297",
+    "risk_score": ""
+   },
+   "elapsed_s": 0.0
+  },
+  {
+   "step": 2,
+   "ts": "2016-11-22 02:31:00",
+   "kind": "case",
+   "title": "Case CASE-2016-0006 opened for alert ALR-006 (status: investigating)",
+   "detail": {
+    "graph_case_id": "CASE-2016-0006"
+   },
+   "elapsed_s": 0.0
+  },
+  {
+   "step": 3,
+   "ts": "2016-11-22 02:31:30",
+   "kind": "tool",
+   "title": "txn_context(txn_id=3476682)",
+   "detail": {
+    "args": {
+     "txn_id": "3476682"
+    },
+    "result": {
+     "txn": 24,
+     "card": 6,
+     "customer": 2,
+     "customer_cards": 1
+    },
+    "latency_s": 1.374,
+    "transport": "mcp"
+   },
+   "elapsed_s": 1.37
+  },
+  {
+   "step": 4,
+   "ts": "2016-11-22 02:32:00",
+   "kind": "tool",
+   "title": "card_window(card_id=C07297-K1, t0=2016-07-24 20:30:00, t1=2016-11-28 20:30:00)",
+   "detail": {
+    "args": {
+     "card_id": "C07297-K1",
+     "t0": "2016-07-24 20:30:00",
+     "t1": "2016-11-28 20:30:00"
+    },
+    "result": {
+     "rows": 182
+    },
+    "latency_s": 1.411,
+    "transport": "mcp"
+   },
+   "elapsed_s": 2.78
+  },
+  {
+   "step": 5,
+   "ts": "2016-11-22 02:32:30",
+   "kind": "tool",
+   "title": "card_profile(card_id=C07297-K1, before=2016-11-21 20:30:00)",
+   "detail": {
+    "args": {
+     "card_id": "C07297-K1",
+     "before": "2016-11-21 20:30:00"
+    },
+    "result": {
+     "n": 199,
+     "amount_sum": 23229.33999999999,
+     "amount_max": 1104,
+     "products": 3,
+     "regions": 31,
+     "devices": 2,
+     "emails": 9,
+     "channels": 2,
+     "first_ts": "2016-07-05 16:16:59",
+     "last_ts": "2016-11-21 20:24:00"
+    },
+    "latency_s": 0.737,
+    "transport": "mcp"
+   },
+   "elapsed_s": 3.52
+  },
+  {
+   "step": 6,
+   "ts": "2016-11-22 02:33:00",
+   "kind": "tool",
+   "title": "client_history(client_id=C07297-K1|264|142)",
+   "detail": {
+    "args": {
+     "client_id": "C07297-K1|264|142"
+    },
+    "result": {
+     "rows": 2
+    },
+    "latency_s": 0.744,
+    "transport": "mcp"
+   },
+   "elapsed_s": 4.27
+  },
+  {
+   "step": 7,
+   "ts": "2016-11-22 02:33:30",
+   "kind": "tool",
+   "title": "device_fanout(device=Trident/7.0 | Windows 7 | ie 11.0 for desktop | 1920x1080, t0=2016-11-11 20:30:00, t1=2016-12-01 20:30:00)",
+   "detail": {
+    "args": {
+     "device": "Trident/7.0 | Windows 7 | ie 11.0 for desktop | 1920x1080",
+     "t0": "2016-11-11 20:30:00",
+     "t1": "2016-12-01 20:30:00"
+    },
+    "result": {
+     "device": 2,
+     "txns": 71
+    },
+    "latency_s": 0.78,
+    "transport": "mcp"
+   },
+   "elapsed_s": 5.05
+  },
+  {
+   "step": 8,
+   "ts": "2016-11-22 02:34:00",
+   "kind": "tool",
+   "title": "peer_txns(txn_id=3476682, t0=2016-11-19 20:30:00, t1=2016-11-23 20:30:00, lo=474.89, hi=489.35, use_email=True)",
+   "detail": {
+    "args": {
+     "txn_id": "3476682",
+     "t0": "2016-11-19 20:30:00",
+     "t1": "2016-11-23 20:30:00",
+     "lo": 474.89,
+     "hi": 489.35,
+     "use_email": true
+    },
+    "result": {
+     "rows": 11
+    },
+    "latency_s": 0.809,
+    "transport": "mcp"
+   },
+   "elapsed_s": 5.85
+  },
+  {
+   "step": 9,
+   "ts": "2016-11-22 02:34:30",
+   "kind": "tool",
+   "title": "prior_cases(customer_id=C07297)",
+   "detail": {
+    "args": {
+     "customer_id": "C07297"
+    },
+    "result": {
+     "closed_cases": 0,
+     "connected_closed_cases": 0,
+     "agent_cases": 4
+    },
+    "latency_s": 0.762,
+    "transport": "mcp"
+   },
+   "elapsed_s": 6.62
+  },
+  {
+   "step": 10,
+   "ts": "2016-11-22 02:35:00",
+   "kind": "tool",
+   "title": "amount_band_scan(t0=2016-10-22 20:30:00, t1=2016-12-21 20:30:00, lo=440.0, hi=500.0)",
+   "detail": {
+    "args": {
+     "t0": "2016-10-22 20:30:00",
+     "t1": "2016-12-21 20:30:00",
+     "lo": 440.0,
+     "hi": 500.0
+    },
+    "result": {
+     "rows": 167
+    },
+    "latency_s": 0.848,
+    "transport": "mcp"
+   },
+   "elapsed_s": 7.47
+  },
+  {
+   "step": 11,
+   "ts": "2016-11-22 02:35:30",
+   "kind": "evidence",
+   "title": "Graph evidence collected: 7 findings",
+   "detail": [
+    {
+     "claim": "Cardholder reported the transaction as unauthorised. In the bank's memory, all 4,665 cardholder-reported cases were confirmed fraud",
+     "source": "customer",
+     "ref": "trigger:customer_report",
+     "entity_ids": [
+      "C07297",
+      "3476682"
+     ],
+     "lr": 40.0,
+     "family": "trigger",
+     "direction": "fraud",
+     "step": 9
+    },
+    {
+     "claim": "Case-memory model (trained on the bank's closed cases, AUC 0.91 on an October hold-out vs 0.87 for the bank score) gives this transaction 0.069, a calibrated fraud rate of 6.6%",
+     "source": "graph",
+     "ref": "txn.model_score",
+     "entity_ids": [
+      "3476682"
+     ],
+     "lr": 1.0,
+     "family": "ml",
+     "direction": "neutral",
+     "step": 9
+    },
+    {
+     "claim": "Threshold structuring: 4 online purchases within 30 minutes, each just under $500 ($478.95, $456.96, $488.04, $482.12), total $1,906.07. Amounts vary, so this is not one product bought repeatedly; they appear chosen to stay under a $500 threshold",
+     "source": "graph",
+     "ref": "card_window(structuring)",
+     "entity_ids": [
+      "3476602",
+      "3476633",
+      "3476665",
+      "3476682"
+     ],
+     "lr": 40.0,
+     "family": "sequence",
+     "direction": "fraud",
+     "step": 9
+    },
+    {
+     "claim": "The same structuring pattern appears on 11 other cards in the surrounding 30 days (C00466-K1, C01890-K1, C02265-K1, C03633-K1, C05423-K1, C05766-K1...): coordinated, repeated abuse across customers",
+     "source": "graph",
+     "ref": "amount_band_scan(440,500)",
+     "entity_ids": [
+      "C00466-K1",
+      "C01890-K1",
+      "C02265-K1",
+      "C03633-K1",
+      "C05423-K1",
+      "C05766-K1",
+      "C05851-K1",
+      "C06881-K1",
+      "C10751-K1",
+      "C10990-K1",
+      "C12641-K2"
+     ],
+     "lr": 6.0,
+     "family": "network",
+     "direction": "fraud",
+     "step": 10
+    },
+    {
+     "claim": "Identity record marks the device as New for this account",
+     "source": "graph",
+     "ref": "txn_context",
+     "entity_ids": [
+      "3476682"
+     ],
+     "lr": 1.6,
+     "family": "device",
+     "direction": "fraud",
+     "step": 9
+    },
+    {
+     "claim": "1 similar transactions on other cards (same email/device, amount within 1.5%, +-48h) show no fraud indicators",
+     "source": "graph",
+     "ref": "peer_txns",
+     "entity_ids": [
+      "3475414"
+     ],
+     "lr": 1.0,
+     "family": "network",
+     "direction": "neutral",
+     "step": 9
+    },
+    {
+     "claim": "Amount $482.12 is well above this card's 90th percentile ($226.07)",
+     "source": "graph",
+     "ref": "card_profile",
+     "entity_ids": [
+      "C07297-K1"
+     ],
+     "lr": 1.4,
+     "family": "behaviour",
+     "direction": "fraud",
+     "step": 9
+    }
+   ],
+   "elapsed_s": 7.47
+  },
+  {
+   "step": 12,
+   "ts": "2016-11-22 02:36:00",
+   "kind": "tool",
+   "title": "similar_closed_cases(vec=<vector 256>, k=8)",
+   "detail": {
+    "args": {
+     "vec": "<vector 256>",
+     "k": 8
+    },
+    "result": {
+     "rows": 8
+    },
+    "latency_s": 0.547,
+    "transport": "mcp"
+   },
+   "elapsed_s": 8.02
+  },
+  {
+   "step": 13,
+   "ts": "2016-11-22 02:36:30",
+   "kind": "tool",
+   "title": "similar_agent_cases(vec=<vector 256>, k=6)",
+   "detail": {
+    "args": {
+     "vec": "<vector 256>",
+     "k": 6
+    },
+    "result": {
+     "rows": 6
+    },
+    "latency_s": 0.39,
+    "transport": "mcp"
+   },
+   "elapsed_s": 8.41
+  },
+  {
+   "step": 14,
+   "ts": "2016-11-22 02:37:00",
+   "kind": "tool",
+   "title": "policy_search(vec=<vector 256>, k=4)",
+   "detail": {
+    "args": {
+     "vec": "<vector 256>",
+     "k": 4
+    },
+    "result": {
+     "rows": 4
+    },
+    "latency_s": 0.779,
+    "transport": "mcp"
+   },
+   "elapsed_s": 9.19
+  },
+  {
+   "step": 15,
+   "ts": "2016-11-22 02:37:30",
+   "kind": "tool",
+   "title": "llm:device_fanout(device=Trident/7.0 | Windows 7 | ie 11.0 for desktop | 1920x1080, t0=2016-11-20 00:00:00, t1=2016-11-22 00:00:00)",
+   "detail": {
+    "args": {
+     "device": "Trident/7.0 | Windows 7 | ie 11.0 for desktop | 1920x1080",
+     "t0": "2016-11-20 00:00:00",
+     "t1": "2016-11-22 00:00:00"
+    },
+    "result": {
+     "device": 2,
+     "txns": 7
+    },
+    "latency_s": 0.695,
+    "transport": "mcp"
+   },
+   "elapsed_s": 15.37
+  },
+  {
+   "step": 16,
+   "ts": "2016-11-22 02:38:00",
+   "kind": "llm",
+   "title": "LLM investigator (gemini-3.5-flash-lite): 1 extra tool call(s)",
+   "detail": {
+    "calls": [
+     {
+      "tool": "device_fanout",
+      "args": {
+       "t1": "2016-11-22 00:00:00",
+       "t0": "2016-11-20 00:00:00",
+       "device": "Trident/7.0 | Windows 7 | ie 11.0 for desktop | 1920x1080"
+      }
+     }
+    ],
+    "notes": "Device fanout across the surrounding 48 hours confirms the exact same browser profile was used across multiple unrelated card IDs in small-value transactions. This matches the known \"shared-device ring\" fraud typology cited in the evidence and prior cases. The cardholder reported the transaction unauthorized, aligning with historical patterns for this velocity structure. No further tool lookups are needed to establish the coordinated abuse pattern."
+   },
+   "elapsed_s": 21.4
+  },
+  {
+   "step": 17,
+   "ts": "2016-11-22 02:38:30",
+   "kind": "guardrail",
+   "title": "Dropped 1 investigator sentence(s) claiming a link the evidence does not show",
+   "detail": {
+    "dropped": [
+     "This matches the known \"shared-device ring\" fraud typology cited in the evidence and prior cases."
+    ]
+   },
+   "elapsed_s": 21.41
+  },
+  {
+   "step": 18,
+   "ts": "2016-11-22 02:39:00",
+   "kind": "assess",
+   "title": "Fraud probability 0.99 (memory-model prior 0.07); confidence high; hypothesis undocumented; exposure $1,906.07",
+   "detail": {
+    "prior": 0.0659,
+    "posterior": 0.99,
+    "graph_only": 0.9743,
+    "log_lr_by_family": {
+     "trigger": 3.689,
+     "sequence": 3.689,
+     "network": 1.792,
+     "device": 0.47,
+     "behaviour": 0.336
+    },
+    "fraud_families": [
+     "device",
+     "network",
+     "sequence",
+     "trigger"
+    ],
+    "legit_families": [],
+    "uncertainty": [
+     "Device ownership not established (new device for this account)"
+    ]
+   },
+   "elapsed_s": 21.41
+  },
+  {
+   "step": 19,
+   "ts": "2016-11-22 02:39:30",
+   "kind": "decision",
+   "title": "Initial next best action: BLOCK_CARD, CREATE_CASE, FILE_REPORT, MONITOR_CONNECTED_CARDS, ESCALATE_TO_ANALYST",
+   "detail": {
+    "actions": [
+     {
+      "action": "BLOCK_CARD",
+      "route": "L1",
+      "reason": "R2: cardholder denies the activity; exposure $1,906.07 <= $2,500 -> L1"
+     },
+     {
+      "action": "CREATE_CASE",
+      "route": "auto",
+      "reason": "R2: record the investigation and write it to the graph"
+     },
+     {
+      "action": "FILE_REPORT",
+      "route": "L2",
+      "reason": "policy 3a, R6, R9: fraud confirmed or strongly suspected and exposure $1,906.07 exceeds $1,000; the activity is linked to fraud on 11 other card(s) (11 via same just-under-$500 structuring pattern, linked by amount and timing only); the pattern is coordinated and undocumented (R9)"
+     },
+     {
+      "action": "MONITOR_CONNECTED_CARDS",
+      "route": "auto",
+      "reason": "R6: 11 other card(s) are linked to this activity (11 via same just-under-$500 structuring pattern, linked by amount and timing only)"
+     },
+     {
+      "action": "ESCALATE_TO_ANALYST",
+      "route": "auto",
+      "reason": "R9: undocumented coordinated pattern, analyst review of the wider scheme"
+     }
+    ],
+    "request": null,
+    "why_request": "",
+    "policy_check": []
+   },
+   "elapsed_s": 21.41
+  },
+  {
+   "step": 20,
+   "ts": "2016-11-22 02:40:00",
+   "kind": "execute",
+   "title": "Executed 3 auto action(s); 2 queued for approval",
+   "detail": {
+    "executed": [
+     "CREATE_CASE",
+     "MONITOR_CONNECTED_CARDS",
+     "ESCALATE_TO_ANALYST"
+    ],
+    "awaiting": [
+     "BLOCK_CARD (L1)",
+     "FILE_REPORT (L2)"
+    ]
+   },
+   "elapsed_s": 21.41
+  },
+  {
+   "step": 21,
+   "ts": "2016-11-22 02:40:30",
+   "kind": "llm",
+   "title": "Case narrative written by gemini-3.5-flash-lite (3/3 fields accepted)",
+   "detail": {
+    "summary": "This case was triggered by customer C07297 reporting an unauthorized online purchase of $482.12 on card C07297-K1, referencing transaction 3476682. The graph and investigation revealed a threshold structuring pattern consisting of 4 online purchases within 30 minutes totaling $1,906.07, where each t",
+    "sar_narrative": "Customer C07297 experienced unauthorized fraudulent activity on card C07297-K1 involving a new device profile. On 2016-11-21, a series of 4 online purchases were executed within a 30-minute window, totaling $1,906.07 with individual amounts of $478.95, $456.96, $488.04, and $482.12 in billing region",
+    "pattern_description": "The undocumented pattern involves a coordinated structuring method where multiple online transactions are executed within a short timeframe (such as 4 purchases within 30 minutes) with values kept just under the $500 threshold to evade standard controls. It affects multiple customers across differen"
+   },
+   "elapsed_s": 28.98
+  },
+  {
+   "step": 22,
+   "ts": "2016-11-22 02:41:00",
+   "kind": "memory",
+   "title": "Case CASE-2016-0006 written to case memory (escalated, fraud, undocumented)",
+   "detail": {
+    "edges": {
+     "txns": 4,
+     "cards": 12,
+     "devices": 0,
+     "similar_closed_cases": [
+      "CC-3841",
+      "CC-4124",
+      "CC-3748",
+      "CC-4086",
+      "CC-3907"
+     ]
+    }
+   },
+   "elapsed_s": 28.98
+  }
+ ],
+ "transport": [
+  "mcp:txn_context:1.44s",
+  "mcp:card_window:1.04s",
+  "mcp:card_profile:0.70s",
+  "mcp:client_history:0.71s",
+  "mcp:device_fanout:1.40s",
+  "mcp:peer_txns:0.91s",
+  "mcp:prior_cases:0.70s",
+  "mcp:similar_closed_cases:0.36s",
+  "mcp:similar_agent_cases:0.42s",
+  "mcp:policy_search:0.36s",
+  "mcp:prior_cases:0.73s",
+  "mcp:card_window:0.70s",
+  "restpp:upsert_case",
+  "mcp:txn_context:1.37s",
+  "mcp:card_window:1.41s",
+  "mcp:card_profile:0.74s",
+  "mcp:client_history:0.74s",
+  "mcp:device_fanout:0.78s",
+  "mcp:peer_txns:0.81s",
+  "mcp:prior_cases:0.76s",
+  "mcp:amount_band_scan:0.85s",
+  "mcp:similar_closed_cases:0.55s",
+  "mcp:similar_agent_cases:0.39s",
+  "mcp:policy_search:0.78s",
+  "mcp:device_fanout:0.70s",
+  "restpp:upsert_case"
+ ],
+ "llm": {
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite",
+  "calls": 3,
+  "errors": []
+ }
+}

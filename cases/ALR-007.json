@@ -1,0 +1,154 @@
+{
+  "case_id": "ALR-007",
+  "case": {
+    "status": "closed_legitimate",
+    "verdict": "legitimate",
+    "fraud_probability": 0.01,
+    "pattern": "none",
+    "pattern_description": "",
+    "affected_txn_ids": [],
+    "first_suspicious_txn_id": "",
+    "connected_card_ids": [],
+    "connected_device_profiles": [],
+    "exposure_usd": 0.0,
+    "evidence": [
+      {
+        "claim": "Bank model scored the transaction 0.87. In the bank's memory, all 900 alerts raised by the score alone were cleared as false alarms, so the score is treated as a reason to look only",
+        "source": "graph",
+        "ref": "txn_context",
+        "entity_ids": [
+          "3514948"
+        ]
+      },
+      {
+        "claim": "Case-memory model (trained on the bank's closed cases, AUC 0.91 on an October hold-out vs 0.87 for the bank score) gives this transaction 0.035, a calibrated fraud rate of 2.3%",
+        "source": "graph",
+        "ref": "txn.model_score",
+        "entity_ids": [
+          "3514948"
+        ]
+      },
+      {
+        "claim": "Home region: this cardholder profile (client C09933-K2|264|50) made 11 earlier card-present purchases in billing region 264",
+        "source": "graph",
+        "ref": "client_history",
+        "entity_ids": [
+          "C09933-K2|264|50",
+          "3408273",
+          "3428558",
+          "3444972",
+          "3508487"
+        ]
+      },
+      {
+        "claim": "Card has 18 earlier confirmed fraud case(s) (account_takeover, out_of_region_use), most recent 2016-10-31; the card was reissued each time, so this is context, not proof",
+        "source": "graph",
+        "ref": "prior_cases",
+        "entity_ids": [
+          "CC-4277",
+          "CC-5521",
+          "CC-5092",
+          "CC-1682"
+        ]
+      },
+      {
+        "claim": "Card also has 1 cleared alert(s) (e.g. Case CC-0657: model scored a $1,769.94 transaction at 0.90. Cardholder confirmed the purch)",
+        "source": "graph",
+        "ref": "prior_cases",
+        "entity_ids": [
+          "CC-0657"
+        ]
+      },
+      {
+        "claim": "Case memory: similar prior investigations retrieved - CC-0657 (cleared, none, $0.00): Case CC-0657: model scored a $1,769.94 transaction at 0.90. Cardholder confirmed the purchase. Amount unusual ; CC-0972 (cleared, none, $0.00): Case CC-0972: model scored a $150.00 transaction at 0.81. Cardholder confirmed travel to the billing region in; CC-1464 (cleared, none, $0.00): Case CC-1464: model scored a $49.98 transaction at 0.86. Cardholder confirmed travel to the billing region in ",
+        "source": "graph",
+        "ref": "similar_closed_cases + prior_cases + device_cases",
+        "entity_ids": [
+          "CC-0657",
+          "CC-0972",
+          "CC-1464",
+          "CC-1402",
+          "CC-1365"
+        ]
+      },
+      {
+        "claim": "Earlier agent cases with a similar profile: CASE-2016-0001 (legitimate, none); CASE-2016-0015 (legitimate, none); CASE-2016-0010 (legitimate, none)",
+        "source": "graph",
+        "ref": "similar_agent_cases",
+        "entity_ids": [
+          "CASE-2016-0001",
+          "CASE-2016-0015",
+          "CASE-2016-0010"
+        ]
+      },
+      {
+        "claim": "Investigator note (LLM): Prior case lookup for C09933 confirmed extensive historical fraud on card C09933-K2, including multiple account takeover and out-of-region cases up to October 2016. The current transaction matches the home region (264) with prior legitimate-looking behavior and low model fraud probability (2.3%). However, the heavy history of compromise warrants caution regarding potential recurring ATO. Remaining uncertainty rests on whether the current in-person transaction aligns with recent cardholder travel patterns.",
+        "source": "graph",
+        "ref": "llm_investigator",
+        "entity_ids": [
+          "3514948"
+        ]
+      }
+    ],
+    "similar_prior_cases": [
+      "CC-0657",
+      "CC-0972",
+      "CC-1464",
+      "CC-1402",
+      "CC-1365"
+    ],
+    "summary": "Real-time model scored transaction 3514948 for $111.92 in billing region 264.0 at 0.87, triggering the case review. The graph showed that the profile made 11 earlier card-present purchases in billing region 264, alongside historical fraud on card C09933-K2, though the case-memory model gave a calibrated fraud rate of 2.3%. The verdict is legitimate and the status is closed_legitimate because policy 6 applies since the probability is <= 0.15 on two independent lines of evidence. The transaction was allowed and the case closed automatically.",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-2016-0007"
+  },
+  "evidence_requests": [],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "ALLOW_TRANSACTION",
+        "route": "auto",
+        "reason": "Policy 6: probability <= 0.15 on two independent lines of evidence"
+      },
+      {
+        "action": "GENERATE_REPORT",
+        "route": "auto",
+        "reason": "Internal write-up of the review; no case needed (probability < 0.30, no dispute)"
+      },
+      {
+        "action": "CLOSE_NO_FRAUD",
+        "route": "auto",
+        "reason": "Policy 6: stop, the evidence supports a legitimate transaction"
+      }
+    ],
+    "final": [
+      {
+        "action": "ALLOW_TRANSACTION",
+        "route": "auto",
+        "reason": "Policy 6: probability <= 0.15 on two independent lines of evidence"
+      },
+      {
+        "action": "GENERATE_REPORT",
+        "route": "auto",
+        "reason": "Internal write-up of the review; no case needed (probability < 0.30, no dispute)"
+      },
+      {
+        "action": "CLOSE_NO_FRAUD",
+        "route": "auto",
+        "reason": "Policy 6: stop, the evidence supports a legitimate transaction"
+      }
+    ],
+    "what_changed": "nothing"
+  },
+  "sar": {
+    "file": false,
+    "reason": "No report: activity not confirmed or strongly suspected as fraud (policy 3a).",
+    "narrative": "",
+    "subjects": [],
+    "total_amount_usd": 0,
+    "activity_dates": []
+  },
+  "stop_reason": "Stopped under policy section 6: probability 0.01 with at least two independent lines of evidence; further steps would not change the decision.",
+  "tool_calls": 11,
+  "tokens": 5474,
+  "latency_s": 64.1
+}

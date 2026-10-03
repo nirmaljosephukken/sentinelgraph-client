@@ -1,0 +1,40 @@
+{
+ "displayName": "SentinelGraph {{SERVICE}}: actions not delivered to the bank",
+ "severity": "CRITICAL",
+ "combiner": "OR",
+ "conditions": [
+  {
+   "displayName": "failed deliveries > 0 in 5 min",
+   "conditionThreshold": {
+    "filter": "metric.type=\"logging.googleapis.com/user/{{PREFIX}}_action_send_failed\" AND resource.type=\"cloud_run_revision\"",
+    "aggregations": [
+     {
+      "alignmentPeriod": "300s",
+      "perSeriesAligner": "ALIGN_SUM",
+      "crossSeriesReducer": "REDUCE_SUM"
+     }
+    ],
+    "comparison": "COMPARISON_GT",
+    "thresholdValue": 0,
+    "duration": "0s",
+    "trigger": {
+     "count": 1
+    }
+   }
+  }
+ ],
+ "alertStrategy": {
+  "autoClose": "1800s"
+ },
+ "documentation": {
+  "mimeType": "text/markdown",
+  "content": "In assist mode an approved or automatic action could not be delivered to ACTION_WEBHOOK_URL after three tries. **The action has not happened.**\n\n1. Agent Activity > Health lists the event ids.\n2. Check the receiving system and the shared secret.\n3. Carry out urgent actions (card blocks) by hand; the audit log has the details.\n\nConsole: {{CONSOLE_URL}} \u00b7 Logs: Cloud Logging, filter `jsonPayload.event=\"action_send_failed\"` on services `{{SERVICE}}*`."
+ },
+ "notificationChannels": [
+  "{{CHANNEL}}"
+ ],
+ "userLabels": {
+  "app": "sentinelgraph",
+  "check": "action-send-failed"
+ }
+}

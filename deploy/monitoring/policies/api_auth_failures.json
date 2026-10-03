@@ -1,0 +1,40 @@
+{
+ "displayName": "SentinelGraph {{SERVICE}}: repeated bad API keys",
+ "severity": "WARNING",
+ "combiner": "OR",
+ "conditions": [
+  {
+   "displayName": "failed API authentications > 20 in 10 min",
+   "conditionThreshold": {
+    "filter": "metric.type=\"logging.googleapis.com/user/{{PREFIX}}_api_auth_failed\" AND resource.type=\"cloud_run_revision\"",
+    "aggregations": [
+     {
+      "alignmentPeriod": "600s",
+      "perSeriesAligner": "ALIGN_SUM",
+      "crossSeriesReducer": "REDUCE_SUM"
+     }
+    ],
+    "comparison": "COMPARISON_GT",
+    "thresholdValue": 20,
+    "duration": "0s",
+    "trigger": {
+     "count": 1
+    }
+   }
+  }
+ ],
+ "alertStrategy": {
+  "autoClose": "1800s"
+ },
+ "documentation": {
+  "mimeType": "text/markdown",
+  "content": "Many intake API calls arrived with a missing, wrong or revoked key: a misconfigured client system after a key rotation, or someone guessing.\n\nConsole: {{CONSOLE_URL}} \u00b7 Logs: Cloud Logging, filter `jsonPayload.event=\"api_auth_failed\"` on services `{{SERVICE}}*`."
+ },
+ "notificationChannels": [
+  "{{CHANNEL}}"
+ ],
+ "userLabels": {
+  "app": "sentinelgraph",
+  "check": "api-auth-failures"
+ }
+}

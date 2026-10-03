@@ -1,0 +1,133 @@
+{
+  "case_id": "ALR-017",
+  "case": {
+    "status": "closed_legitimate",
+    "verdict": "legitimate",
+    "fraud_probability": 0.03,
+    "pattern": "none",
+    "pattern_description": "",
+    "affected_txn_ids": [],
+    "first_suspicious_txn_id": "",
+    "connected_card_ids": [],
+    "connected_device_profiles": [],
+    "exposure_usd": 0.0,
+    "evidence": [
+      {
+        "claim": "Bank model scored the transaction 0.57. In the bank's memory, all 900 alerts raised by the score alone were cleared as false alarms, so the score is treated as a reason to look only",
+        "source": "graph",
+        "ref": "txn_context",
+        "entity_ids": [
+          "3450629"
+        ]
+      },
+      {
+        "claim": "Case-memory model (trained on the bank's closed cases, AUC 0.91 on an October hold-out vs 0.87 for the bank score) gives this transaction 0.037, a calibrated fraud rate of 2.6%",
+        "source": "graph",
+        "ref": "txn.model_score",
+        "entity_ids": [
+          "3450629"
+        ]
+      },
+      {
+        "claim": "Connection through a hidden proxy",
+        "source": "graph",
+        "ref": "txn_context",
+        "entity_ids": [
+          "3450629"
+        ]
+      },
+      {
+        "claim": "Device profile 'Windows | Windows 10 | chrome 65.0 | 1920x1080' already used 3 times on this card",
+        "source": "graph",
+        "ref": "card_profile",
+        "entity_ids": [
+          "C04570-K1"
+        ]
+      },
+      {
+        "claim": "Card also has 1 cleared alert(s) (e.g. Case CC-1383: model scored a $99.98 transaction at 0.91. Cardholder confirmed travel to th)",
+        "source": "graph",
+        "ref": "prior_cases",
+        "entity_ids": [
+          "CC-1383"
+        ]
+      },
+      {
+        "claim": "Case memory: similar prior investigations retrieved - CC-4871 (confirmed_fraud, card_not_present_fraud, $28.95): Case CC-4871: cardholder C13147 reported unrecognized activity on card C13147-K1. 1 transaction(s) between 201; CC-5286 (confirmed_fraud, card_not_present_fraud, $109.41): Case CC-5286: cardholder C13147 reported unrecognized activity on card C13147-K1. 1 transaction(s) between 201; CC-4323 (confirmed_fraud, card_not_present_fraud, $49.49): Case CC-4323: cardholder C02266 reported unrecognized activity on card C02266-K1. 1 transaction(s) between 201",
+        "source": "graph",
+        "ref": "similar_closed_cases + prior_cases + device_cases",
+        "entity_ids": [
+          "CC-4871",
+          "CC-5286",
+          "CC-4323",
+          "CC-3376",
+          "CC-4913"
+        ]
+      },
+      {
+        "claim": "Investigator note (LLM): Prior case lookup for C04570 showed only a single cleared travel alert (CC-1383). The low case-memory model score (0.037) and lack of confirmed fraud on this customer outweigh the hidden proxy and bank score false-alarm history. Residual uncertainty rests on whether the proxy usage reflects anonymized legitimate shopping or early-stage testing.",
+        "source": "graph",
+        "ref": "llm_investigator",
+        "entity_ids": [
+          "3450629"
+        ]
+      }
+    ],
+    "similar_prior_cases": [
+      "CC-1383"
+    ],
+    "summary": "Real-time model scored transaction 3450629 at 0.57, triggering the case review. The graph analysis showed connection through a hidden proxy and a device profile used 3 times on this card. The verdict is legitimate and the case status is closed_legitimate because the case-memory model gave a calibrated fraud rate of 2.6% (score 0.037) and similar transactions showed no fraud indicators, meeting Policy 6 requirements. All initial and final actions were executed automatically.",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-2016-0017"
+  },
+  "evidence_requests": [],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "ALLOW_TRANSACTION",
+        "route": "auto",
+        "reason": "Policy 6: probability <= 0.15 on two independent lines of evidence"
+      },
+      {
+        "action": "GENERATE_REPORT",
+        "route": "auto",
+        "reason": "Internal write-up of the review; no case needed (probability < 0.30, no dispute)"
+      },
+      {
+        "action": "CLOSE_NO_FRAUD",
+        "route": "auto",
+        "reason": "Policy 6: stop, the evidence supports a legitimate transaction"
+      }
+    ],
+    "final": [
+      {
+        "action": "ALLOW_TRANSACTION",
+        "route": "auto",
+        "reason": "Policy 6: probability <= 0.15 on two independent lines of evidence"
+      },
+      {
+        "action": "GENERATE_REPORT",
+        "route": "auto",
+        "reason": "Internal write-up of the review; no case needed (probability < 0.30, no dispute)"
+      },
+      {
+        "action": "CLOSE_NO_FRAUD",
+        "route": "auto",
+        "reason": "Policy 6: stop, the evidence supports a legitimate transaction"
+      }
+    ],
+    "what_changed": "nothing"
+  },
+  "sar": {
+    "file": false,
+    "reason": "No report: activity not confirmed or strongly suspected as fraud (policy 3a).",
+    "narrative": "",
+    "subjects": [],
+    "total_amount_usd": 0,
+    "activity_dates": []
+  },
+  "stop_reason": "Stopped under policy section 6: probability 0.03 with at least two independent lines of evidence; further steps would not change the decision.",
+  "tool_calls": 13,
+  "tokens": 4441,
+  "latency_s": 33.1
+}

@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "tigergraph": {
+      "command": "tigergraph-mcp",
+      "env": {
+        "TG_HOST": "https://<your-workspace>.i.tgcloud.io",
+        "TG_GRAPHNAME": "FraudGraph",
+        "TG_SECRET": "<gsql secret>",
+        "TG_TGCLOUD": "true",
+        "TG_RESTPP_PORT": "443",
+        "TG_GS_PORT": "443"
+      }
+    }
+  }
+}

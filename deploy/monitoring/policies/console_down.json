@@ -1,0 +1,43 @@
+{
+ "displayName": "SentinelGraph {{SERVICE}}: console unreachable",
+ "severity": "ERROR",
+ "combiner": "OR",
+ "conditions": [
+  {
+   "displayName": "uptime check failing",
+   "conditionThreshold": {
+    "filter": "metric.type=\"monitoring.googleapis.com/uptime_check/check_passed\" AND resource.type=\"uptime_url\" AND metric.label.check_id=\"{{CONSOLE_CHECK}}\"",
+    "aggregations": [
+     {
+      "alignmentPeriod": "1200s",
+      "perSeriesAligner": "ALIGN_NEXT_OLDER",
+      "crossSeriesReducer": "REDUCE_COUNT_FALSE",
+      "groupByFields": [
+       "resource.label.*"
+      ]
+     }
+    ],
+    "comparison": "COMPARISON_GT",
+    "thresholdValue": 1,
+    "duration": "600s",
+    "trigger": {
+     "count": 1
+    }
+   }
+  }
+ ],
+ "alertStrategy": {
+  "autoClose": "1800s"
+ },
+ "documentation": {
+  "mimeType": "text/markdown",
+  "content": "The analyst console has failed its health check from several regions for 10 minutes.\n\nCheck Cloud Run > {{SERVICE}} > Revisions and Logs. A failed deploy can be rolled back to the previous revision from the console."
+ },
+ "notificationChannels": [
+  "{{CHANNEL}}"
+ ],
+ "userLabels": {
+  "app": "sentinelgraph",
+  "check": "console-down"
+ }
+}

@@ -1,0 +1,223 @@
+{
+  "case_id": "ALR-006",
+  "case": {
+    "status": "escalated",
+    "verdict": "fraud",
+    "fraud_probability": 0.99,
+    "pattern": "undocumented",
+    "pattern_description": "The undocumented pattern involves a coordinated structuring method where multiple online transactions are executed within a short timeframe (such as 4 purchases within 30 minutes) with values kept just under the $500 threshold to evade standard controls. It affects multiple customers across different card accounts and was found through transaction network graph analysis linking accounts by identical timing and amount structures.",
+    "affected_txn_ids": [
+      "3476602",
+      "3476633",
+      "3476665",
+      "3476682"
+    ],
+    "first_suspicious_txn_id": "3476602",
+    "connected_card_ids": [
+      "C00466-K1",
+      "C01890-K1",
+      "C02265-K1",
+      "C03633-K1",
+      "C05423-K1",
+      "C05766-K1",
+      "C05851-K1",
+      "C06881-K1",
+      "C10751-K1",
+      "C10990-K1",
+      "C12641-K2"
+    ],
+    "connected_device_profiles": [],
+    "exposure_usd": 1906.07,
+    "evidence": [
+      {
+        "claim": "Cardholder reported the transaction as unauthorised. In the bank's memory, all 4,665 cardholder-reported cases were confirmed fraud",
+        "source": "customer",
+        "ref": "trigger:customer_report",
+        "entity_ids": [
+          "C07297",
+          "3476682"
+        ]
+      },
+      {
+        "claim": "Case-memory model (trained on the bank's closed cases, AUC 0.91 on an October hold-out vs 0.87 for the bank score) gives this transaction 0.069, a calibrated fraud rate of 6.6%",
+        "source": "graph",
+        "ref": "txn.model_score",
+        "entity_ids": [
+          "3476682"
+        ]
+      },
+      {
+        "claim": "Threshold structuring: 4 online purchases within 30 minutes, each just under $500 ($478.95, $456.96, $488.04, $482.12), total $1,906.07. Amounts vary, so this is not one product bought repeatedly; they appear chosen to stay under a $500 threshold",
+        "source": "graph",
+        "ref": "card_window(structuring)",
+        "entity_ids": [
+          "3476602",
+          "3476633",
+          "3476665",
+          "3476682"
+        ]
+      },
+      {
+        "claim": "The same structuring pattern appears on 11 other cards in the surrounding 30 days (C00466-K1, C01890-K1, C02265-K1, C03633-K1, C05423-K1, C05766-K1...): coordinated, repeated abuse across customers",
+        "source": "graph",
+        "ref": "amount_band_scan(440,500)",
+        "entity_ids": [
+          "C00466-K1",
+          "C01890-K1",
+          "C02265-K1",
+          "C03633-K1",
+          "C05423-K1",
+          "C05766-K1",
+          "C05851-K1",
+          "C06881-K1",
+          "C10751-K1",
+          "C10990-K1",
+          "C12641-K2"
+        ]
+      },
+      {
+        "claim": "Identity record marks the device as New for this account",
+        "source": "graph",
+        "ref": "txn_context",
+        "entity_ids": [
+          "3476682"
+        ]
+      },
+      {
+        "claim": "Amount $482.12 is well above this card's 90th percentile ($226.07)",
+        "source": "graph",
+        "ref": "card_profile",
+        "entity_ids": [
+          "C07297-K1"
+        ]
+      },
+      {
+        "claim": "Case memory: similar prior investigations retrieved - CC-3841 (confirmed_fraud, undocumented, $1,899.30): Case CC-3841: cardholder C01099 reported four online purchases within forty minutes, each just under $500, non; CC-4124 (confirmed_fraud, undocumented, $1,922.37): Case CC-4124: cardholder C02838 reported four online purchases within forty minutes, each just under $500, non; CC-3748 (confirmed_fraud, undocumented, $1,905.21): Case CC-3748: cardholder C12267 reported four online purchases within forty minutes, each just under $500, non",
+        "source": "graph",
+        "ref": "similar_closed_cases + prior_cases + device_cases",
+        "entity_ids": [
+          "CC-3841",
+          "CC-4124",
+          "CC-3748",
+          "CC-4086",
+          "CC-3907"
+        ]
+      },
+      {
+        "claim": "Earlier agent cases with a similar profile: CASE-2016-ADHOC-414 (fraud, undocumented); CASE-2016-PRO-005 (fraud, undocumented); CASE-2016-PRO-006 (fraud, undocumented)",
+        "source": "graph",
+        "ref": "similar_agent_cases",
+        "entity_ids": [
+          "CASE-2016-ADHOC-414",
+          "CASE-2016-PRO-005",
+          "CASE-2016-PRO-006"
+        ]
+      },
+      {
+        "claim": "Investigator note (LLM): Device fanout across the surrounding 48 hours confirms the exact same browser profile was used across multiple unrelated card IDs in small-value transactions. The cardholder reported the transaction unauthorized, aligning with historical patterns for this velocity structure. No further tool lookups are needed to establish the coordinated abuse pattern.",
+        "source": "graph",
+        "ref": "llm_investigator",
+        "entity_ids": [
+          "3476682"
+        ]
+      }
+    ],
+    "similar_prior_cases": [
+      "CC-3841",
+      "CC-4124",
+      "CC-3748",
+      "CC-4086",
+      "CC-3907"
+    ],
+    "summary": "This case was triggered by customer C07297 reporting an unauthorized online purchase of $482.12 on card C07297-K1, referencing transaction 3476682. The graph and investigation revealed a threshold structuring pattern consisting of 4 online purchases within 30 minutes totaling $1,906.07, where each transaction was kept just under $500, alongside links to 11 other connected cards showing the same structuring pattern. The verdict is confirmed fraud with a final fraud probability of 0.99, because the cardholder disputed the activity and historical data confirms this velocity structure. The card block is pending approval (recommended under policy R2), while case creation, connected card monitoring, and analyst escalation were automatically executed, and a regulatory report filing is pending approval under policy 3a, R6, and R9.",
+    "written_to_graph": true,
+    "graph_case_id": "CASE-2016-0006"
+  },
+  "evidence_requests": [],
+  "next_best_actions": {
+    "initial": [
+      {
+        "action": "BLOCK_CARD",
+        "route": "L1",
+        "reason": "R2: cardholder denies the activity; exposure $1,906.07 <= $2,500 -> L1"
+      },
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "R2: record the investigation and write it to the graph"
+      },
+      {
+        "action": "FILE_REPORT",
+        "route": "L2",
+        "reason": "policy 3a, R6, R9: fraud confirmed or strongly suspected and exposure $1,906.07 exceeds $1,000; the activity is linked to fraud on 11 other card(s) (11 via same just-under-$500 structuring pattern, linked by amount and timing only); the pattern is coordinated and undocumented (R9)"
+      },
+      {
+        "action": "MONITOR_CONNECTED_CARDS",
+        "route": "auto",
+        "reason": "R6: 11 other card(s) are linked to this activity (11 via same just-under-$500 structuring pattern, linked by amount and timing only)"
+      },
+      {
+        "action": "ESCALATE_TO_ANALYST",
+        "route": "auto",
+        "reason": "R9: undocumented coordinated pattern, analyst review of the wider scheme"
+      }
+    ],
+    "final": [
+      {
+        "action": "BLOCK_CARD",
+        "route": "L1",
+        "reason": "R2: cardholder denies the activity; exposure $1,906.07 <= $2,500 -> L1"
+      },
+      {
+        "action": "CREATE_CASE",
+        "route": "auto",
+        "reason": "R2: record the investigation and write it to the graph"
+      },
+      {
+        "action": "FILE_REPORT",
+        "route": "L2",
+        "reason": "policy 3a, R6, R9: fraud confirmed or strongly suspected and exposure $1,906.07 exceeds $1,000; the activity is linked to fraud on 11 other card(s) (11 via same just-under-$500 structuring pattern, linked by amount and timing only); the pattern is coordinated and undocumented (R9)"
+      },
+      {
+        "action": "MONITOR_CONNECTED_CARDS",
+        "route": "auto",
+        "reason": "R6: 11 other card(s) are linked to this activity (11 via same just-under-$500 structuring pattern, linked by amount and timing only)"
+      },
+      {
+        "action": "ESCALATE_TO_ANALYST",
+        "route": "auto",
+        "reason": "R9: undocumented coordinated pattern, analyst review of the wider scheme"
+      }
+    ],
+    "what_changed": "nothing"
+  },
+  "sar": {
+    "file": true,
+    "reason": "File (policy 3a, R6, R9): fraud confirmed or strongly suspected and exposure $1,906.07 exceeds $1,000; the activity is linked to fraud on 11 other card(s) (11 via same just-under-$500 structuring pattern, linked by amount and timing only); the pattern is coordinated and undocumented (R9).",
+    "narrative": "Customer C07297 experienced unauthorized fraudulent activity on card C07297-K1 involving a new device profile. On 2016-11-21, a series of 4 online purchases were executed within a 30-minute window, totaling $1,906.07 with individual amounts of $478.95, $456.96, $488.04, and $482.12 in billing region 264. The activity was carried out via online channels using varying device profiles including Trident/7.0 on Windows 7 and iOS Device with mobile safari. This is suspicious because the amounts were deliberately kept just under the $500 threshold and well above the card's 90th percentile of $226.07, matching a coordinated undocumented structuring scheme observed across 11 other card accounts (C00466-K1, C01890-K1, C02265-K1, C03633-K1, C05423-K1, C05766-K1, C05851-K1, C06881-K1, C10751-K1, C10990-K1, and C12641-K2). The total exposure amounts to $1,906.07. Actions taken include an L1 recommended card block pending approval under policy R2, an automatic case creation, automatic monitoring of connected cards under R6, an automatic escalation to an analyst for the wider scheme under R9, and an L2 recommended regulatory report filing pending approval under policy 3a, R6, and R9. How the 11 connected card(s) are linked: 11 card(s) show the same structuring pattern (a burst of just-under-$500 online purchases within an hour); the link is amount and timing only. None of them shares a device profile with this card.",
+    "subjects": [
+      "C07297",
+      "C07297-K1",
+      "C00466-K1",
+      "C01890-K1",
+      "C02265-K1",
+      "C03633-K1",
+      "C05423-K1",
+      "C05766-K1",
+      "C05851-K1",
+      "C06881-K1",
+      "C10751-K1",
+      "C10990-K1",
+      "C12641-K2"
+    ],
+    "total_amount_usd": 1906.07,
+    "activity_dates": [
+      "2016-11-21",
+      "2016-11-21"
+    ]
+  },
+  "stop_reason": "Stopped under policy section 6: probability 0.99 with at least two independent lines of evidence; further steps would not change the decision.",
+  "tool_calls": 13,
+  "tokens": 7441,
+  "latency_s": 29.7
+}

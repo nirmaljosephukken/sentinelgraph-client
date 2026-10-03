@@ -1,0 +1,11 @@
+// Vector attributes for GraphRAG (TigerGraph 4.2+). setup_graph.py runs this after schema.gsql.
+// If the server does not support vector attributes, setup falls back to LIST<DOUBLE> attributes
+// (vector_schema_fallback.gsql) and brute-force cosine queries (queries/fallback_similarity.gsql).
+USE GRAPH FraudGraph
+CREATE SCHEMA_CHANGE JOB add_vectors FOR GRAPH FraudGraph {
+  ALTER VERTEX ClosedCase ADD VECTOR ATTRIBUTE emb(DIMENSION=256, METRIC="COSINE");
+  ALTER VERTEX FraudCase ADD VECTOR ATTRIBUTE emb(DIMENSION=256, METRIC="COSINE");
+  ALTER VERTEX PolicyChunk ADD VECTOR ATTRIBUTE emb(DIMENSION=256, METRIC="COSINE");
+}
+RUN SCHEMA_CHANGE JOB add_vectors
+DROP JOB add_vectors

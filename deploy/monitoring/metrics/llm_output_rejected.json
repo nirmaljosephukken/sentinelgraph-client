@@ -1,0 +1,5 @@
+{
+ "name": "{{PREFIX}}_llm_output_rejected",
+ "description": "Model text rejected by the output checks",
+ "filter": "resource.type=\"cloud_run_revision\" AND resource.labels.service_name:\"{{SERVICE}}\" AND jsonPayload.event=\"llm_output_rejected\""
+}

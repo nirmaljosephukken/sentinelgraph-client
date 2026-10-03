@@ -1,0 +1,54 @@
+# SentinelGraph decision policy.
+#
+# Every threshold, money limit and approval route the agent uses comes from this file. The language model never
+# decides an action; the policy engine (agent/policy.py) applies these numbers. Change a value, bump the version,
+# redeploy, and every new case records which version decided it.
+#
+# Probabilities are between 0 and 1. Money is in the currency below.
+
+policy:
+  name: Card Fraud Policy
+  version: "1.0"
+  effective_from: "2026-10-01"
+  approved_by: ""               # name and role of whoever signed off this version
+
+currency:
+  code: USD
+  symbol: "$"
+
+thresholds:
+  fraud_stop: 0.85              # stop and act as fraud at or above this probability ...
+  legit_stop: 0.15              # ... or close as legitimate at or below this one,
+  min_independent_evidence: 2   # but only when this many independent lines of evidence agree (policy 6)
+  hold_authorisation: 0.70      # decline a pending authorisation at or above this; no block on one weak signal below it (R1)
+  open_case: 0.30               # open a case at or above this (policy 3a)
+  monitor_connected_cards: 0.50 # monitor linked cards while verification is pending (R6)
+  step_up_below: 0.50           # online risk-score alerts below this get step-up authentication instead of a call
+
+money:
+  block_card_team_lead_max: 2500  # BLOCK_CARD up to this exposure needs a team lead (L1); above it a fraud manager (L2)
+  report_over: 1000               # confirmed fraud above this exposure gets a suspicious activity report (policy 3a)
+  escalate_over: 500              # unresolved or conflicting cases above this go to an analyst (R4, R8)
+  card_testing_large_purchase: 100  # a cleared purchase above this after card testing means block, not decline (R5)
+
+model:
+  unscored_prior: 0.035         # starting fraud probability for transactions with no case-memory model score
+                                # (client feeds); the base fraud rate of the client's own book is the right value
+
+operations:
+  mode: shadow                  # shadow: recommend only, nothing is acted on, analysts mark agree/disagree
+                                # assist: auto actions and approved actions are sent to the bank's systems
+  reply_wait_hours: 24          # R4: a question to the cardholder with no answer after this long counts as no reply
+
+go_live:                        # the Outcomes page checks shadow results against these before assist mode
+  min_outcomes: 200             # cases with a confirmed real-world outcome
+  min_fraud_precision: 0.90     # of cases the agent called fraud, at least this share were fraud
+  max_missed_fraud: 0.02        # of cases the agent called legitimate, at most this share were fraud
+
+routes:
+  # auto: the agent may execute. L1: team lead approves. L2: fraud manager approves.
+  # BLOCK_CARD is routed by exposure using money.block_card_team_lead_max.
+  auto: [ALLOW_TRANSACTION, MONITOR_CARD, MONITOR_CONNECTED_CARDS, WARN_CUSTOMER, VERIFY_WITH_CUSTOMER,
+         STEP_UP_AUTH, GENERATE_REPORT, CREATE_CASE, ESCALATE_TO_ANALYST, CLOSE_NO_FRAUD]
+  L1: [DECLINE_TRANSACTION]
+  L2: [BLOCK_ALL_CARDS, FILE_REPORT]

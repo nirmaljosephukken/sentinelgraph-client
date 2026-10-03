@@ -1,0 +1,190 @@
+// =====================================================================================
+//  Investigation queries. Each one is exposed to the agent as a tool (via TigerGraph MCP
+//  `run_installed_query`, with a direct RESTPP fallback). Queries return raw, typed evidence;
+//  the agent's deterministic signal layer turns it into claims, and the LLM only narrates.
+// =====================================================================================
+USE GRAPH FraudGraph
+
+// 1. The flagged transaction with its card, customer, device, region and email context
+CREATE OR REPLACE QUERY txn_context(VERTEX<Txn> x) FOR GRAPH FraudGraph {
+  Start = {x};
+  PRINT Start AS txn;
+  Cards = SELECT c FROM Start:s -(CARD_TXN:e)-> Card:c;
+  PRINT Cards AS card;
+  Custs = SELECT u FROM Cards:c -(HAS_CARD:e)-> Customer:u;
+  PRINT Custs AS customer;
+  Sibs = SELECT c FROM Custs:u -(HAS_CARD:e)-> Card:c;
+  PRINT Sibs AS customer_cards;
+}
+
+// 2. Every transaction on a card inside a time window (velocity, bursts, testing sequences)
+CREATE OR REPLACE QUERY card_window(VERTEX<Card> c, DATETIME t0, DATETIME t1) FOR GRAPH FraudGraph {
+  Start = {c};
+  T = SELECT t FROM Start:s -(CARD_TXN:e)-> Txn:t
+      WHERE t.ts >= t0 AND t.ts <= t1;
+  PRINT T AS txns;
+}
+
+// 3. Behavioural baseline of a card before a point in time (graph aggregation in GSQL)
+CREATE OR REPLACE QUERY card_profile(VERTEX<Card> c, DATETIME before_t) FOR GRAPH FraudGraph {
+  SumAccum<INT> @@n;
+  SumAccum<DOUBLE> @@amount_sum;
+  MaxAccum<DOUBLE> @@amount_max;
+  ListAccum<DOUBLE> @@amounts;
+  MapAccum<STRING, SumAccum<INT>> @@products, @@regions, @@devices, @@emails, @@channels;
+  MinAccum<DATETIME> @@first_ts;
+  MaxAccum<DATETIME> @@last_ts;
+  Start = {c};
+  T = SELECT t FROM Start:s -(CARD_TXN:e)-> Txn:t
+      WHERE t.ts < before_t
+      ACCUM @@n += 1, @@amount_sum += t.amount, @@amount_max += t.amount, @@amounts += t.amount,
+            @@products += (t.product -> 1), @@regions += (t.addr1 -> 1), @@channels += (t.channel -> 1),
+            @@first_ts += t.ts, @@last_ts += t.ts,
+            IF t.device_profile != "" THEN @@devices += (t.device_profile -> 1) END,
+            IF t.p_email != "" THEN @@emails += (t.p_email -> 1) END;
+  PRINT @@n AS n, @@amount_sum AS amount_sum, @@amount_max AS amount_max, @@amounts AS amounts,
+        @@products AS products, @@regions AS regions, @@devices AS devices, @@emails AS emails,
+        @@channels AS channels, @@first_ts AS first_ts, @@last_ts AS last_ts;
+}
+
+// 4. The latent cardholder (Client = card + billing region + account-open day) behind a transaction
+CREATE OR REPLACE QUERY client_history(VERTEX<Client> cl) FOR GRAPH FraudGraph {
+  Start = {cl};
+  T = SELECT t FROM Start:s -(CLIENT_TXN:e)-> Txn:t;
+  PRINT T AS txns;
+}
+
+// 5. Who else used this device profile in the window (fan-out across cards)
+CREATE OR REPLACE QUERY device_fanout(VERTEX<DeviceProfile> d, DATETIME t0, DATETIME t1) FOR GRAPH FraudGraph {
+  Start = {d};
+  PRINT Start AS device;
+  T = SELECT t FROM Start:s -(TXN_DEVICE:e)-> Txn:t
+      WHERE t.ts >= t0 AND t.ts <= t1;
+  PRINT T AS txns;
+}
+
+// 6. Two-hop peers: transactions on OTHER cards that share this transaction's device profile or
+//    purchaser email domain, at a similar amount, in the same window ("what happened on other cards")
+CREATE OR REPLACE QUERY peer_txns(VERTEX<Txn> x, DATETIME t0, DATETIME t1, DOUBLE amt_lo, DOUBLE amt_hi,
+                                  BOOL use_email) FOR GRAPH FraudGraph {
+  OrAccum @via_device, @via_email;
+  Start = {x};
+  D = SELECT d FROM Start:s -(TXN_DEVICE:e)-> DeviceProfile:d;
+  P = SELECT t FROM D:d -(TXN_DEVICE:e)-> Txn:t
+      WHERE t.ts >= t0 AND t.ts <= t1 AND t.amount >= amt_lo AND t.amount <= amt_hi AND t != x
+      ACCUM t.@via_device += TRUE;
+  IF use_email THEN
+    M = SELECT m FROM Start:s -(TXN_P_EMAIL:e)-> EmailDomain:m;
+    Q = SELECT t FROM M:m -(TXN_P_EMAIL:e)-> Txn:t
+        WHERE t.ts >= t0 AND t.ts <= t1 AND t.amount >= amt_lo AND t.amount <= amt_hi AND t != x
+        ACCUM t.@via_email += TRUE;
+    P = P UNION Q;
+  END;
+  PRINT P AS peers;
+}
+
+// 7. Case memory attached to a customer's cards: closed cases (as subject or connected card)
+//    and cases previously opened by this agent
+CREATE OR REPLACE QUERY prior_cases(VERTEX<Customer> u) FOR GRAPH FraudGraph {
+  Start = {u};
+  Cards = SELECT c FROM Start:s -(HAS_CARD:e)-> Card:c;
+  Subj = SELECT k FROM Cards:c -(CC_CARD:e)-> ClosedCase:k;
+  Conn = SELECT k FROM Cards:c -(CC_CONNECTED_CARD:e)-> ClosedCase:k;
+  Mine = SELECT f FROM Cards:c -(FC_CARD:e)-> FraudCase:f;
+  PRINT Subj AS closed_cases, Conn AS connected_closed_cases, Mine AS agent_cases;
+}
+
+// 8. Case memory attached to a device profile: closed cases whose transactions used it, and
+//    agent cases that named it
+CREATE OR REPLACE QUERY device_cases(VERTEX<DeviceProfile> d) FOR GRAPH FraudGraph {
+  Start = {d};
+  T = SELECT t FROM Start:s -(TXN_DEVICE:e)-> Txn:t;
+  CC = SELECT k FROM T:t -(CC_TXN:e)-> ClosedCase:k;
+  FC = SELECT f FROM Start:s -(FC_DEVICE:e)-> FraudCase:f;
+  PRINT CC AS closed_cases, FC AS agent_cases;
+}
+
+// 9. Structuring scan: online authorisations in an amount band (e.g. just under $500)
+CREATE OR REPLACE QUERY amount_band_scan(DATETIME t0, DATETIME t1, DOUBLE lo, DOUBLE hi) FOR GRAPH FraudGraph {
+  All = {Txn.*};
+  R = SELECT t FROM All:t
+      WHERE t.channel == "online" AND t.amount >= lo AND t.amount < hi AND t.ts >= t0 AND t.ts <= t1;
+  PRINT R AS txns;
+}
+
+// 10. Device-sharing scan: specific (low fan-in) device profiles used by many cards in a window
+CREATE OR REPLACE QUERY device_ring_scan(DATETIME t0, DATETIME t1, INT min_cards, INT max_profile_txns) FOR GRAPH FraudGraph {
+  SetAccum<STRING> @cards;
+  SumAccum<INT> @n, @n_new, @n_proxy;
+  SumAccum<DOUBLE> @amount, @model_sum;
+  Devs = {DeviceProfile.*};
+  Devs = SELECT d FROM Devs:d WHERE d.n_txns <= max_profile_txns AND length(d.id) > 12;
+  Devs = SELECT d FROM Devs:d -(TXN_DEVICE:e)-> Txn:t
+         WHERE t.ts >= t0 AND t.ts <= t1
+         ACCUM d.@cards += t.card_id, d.@n += 1, d.@amount += t.amount, d.@model_sum += t.model_score,
+               IF t.device_status == "New" THEN d.@n_new += 1 END,
+               IF t.proxy_type != "" THEN d.@n_proxy += 1 END
+         HAVING d.@cards.size() >= min_cards;
+  PRINT Devs[Devs.id, Devs.n_txns, Devs.@cards, Devs.@n, Devs.@n_new, Devs.@n_proxy, Devs.@amount, Devs.@model_sum] AS rings;
+}
+
+// 11. Graph algorithm: weakly connected components (WCC) over the client <-> device co-usage subgraph
+//     in a window. Clients are latent cardholders (card + billing region + account-open day), so issuer-level
+//     "cards" shared by many people do not glue everything together. Only specific device profiles
+//     (<= max_profile_txns uses overall) are projected. Components spanning many cards are candidate rings.
+//     Min-label propagation, adapted from the TigerGraph GDS tg_wcc algorithm.
+CREATE OR REPLACE QUERY ring_components(DATETIME t0, DATETIME t1, INT max_profile_txns, INT min_cards) FOR GRAPH FraudGraph {
+  OrAccum @in_proj;
+  MinAccum<INT> @cc_id;
+  MinAccum<INT> @old_id;
+  OrAccum @changed;
+  MapAccum<INT, SetAccum<STRING>> @@comp_cards, @@comp_devices;
+  MapAccum<INT, SumAccum<INT>> @@comp_txns;
+  Devs = {DeviceProfile.*};
+  Devs = SELECT d FROM Devs:d WHERE d.n_txns <= max_profile_txns AND d.n_txns > 1 AND length(d.id) > 12
+         POST-ACCUM d.@in_proj = TRUE;
+  Txns = SELECT t FROM Devs:d -(TXN_DEVICE:e)-> Txn:t WHERE t.ts >= t0 AND t.ts <= t1
+         POST-ACCUM t.@in_proj = TRUE;
+  Devs = SELECT d FROM Txns:t -(TXN_DEVICE:e)-> DeviceProfile:d;
+  Clients = SELECT c FROM Txns:t -(CLIENT_TXN:e)-> Client:c POST-ACCUM c.@in_proj = TRUE;
+  Active = Devs UNION Txns UNION Clients;
+  Active = SELECT s FROM Active:s POST-ACCUM s.@cc_id = getvid(s), s.@old_id = getvid(s);
+  WHILE Active.size() > 0 LIMIT 40 DO
+    Active = SELECT t FROM Active:s -((TXN_DEVICE|CLIENT_TXN):e)-> :t
+             WHERE t.@in_proj == TRUE
+             ACCUM t.@cc_id += s.@cc_id
+             POST-ACCUM
+               CASE WHEN t.@old_id != t.@cc_id THEN t.@old_id = t.@cc_id, t.@changed = TRUE
+               ELSE t.@changed = FALSE END
+             HAVING t.@changed == TRUE;
+  END;
+  X = SELECT c FROM Clients:c POST-ACCUM @@comp_cards += (c.@cc_id -> c.card_id);
+  Y = SELECT d FROM Devs:d POST-ACCUM @@comp_devices += (d.@cc_id -> d.id);
+  Z = SELECT t FROM Txns:t POST-ACCUM @@comp_txns += (t.@cc_id -> 1);
+  PRINT @@comp_cards AS comp_cards, @@comp_devices AS comp_devices, @@comp_txns AS comp_txns;
+}
+
+// 12. Audit trail of an agent case
+CREATE OR REPLACE QUERY case_timeline(VERTEX<FraudCase> f) FOR GRAPH FraudGraph {
+  Start = {f};
+  PRINT Start AS fraud_case;
+  Ev = SELECT e FROM Start:s -(FC_EVENT:x)-> CaseEvent:e ORDER BY e.step ASC;
+  PRINT Ev AS events;
+  Txns = SELECT t FROM Start:s -(FC_TXN:x)-> Txn:t;
+  PRINT Txns AS txns;
+  Cards = SELECT c FROM Start:s -(FC_CARD:x)-> Card:c;
+  PRINT Cards AS cards;
+}
+
+// 13. Counts for the dashboard
+CREATE OR REPLACE QUERY graph_stats() FOR GRAPH FraudGraph {
+  SumAccum<INT> @@txn, @@card, @@dev, @@cc, @@fc, @@pc;
+  A = {Txn.*};        A = SELECT s FROM A:s ACCUM @@txn += 1;
+  B = {Card.*};       B = SELECT s FROM B:s ACCUM @@card += 1;
+  C = {DeviceProfile.*}; C = SELECT s FROM C:s ACCUM @@dev += 1;
+  D = {ClosedCase.*}; D = SELECT s FROM D:s ACCUM @@cc += 1;
+  E = {FraudCase.*};  E = SELECT s FROM E:s ACCUM @@fc += 1;
+  F = {PolicyChunk.*}; F = SELECT s FROM F:s ACCUM @@pc += 1;
+  PRINT @@txn AS txns, @@card AS cards, @@dev AS device_profiles, @@cc AS closed_cases,
+        @@fc AS agent_cases, @@pc AS policy_chunks;
+}

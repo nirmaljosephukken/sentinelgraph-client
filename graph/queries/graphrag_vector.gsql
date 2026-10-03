@@ -1,0 +1,23 @@
+// GraphRAG retrieval over TigerGraph's native vector index (HNSW, cosine), TigerGraph 4.2+.
+USE GRAPH FraudGraph
+
+CREATE OR REPLACE QUERY similar_closed_cases(LIST<FLOAT> qv, INT k) FOR GRAPH FraudGraph SYNTAX v3 {
+  MapAccum<VERTEX, FLOAT> @@dist;
+  R = vectorSearch({ClosedCase.emb}, qv, k, {distance_map: @@dist});
+  PRINT R AS hits;
+  PRINT @@dist AS distances;
+}
+
+CREATE OR REPLACE QUERY similar_agent_cases(LIST<FLOAT> qv, INT k) FOR GRAPH FraudGraph SYNTAX v3 {
+  MapAccum<VERTEX, FLOAT> @@dist;
+  R = vectorSearch({FraudCase.emb}, qv, k, {distance_map: @@dist});
+  PRINT R AS hits;
+  PRINT @@dist AS distances;
+}
+
+CREATE OR REPLACE QUERY policy_search(LIST<FLOAT> qv, INT k) FOR GRAPH FraudGraph SYNTAX v3 {
+  MapAccum<VERTEX, FLOAT> @@dist;
+  R = vectorSearch({PolicyChunk.emb}, qv, k, {distance_map: @@dist});
+  PRINT R AS hits;
+  PRINT @@dist AS distances;
+}

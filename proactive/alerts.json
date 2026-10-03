@@ -1,0 +1,4231 @@
+{
+ "window": [
+  "2016-11-01 00:00:00",
+  "2016-12-31 23:59:59"
+ ],
+ "device_rings": [
+  {
+   "type": "device_ring",
+   "device": "SM-G935F Build/NRD90M | Android 7.0 | chrome 62.0 for android | 1920x1080",
+   "cards": [
+    "C01289-K1",
+    "C01996-K2",
+    "C02910-K1",
+    "C02975-K1",
+    "C03676-K2",
+    "C04108-K2",
+    "C04274-K1",
+    "C05448-K2",
+    "C06031-K2",
+    "C06650-K2",
+    "C06710-K1",
+    "C07472-K1",
+    "C08168-K1",
+    "C08972-K2",
+    "C09049-K1",
+    "C09195-K1",
+    "C09906-K1",
+    "C09975-K1",
+    "C10020-K1",
+    "C10193-K2",
+    "C10326-K1",
+    "C11082-K1",
+    "C11670-K2",
+    "C11702-K1",
+    "C12645-K1",
+    "C12796-K1",
+    "C13291-K1",
+    "C13487-K1"
+   ],
+   "txns": 60,
+   "proxy_share": 1.0,
+   "new_share": 1.0,
+   "mean_model_score": 0.099,
+   "score": 47.52
+  },
+  {
+   "type": "device_ring",
+   "device": "SM-A300H Build/LRX22G |  | chrome 65.0 for android |",
+   "cards": [
+    "C01155-K2",
+    "C01521-K2",
+    "C04386-K1",
+    "C05031-K2",
+    "C05381-K2",
+    "C06630-K2",
+    "C07508-K2",
+    "C07562-K2",
+    "C09657-K2",
+    "C10837-K2",
+    "C11787-K1",
+    "C11844-K2",
+    "C11847-K2",
+    "C11923-K2",
+    "C12028-K2",
+    "C13001-K1",
+    "C13254-K2",
+    "C13364-K1"
+   ],
+   "txns": 31,
+   "proxy_share": 0.0,
+   "new_share": 0.32,
+   "mean_model_score": 0.723,
+   "score": 28.92
+  },
+  {
+   "type": "device_ring",
+   "device": "LG-D320 Build/KOT49I.V10a |  | chrome generic |",
+   "cards": [
+    "C00294-K2",
+    "C00951-K1",
+    "C02147-K2",
+    "C05031-K2",
+    "C05307-K2",
+    "C05381-K2",
+    "C06464-K1",
+    "C06598-K1",
+    "C06906-K1",
+    "C07562-K2",
+    "C07981-K1",
+    "C08655-K1",
+    "C08962-K2",
+    "C09119-K1",
+    "C09657-K2",
+    "C10837-K2",
+    "C11444-K1",
+    "C11807-K1",
+    "C11844-K2",
+    "C12258-K2",
+    "C12966-K1",
+    "C13171-K2"
+   ],
+   "txns": 39,
+   "proxy_share": 0.0,
+   "new_share": 0.0,
+   "mean_model_score": 0.634,
+   "score": 27.89
+  },
+  {
+   "type": "device_ring",
+   "device": "MotoG3 Build/MPIS24.65-33.1-2-16 |  | chrome 66.0 for android |",
+   "cards": [
+    "C01890-K1",
+    "C05031-K2",
+    "C05381-K2",
+    "C06663-K2",
+    "C06744-K2",
+    "C06793-K1",
+    "C06940-K1",
+    "C07220-K1",
+    "C07508-K2",
+    "C07562-K2",
+    "C09657-K2",
+    "C10837-K2",
+    "C11787-K1",
+    "C11847-K2",
+    "C12966-K1",
+    "C13171-K2",
+    "C13364-K1"
+   ],
+   "txns": 27,
+   "proxy_share": 0.0,
+   "new_share": 0.15,
+   "mean_model_score": 0.674,
+   "score": 24.18
+  },
+  {
+   "type": "device_ring",
+   "device": "|  | edge 16.0 |",
+   "cards": [
+    "C00319-K1",
+    "C01790-K1",
+    "C05031-K2",
+    "C05140-K1",
+    "C06829-K1",
+    "C09017-K1",
+    "C10957-K2",
+    "C11509-K2",
+    "C11919-K2",
+    "C11923-K2",
+    "C13171-K2"
+   ],
+   "txns": 12,
+   "proxy_share": 0.17,
+   "new_share": 0.25,
+   "mean_model_score": 0.666,
+   "score": 17.86
+  },
+  {
+   "type": "device_ring",
+   "device": "FRD-L09 Build/HUAWEIFRD-L09 | Android 7.0 | chrome 66.0 for android | 1920x1080",
+   "cards": [
+    "C02515-K2",
+    "C02575-K2",
+    "C05402-K1",
+    "C06336-K1",
+    "C06343-K1",
+    "C08893-K1",
+    "C09165-K2",
+    "C13284-K1"
+   ],
+   "txns": 9,
+   "proxy_share": 0.0,
+   "new_share": 0.0,
+   "mean_model_score": 0.906,
+   "score": 14.49
+  },
+  {
+   "type": "device_ring",
+   "device": "M4 SS4456 Build/LMY47V |  | chrome 66.0 for android |",
+   "cards": [
+    "C00294-K2",
+    "C02181-K2",
+    "C05031-K2",
+    "C05381-K2",
+    "C06940-K1",
+    "C07562-K2",
+    "C08962-K2",
+    "C11844-K2",
+    "C11923-K2"
+   ],
+   "txns": 17,
+   "proxy_share": 0.0,
+   "new_share": 0.24,
+   "mean_model_score": 0.589,
+   "score": 11.67
+  },
+  {
+   "type": "device_ring",
+   "device": "Windows | other | chrome 61.0 | 1280x720",
+   "cards": [
+    "C01104-K2",
+    "C01983-K1",
+    "C06224-K2",
+    "C07987-K2",
+    "C11309-K1"
+   ],
+   "txns": 5,
+   "proxy_share": 0.0,
+   "new_share": 0.8,
+   "mean_model_score": 0.947,
+   "score": 11.47
+  },
+  {
+   "type": "device_ring",
+   "device": "GT-I9060M Build/KTU84P |  | chrome 65.0 for android |",
+   "cards": [
+    "C01002-K1",
+    "C04125-K2",
+    "C05307-K2",
+    "C06362-K1",
+    "C06630-K2",
+    "C08450-K2",
+    "C09492-K1",
+    "C09588-K1",
+    "C10957-K2"
+   ],
+   "txns": 11,
+   "proxy_share": 0.0,
+   "new_share": 0.45,
+   "mean_model_score": 0.523,
+   "score": 11.46
+  },
+  {
+   "type": "device_ring",
+   "device": "Moto G (4) Build/NPJS25.93-14-8.1-4 |  | chrome generic |",
+   "cards": [
+    "C02851-K2",
+    "C03260-K1",
+    "C06247-K1",
+    "C09657-K2",
+    "C11642-K1",
+    "C11919-K2",
+    "C13171-K2"
+   ],
+   "txns": 7,
+   "proxy_share": 0.0,
+   "new_share": 0.0,
+   "mean_model_score": 0.813,
+   "score": 11.38
+  },
+  {
+   "type": "device_ring",
+   "device": "MacOS | Mac | safari generic | 1366x768",
+   "cards": [
+    "C01155-K2",
+    "C06544-K1",
+    "C08804-K1",
+    "C10137-K2"
+   ],
+   "txns": 4,
+   "proxy_share": 1.0,
+   "new_share": 0.0,
+   "mean_model_score": 0.91,
+   "score": 11.28
+  },
+  {
+   "type": "device_ring",
+   "device": "BLADE V8Q Build/N2G47H |  | chrome generic for android |",
+   "cards": [
+    "C00294-K2",
+    "C02181-K2",
+    "C04386-K1",
+    "C06988-K1"
+   ],
+   "txns": 9,
+   "proxy_share": 1.0,
+   "new_share": 0.44,
+   "mean_model_score": 0.734,
+   "score": 10.76
+  },
+  {
+   "type": "device_ring",
+   "device": "SM-J105B Build/LMY47V |  | chrome 65.0 for android |",
+   "cards": [
+    "C02147-K2",
+    "C05423-K1",
+    "C06630-K2",
+    "C06744-K2",
+    "C11787-K1",
+    "C12987-K1",
+    "C13171-K2"
+   ],
+   "txns": 7,
+   "proxy_share": 0.0,
+   "new_share": 0.29,
+   "mean_model_score": 0.619,
+   "score": 9.67
+  },
+  {
+   "type": "device_ring",
+   "device": "MacOS | Mac OS X 10_9_5 | chrome 66.0 | 1280x800",
+   "cards": [
+    "C02222-K1",
+    "C06224-K2",
+    "C07146-K1",
+    "C12418-K1",
+    "C13190-K2",
+    "C13303-K1"
+   ],
+   "txns": 11,
+   "proxy_share": 0.0,
+   "new_share": 0.0,
+   "mean_model_score": 0.787,
+   "score": 9.45
+  },
+  {
+   "type": "device_ring",
+   "device": "iOS Device | iOS 11.2.2 | mobile safari generic | 2436x1125",
+   "cards": [
+    "C03341-K2",
+    "C04139-K1",
+    "C05290-K2",
+    "C07196-K2",
+    "C12686-K1"
+   ],
+   "txns": 8,
+   "proxy_share": 0.12,
+   "new_share": 0.12,
+   "mean_model_score": 0.823,
+   "score": 9.16
+  },
+  {
+   "type": "device_ring",
+   "device": "Alcatel_5044R Build/NRD90M | Android 7.0 | chrome 66.0 for android | 855x480",
+   "cards": [
+    "C00750-K2",
+    "C04108-K2",
+    "C05128-K1"
+   ],
+   "txns": 3,
+   "proxy_share": 1.0,
+   "new_share": 0.33,
+   "mean_model_score": 0.924,
+   "score": 9.04
+  },
+  {
+   "type": "device_ring",
+   "device": "iOS Device | iOS 11.2.6 | mobile safari 11.0 | 2436x1125",
+   "cards": [
+    "C03278-K2",
+    "C03885-K1",
+    "C04046-K2",
+    "C05292-K1",
+    "C06224-K2",
+    "C10149-K1",
+    "C11000-K2",
+    "C12592-K1",
+    "C12887-K1"
+   ],
+   "txns": 12,
+   "proxy_share": 0.5,
+   "new_share": 0.67,
+   "mean_model_score": 0.083,
+   "score": 9.0
+  },
+  {
+   "type": "device_ring",
+   "device": "iOS Device | iOS 11.0.3 | mobile safari generic | 2001x1125",
+   "cards": [
+    "C00452-K2",
+    "C01155-K2",
+    "C04984-K2",
+    "C10553-K1",
+    "C11143-K1",
+    "C12230-K1"
+   ],
+   "txns": 6,
+   "proxy_share": 0.0,
+   "new_share": 0.67,
+   "mean_model_score": 0.578,
+   "score": 8.94
+  },
+  {
+   "type": "device_ring",
+   "device": "SM-G920P Build/NRD90M |  | chrome 66.0 for android |",
+   "cards": [
+    "C01525-K2",
+    "C04386-K1",
+    "C04597-K2",
+    "C05031-K2",
+    "C05127-K1",
+    "C05381-K2",
+    "C06598-K1"
+   ],
+   "txns": 16,
+   "proxy_share": 0.0,
+   "new_share": 0.0,
+   "mean_model_score": 0.633,
+   "score": 8.87
+  },
+  {
+   "type": "device_ring",
+   "device": "iOS Device | iOS 11.2.0 | mobile safari generic | 1136x640",
+   "cards": [
+    "C00329-K2",
+    "C08450-K2",
+    "C09363-K2"
+   ],
+   "txns": 3,
+   "proxy_share": 1.0,
+   "new_share": 0.67,
+   "mean_model_score": 0.742,
+   "score": 8.45
+  },
+  {
+   "type": "device_ring",
+   "device": "rv:59.0 | Mac OS X 10.12 | firefox 59.0 | 2560x1440",
+   "cards": [
+    "C05342-K1",
+    "C07687-K1",
+    "C09933-K2",
+    "C10287-K1",
+    "C11000-K2",
+    "C11244-K1",
+    "C12552-K1"
+   ],
+   "txns": 9,
+   "proxy_share": 0.0,
+   "new_share": 0.33,
+   "mean_model_score": 0.518,
+   "score": 8.42
+  },
+  {
+   "type": "device_ring",
+   "device": "iOS Device | iOS 11.2.0 | mobile safari 11.0 | 1136x640",
+   "cards": [
+    "C04965-K2",
+    "C06224-K2",
+    "C10835-K2"
+   ],
+   "txns": 3,
+   "proxy_share": 1.0,
+   "new_share": 0.67,
+   "mean_model_score": 0.663,
+   "score": 7.98
+  },
+  {
+   "type": "device_ring",
+   "device": "SAMSUNG SM-G965U Build/R16NW | Android 8.0.0 | samsung browser 7.0 | 2220x1081",
+   "cards": [
+    "C03405-K2",
+    "C05416-K1",
+    "C08450-K2",
+    "C10127-K2",
+    "C11000-K2",
+    "C11923-K2"
+   ],
+   "txns": 8,
+   "proxy_share": 0.0,
+   "new_share": 0.25,
+   "mean_model_score": 0.597,
+   "score": 7.92
+  },
+  {
+   "type": "device_ring",
+   "device": "iOS Device | iOS 11.0.2 | mobile safari 11.0 | 1334x750",
+   "cards": [
+    "C02354-K2",
+    "C04108-K2",
+    "C04206-K1",
+    "C06049-K1",
+    "C07910-K1",
+    "C12728-K1"
+   ],
+   "txns": 6,
+   "proxy_share": 0.0,
+   "new_share": 0.17,
+   "mean_model_score": 0.608,
+   "score": 7.79
+  },
+  {
+   "type": "device_ring",
+   "device": "SM-G955U Build/NRD90M |  | chrome 65.0 for android |",
+   "cards": [
+    "C00294-K2",
+    "C04597-K2",
+    "C05381-K2",
+    "C05996-K1",
+    "C07562-K2",
+    "C09657-K2",
+    "C13171-K2"
+   ],
+   "txns": 13,
+   "proxy_share": 0.0,
+   "new_share": 0.08,
+   "mean_model_score": 0.529,
+   "score": 7.68
+  },
+  {
+   "type": "device_ring",
+   "device": "SM-J327P Build/MMB29M |  | chrome 66.0 for android |",
+   "cards": [
+    "C01002-K1",
+    "C02147-K2",
+    "C07562-K2",
+    "C08962-K2",
+    "C11597-K2",
+    "C12680-K1"
+   ],
+   "txns": 9,
+   "proxy_share": 0.0,
+   "new_share": 0.11,
+   "mean_model_score": 0.606,
+   "score": 7.61
+  },
+  {
+   "type": "device_ring",
+   "device": "E2306 Build/26.3.A.1.33 |  | chrome 65.0 for android |",
+   "cards": [
+    "C04034-K2",
+    "C05381-K2",
+    "C08962-K2",
+    "C10957-K2",
+    "C11509-K2"
+   ],
+   "txns": 5,
+   "proxy_share": 0.0,
+   "new_share": 0.2,
+   "mean_model_score": 0.7,
+   "score": 7.5
+  },
+  {
+   "type": "device_ring",
+   "device": "5025G Build/LMY47I |  | chrome 43.0 for android |",
+   "cards": [
+    "C09657-K2",
+    "C09848-K1",
+    "C11923-K2",
+    "C12258-K1",
+    "C13171-K2"
+   ],
+   "txns": 6,
+   "proxy_share": 0.0,
+   "new_share": 0.17,
+   "mean_model_score": 0.67,
+   "score": 7.11
+  },
+  {
+   "type": "device_ring",
+   "device": "SM-G9650 Build/R16NW |  | chrome generic for android |",
+   "cards": [
+    "C02545-K2",
+    "C06630-K2",
+    "C09657-K2",
+    "C10837-K2",
+    "C12680-K1",
+    "C13372-K1"
+   ],
+   "txns": 8,
+   "proxy_share": 0.0,
+   "new_share": 0.25,
+   "mean_model_score": 0.529,
+   "score": 7.1
+  },
+  {
+   "type": "device_ring",
+   "device": "SM-G920P Build/NRD90M |  | chrome 65.0 for android |",
+   "cards": [
+    "C03773-K1",
+    "C04248-K2",
+    "C05381-K2",
+    "C10644-K1",
+    "C11923-K2",
+    "C12966-K1"
+   ],
+   "txns": 7,
+   "proxy_share": 0.0,
+   "new_share": 0.0,
+   "mean_model_score": 0.571,
+   "score": 6.85
+  },
+  {
+   "type": "device_ring",
+   "device": "VS425PP Build/LMY47V | Android 5.1.1 | chrome generic | 855x480",
+   "cards": [
+    "C02265-K1",
+    "C02826-K1",
+    "C10326-K1"
+   ],
+   "txns": 4,
+   "proxy_share": 0.0,
+   "new_share": 0.25,
+   "mean_model_score": 0.994,
+   "score": 6.34
+  },
+  {
+   "type": "device_ring",
+   "device": "XT1021 Build/LPCS23.13-34.8-3 |  | chrome 65.0 for android |",
+   "cards": [
+    "C04125-K2",
+    "C07212-K2",
+    "C08962-K2",
+    "C09241-K2"
+   ],
+   "txns": 5,
+   "proxy_share": 0.0,
+   "new_share": 0.2,
+   "mean_model_score": 0.728,
+   "score": 6.22
+  },
+  {
+   "type": "device_ring",
+   "device": "SAMSUNG SM-G550T1 Build/MMB29K |  | samsung browser 6.4 |",
+   "cards": [
+    "C04597-K2",
+    "C05996-K1",
+    "C06224-K2",
+    "C11509-K2",
+    "C12027-K1",
+    "C13147-K1"
+   ],
+   "txns": 9,
+   "proxy_share": 0.0,
+   "new_share": 0.0,
+   "mean_model_score": 0.518,
+   "score": 6.21
+  },
+  {
+   "type": "device_ring",
+   "device": "Windows | Windows 7 | chrome 60.0 | 2112x1188",
+   "cards": [
+    "C05116-K1",
+    "C06532-K2",
+    "C13037-K1"
+   ],
+   "txns": 3,
+   "proxy_share": 0.0,
+   "new_share": 0.0,
+   "mean_model_score": 0.998,
+   "score": 5.99
+  },
+  {
+   "type": "device_ring",
+   "device": "LM-X210(G | Android 7.1.2 | chrome generic | 1280x720",
+   "cards": [
+    "C01755-K2",
+    "C07149-K2",
+    "C12136-K2",
+    "C13440-K2"
+   ],
+   "txns": 4,
+   "proxy_share": 0.0,
+   "new_share": 0.25,
+   "mean_model_score": 0.674,
+   "score": 5.89
+  },
+  {
+   "type": "device_ring",
+   "device": "Windows | Windows 10 | chrome 64.0 | 3840x2160",
+   "cards": [
+    "C03517-K1",
+    "C07149-K2",
+    "C08375-K1"
+   ],
+   "txns": 5,
+   "proxy_share": 0.0,
+   "new_share": 0.2,
+   "mean_model_score": 0.919,
+   "score": 5.82
+  },
+  {
+   "type": "device_ring",
+   "device": "iOS Device | iOS 11.2.1 | mobile safari 11.0 | 2436x1125",
+   "cards": [
+    "C01104-K2",
+    "C01909-K2",
+    "C02342-K1",
+    "C03405-K2",
+    "C06224-K2",
+    "C07267-K1"
+   ],
+   "txns": 6,
+   "proxy_share": 0.5,
+   "new_share": 0.83,
+   "mean_model_score": 0.016,
+   "score": 5.69
+  },
+  {
+   "type": "device_ring",
+   "device": "CAM-L03 Build/HUAWEICAM-L03 |  | chrome 63.0 for android |",
+   "cards": [
+    "C04034-K2",
+    "C06464-K1",
+    "C07562-K2",
+    "C08962-K2",
+    "C12258-K2"
+   ],
+   "txns": 15,
+   "proxy_share": 0.0,
+   "new_share": 0.2,
+   "mean_model_score": 0.516,
+   "score": 5.66
+  },
+  {
+   "type": "device_ring",
+   "device": "iOS Device | iOS 11.2.6 | mobile safari 11.0 | 2001x1125",
+   "cards": [
+    "C00750-K2",
+    "C00854-K2",
+    "C03047-K2",
+    "C12887-K1"
+   ],
+   "txns": 4,
+   "proxy_share": 0.75,
+   "new_share": 0.75,
+   "mean_model_score": 0.134,
+   "score": 5.57
+  },
+  {
+   "type": "device_ring",
+   "device": "SM-G850M |  | chrome 66.0 for android |",
+   "cards": [
+    "C05268-K1",
+    "C05381-K2",
+    "C06598-K1",
+    "C08962-K2"
+   ],
+   "txns": 4,
+   "proxy_share": 0.0,
+   "new_share": 0.25,
+   "mean_model_score": 0.623,
+   "score": 5.48
+  },
+  {
+   "type": "device_ring",
+   "device": "SM-G610F Build/NRD90M |  | chrome 66.0 for android |",
+   "cards": [
+    "C03938-K1",
+    "C05595-K1",
+    "C05678-K1",
+    "C11923-K2"
+   ],
+   "txns": 4,
+   "proxy_share": 0.0,
+   "new_share": 0.5,
+   "mean_model_score": 0.557,
+   "score": 5.46
+  },
+  {
+   "type": "device_ring",
+   "device": "Windows | Windows 10 | comodo | 1920x1080",
+   "cards": [
+    "C03598-K2",
+    "C04517-K1",
+    "C05772-K1",
+    "C09900-K1"
+   ],
+   "txns": 4,
+   "proxy_share": 0.0,
+   "new_share": 0.25,
+   "mean_model_score": 0.616,
+   "score": 5.43
+  },
+  {
+   "type": "device_ring",
+   "device": "SM-J327T1 Build/NRD90M | Android 7.0 | chrome 65.0 for android | 1280x720",
+   "cards": [
+    "C01629-K1",
+    "C07212-K2",
+    "C11309-K1"
+   ],
+   "txns": 3,
+   "proxy_share": 0.0,
+   "new_share": 0.67,
+   "mean_model_score": 0.731,
+   "score": 5.38
+  },
+  {
+   "type": "device_ring",
+   "device": "Windows | Windows 7 | chrome 65.0 | 1916x901",
+   "cards": [
+    "C00768-K2",
+    "C04776-K1",
+    "C09149-K1"
+   ],
+   "txns": 3,
+   "proxy_share": 1.0,
+   "new_share": 1.0,
+   "mean_model_score": 0.123,
+   "score": 5.24
+  },
+  {
+   "type": "device_ring",
+   "device": "rv:59.0 | Windows 10 | firefox 59.0 | 1366x767",
+   "cards": [
+    "C06224-K2",
+    "C08918-K2",
+    "C12838-K1"
+   ],
+   "txns": 5,
+   "proxy_share": 0.0,
+   "new_share": 0.6,
+   "mean_model_score": 0.718,
+   "score": 5.21
+  },
+  {
+   "type": "device_ring",
+   "device": "iOS Device | iOS 11.0.0 | mobile safari generic | 2208x1242",
+   "cards": [
+    "C01755-K2",
+    "C02716-K2",
+    "C03040-K2",
+    "C03094-K1"
+   ],
+   "txns": 5,
+   "proxy_share": 0.6,
+   "new_share": 0.8,
+   "mean_model_score": 0.123,
+   "score": 4.98
+  },
+  {
+   "type": "device_ring",
+   "device": "M4 SS4456 Build/LMY47V |  | chrome generic |",
+   "cards": [
+    "C02456-K1",
+    "C04386-K1",
+    "C11919-K2",
+    "C11923-K2"
+   ],
+   "txns": 4,
+   "proxy_share": 0.0,
+   "new_share": 0.0,
+   "mean_model_score": 0.604,
+   "score": 4.83
+  },
+  {
+   "type": "device_ring",
+   "device": "LG-D680 Build/KOT49I |  | chrome 65.0 for android |",
+   "cards": [
+    "C02545-K2",
+    "C07508-K2",
+    "C11923-K2"
+   ],
+   "txns": 3,
+   "proxy_share": 0.0,
+   "new_share": 0.67,
+   "mean_model_score": 0.622,
+   "score": 4.73
+  },
+  {
+   "type": "device_ring",
+   "device": "LG-M700 Build/NMF26X |  | android webview 4.0 |",
+   "cards": [
+    "C02147-K2",
+    "C05381-K2",
+    "C08962-K2"
+   ],
+   "txns": 3,
+   "proxy_share": 0.0,
+   "new_share": 0.33,
+   "mean_model_score": 0.667,
+   "score": 4.5
+  },
+  {
+   "type": "device_ring",
+   "device": "SM-G935V Build/NRD90M |  | chrome 66.0 for android |",
+   "cards": [
+    "C07562-K2",
+    "C09657-K2",
+    "C11923-K2"
+   ],
+   "txns": 11,
+   "proxy_share": 0.0,
+   "new_share": 0.36,
+   "mean_model_score": 0.637,
+   "score": 4.37
+  },
+  {
+   "type": "device_ring",
+   "device": "Dream |  | chrome 65.0 for android |",
+   "cards": [
+    "C08962-K2",
+    "C11509-K2",
+    "C13171-K2"
+   ],
+   "txns": 4,
+   "proxy_share": 0.0,
+   "new_share": 0.25,
+   "mean_model_score": 0.66,
+   "score": 4.33
+  },
+  {
+   "type": "device_ring",
+   "device": "iOS Device | iOS 10.3.2 | mobile safari 10.0 | 1334x750",
+   "cards": [
+    "C00298-K1",
+    "C02883-K2",
+    "C10299-K1"
+   ],
+   "txns": 5,
+   "proxy_share": 0.0,
+   "new_share": 0.6,
+   "mean_model_score": 0.532,
+   "score": 4.09
+  },
+  {
+   "type": "device_ring",
+   "device": "SM-J320M Build/LMY47V |  | chrome 65.0 for android |",
+   "cards": [
+    "C05031-K2",
+    "C06744-K2",
+    "C11597-K2"
+   ],
+   "txns": 18,
+   "proxy_share": 0.0,
+   "new_share": 0.67,
+   "mean_model_score": 0.516,
+   "score": 4.09
+  },
+  {
+   "type": "device_ring",
+   "device": "iOS Device | iOS 11.0.1 | mobile safari 11.0 | 2208x1242",
+   "cards": [
+    "C03218-K2",
+    "C06224-K2",
+    "C10286-K1"
+   ],
+   "txns": 7,
+   "proxy_share": 0.0,
+   "new_share": 0.43,
+   "mean_model_score": 0.554,
+   "score": 3.97
+  },
+  {
+   "type": "device_ring",
+   "device": "LG-H650 Build/MRA58K |  | chrome 64.0 for android |",
+   "cards": [
+    "C05031-K2",
+    "C06630-K2",
+    "C06663-K2"
+   ],
+   "txns": 3,
+   "proxy_share": 0.0,
+   "new_share": 0.0,
+   "mean_model_score": 0.623,
+   "score": 3.74
+  },
+  {
+   "type": "device_ring",
+   "device": "Windows | Windows Vista | chrome 49.0 | 1280x1024",
+   "cards": [
+    "C01155-K2",
+    "C08635-K1",
+    "C12942-K2"
+   ],
+   "txns": 6,
+   "proxy_share": 0.0,
+   "new_share": 0.17,
+   "mean_model_score": 0.53,
+   "score": 3.43
+  },
+  {
+   "type": "device_ring",
+   "device": "Trident/7.0 | Windows 8.1 | ie 11.0 for desktop | 1919x1080",
+   "cards": [
+    "C02902-K2",
+    "C03598-K2",
+    "C04300-K1"
+   ],
+   "txns": 3,
+   "proxy_share": 0.67,
+   "new_share": 0.67,
+   "mean_model_score": 0.003,
+   "score": 3.02
+  }
+ ],
+ "structuring": [
+  {
+   "type": "structuring",
+   "card": "C05851-K1",
+   "txns": [
+    "3475403",
+    "3475405",
+    "3475408",
+    "3475414"
+   ],
+   "total": 1911.84,
+   "start": "2016-11-21 10:00:00"
+  },
+  {
+   "type": "structuring",
+   "card": "C10990-K1",
+   "txns": [
+    "3475933",
+    "3475959",
+    "3475998",
+    "3476008"
+   ],
+   "total": 1926.93,
+   "start": "2016-11-21 16:00:00"
+  },
+  {
+   "type": "structuring",
+   "card": "C00466-K1",
+   "txns": [
+    "3476601",
+    "3476621",
+    "3476655",
+    "3476664"
+   ],
+   "total": 1860.43,
+   "start": "2016-11-21 20:00:00"
+  },
+  {
+   "type": "structuring",
+   "card": "C07297-K1",
+   "txns": [
+    "3476602",
+    "3476633",
+    "3476665",
+    "3476682"
+   ],
+   "total": 1906.07,
+   "start": "2016-11-21 20:00:00"
+  },
+  {
+   "type": "structuring",
+   "card": "C01890-K1",
+   "txns": [
+    "3481356",
+    "3481393",
+    "3481403",
+    "3481444"
+   ],
+   "total": 1921.59,
+   "start": "2016-11-23 18:00:00"
+  },
+  {
+   "type": "structuring",
+   "card": "C10751-K1",
+   "txns": [
+    "3483817",
+    "3483854",
+    "3483876",
+    "3483895"
+   ],
+   "total": 1906.11,
+   "start": "2016-11-24 17:00:00"
+  },
+  {
+   "type": "structuring",
+   "card": "C03633-K1",
+   "txns": [
+    "3487284",
+    "3487318",
+    "3487340",
+    "3487348"
+   ],
+   "total": 1935.29,
+   "start": "2016-11-25 21:00:00"
+  },
+  {
+   "type": "structuring",
+   "card": "C12641-K2",
+   "txns": [
+    "3497982",
+    "3498004",
+    "3498051",
+    "3498092"
+   ],
+   "total": 1922.43,
+   "start": "2016-11-29 19:00:00"
+  },
+  {
+   "type": "structuring",
+   "card": "C02265-K1",
+   "txns": [
+    "3507563",
+    "3507591",
+    "3507626",
+    "3507670"
+   ],
+   "total": 1904.86,
+   "start": "2016-12-02 19:00:00"
+  },
+  {
+   "type": "structuring",
+   "card": "C05423-K1",
+   "txns": [
+    "3509526",
+    "3509535",
+    "3509563",
+    "3509576"
+   ],
+   "total": 1884.76,
+   "start": "2016-12-03 12:00:00"
+  },
+  {
+   "type": "structuring",
+   "card": "C05766-K1",
+   "txns": [
+    "3509629",
+    "3509649",
+    "3509692",
+    "3509706"
+   ],
+   "total": 1908.26,
+   "start": "2016-12-03 13:00:00"
+  },
+  {
+   "type": "structuring",
+   "card": "C06881-K1",
+   "txns": [
+    "3510950",
+    "3510982",
+    "3511041",
+    "3511062"
+   ],
+   "total": 1880.16,
+   "start": "2016-12-03 20:00:00"
+  }
+ ],
+ "wcc_components": [
+  {
+   "type": "wcc_component",
+   "component": "548408044",
+   "cards": [
+    "C00197-K1",
+    "C00594-K1",
+    "C00887-K1",
+    "C01155-K2",
+    "C01973-K1",
+    "C02090-K1",
+    "C02280-K1",
+    "C02331-K1",
+    "C02716-K2",
+    "C02831-K1",
+    "C03040-K2",
+    "C03070-K1",
+    "C03595-K1",
+    "C04571-K2",
+    "C04861-K2",
+    "C04951-K1",
+    "C05049-K1",
+    "C05362-K1",
+    "C05395-K1",
+    "C05560-K2",
+    "C05704-K2",
+    "C05868-K1",
+    "C06708-K2",
+    "C06840-K1",
+    "C06948-K1",
+    "C07879-K1",
+    "C08363-K1",
+    "C08720-K1",
+    "C09274-K1",
+    "C09468-K2",
+    "C09530-K1",
+    "C10295-K1",
+    "C10555-K1",
+    "C10706-K1",
+    "C10782-K1",
+    "C10906-K1",
+    "C11000-K2",
+    "C11596-K2",
+    "C12156-K1",
+    "C12897-K1",
+    "C12930-K1",
+    "C12942-K2",
+    "C13034-K1",
+    "C13086-K2",
+    "C13260-K1"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_13_4 | chrome generic | 1440x900",
+    "Trident/7.0 | Windows 10 | ie 11.0 for tablet | 1920x1080"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "548406284",
+   "cards": [
+    "C01289-K1",
+    "C01996-K2",
+    "C02910-K1",
+    "C02975-K1",
+    "C03676-K2",
+    "C04108-K2",
+    "C04274-K1",
+    "C05448-K2",
+    "C06031-K2",
+    "C06650-K2",
+    "C06710-K1",
+    "C07472-K1",
+    "C08168-K1",
+    "C08972-K2",
+    "C09049-K1",
+    "C09195-K1",
+    "C09906-K1",
+    "C09975-K1",
+    "C10020-K1",
+    "C10193-K2",
+    "C10326-K1",
+    "C11082-K1",
+    "C11670-K2",
+    "C11702-K1",
+    "C12645-K1",
+    "C12796-K1",
+    "C13291-K1",
+    "C13487-K1"
+   ],
+   "devices": [
+    "SM-G935F Build/NRD90M | Android 7.0 | chrome 62.0 for android | 1920x1080"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "556798942",
+   "cards": [
+    "C00877-K1",
+    "C01104-K2",
+    "C01155-K2",
+    "C02848-K1",
+    "C03040-K2",
+    "C03405-K2",
+    "C03449-K1",
+    "C03474-K1",
+    "C04108-K2",
+    "C05327-K1",
+    "C05697-K1",
+    "C05868-K1",
+    "C06121-K2",
+    "C06220-K1",
+    "C06224-K2",
+    "C06631-K1",
+    "C06976-K1",
+    "C08570-K1",
+    "C09227-K1",
+    "C11413-K1",
+    "C11687-K2",
+    "C11945-K2",
+    "C12267-K2",
+    "C12450-K1",
+    "C12961-K2"
+   ],
+   "devices": [
+    "Windows | Windows 10 | firefox 59.0 | 1366x768"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "556796037",
+   "cards": [
+    "C00450-K1",
+    "C00768-K2",
+    "C00854-K2",
+    "C01104-K2",
+    "C02231-K1",
+    "C02716-K2",
+    "C03040-K2",
+    "C03370-K1",
+    "C04046-K2",
+    "C04108-K2",
+    "C04590-K1",
+    "C05245-K2",
+    "C05704-K2",
+    "C06224-K2",
+    "C07925-K1",
+    "C08489-K2",
+    "C09165-K2",
+    "C10224-K1",
+    "C10799-K1",
+    "C11309-K1",
+    "C12166-K2",
+    "C12897-K1"
+   ],
+   "devices": [
+    "SAMSUNG SM-G892A Build/R16NW | Android 8.0.0 | samsung browser 7.0 | 2220x1080",
+    "iOS Device | iOS 11.2.6 | mobile safari generic | 1136x640"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "548410279",
+   "cards": [
+    "C01155-K2",
+    "C01215-K1",
+    "C01688-K1",
+    "C02342-K1",
+    "C02354-K2",
+    "C02508-K1",
+    "C03040-K2",
+    "C03066-K1",
+    "C03278-K2",
+    "C03738-K2",
+    "C04108-K2",
+    "C05739-K2",
+    "C05852-K1",
+    "C06130-K1",
+    "C06224-K2",
+    "C06491-K1",
+    "C06556-K1",
+    "C07518-K2",
+    "C08918-K2",
+    "C09241-K2",
+    "C11227-K2",
+    "C11965-K1"
+   ],
+   "devices": [
+    "Windows | Windows 10 | chrome 65.0 | 1680x1050",
+    "Trident/7.0 | Windows 10 | ie 11.0 for tablet | 1679x1049",
+    "KFGIWI Build/LVY48F | Android 5.1.1 | chrome generic | 1280x800"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "556800826",
+   "cards": [
+    "C00450-K1",
+    "C00750-K2",
+    "C00777-K1",
+    "C00805-K1",
+    "C00854-K2",
+    "C01104-K2",
+    "C01155-K2",
+    "C03277-K1",
+    "C03285-K2",
+    "C03708-K2",
+    "C04332-K1",
+    "C05560-K2",
+    "C05704-K2",
+    "C05791-K2",
+    "C05999-K1",
+    "C06224-K2",
+    "C06331-K2",
+    "C07212-K2",
+    "C09659-K1",
+    "C11227-K2",
+    "C12626-K2",
+    "C13334-K1"
+   ],
+   "devices": [
+    "Windows | Windows 10 | edge 16.0 | 1600x900"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "548409534",
+   "cards": [
+    "C00450-K1",
+    "C00750-K2",
+    "C00942-K2",
+    "C01148-K1",
+    "C01155-K2",
+    "C01744-K2",
+    "C02902-K2",
+    "C02910-K1",
+    "C03474-K1",
+    "C05535-K1",
+    "C05560-K2",
+    "C06224-K2",
+    "C06708-K2",
+    "C07212-K2",
+    "C08566-K1",
+    "C09181-K1",
+    "C10420-K1",
+    "C11709-K2",
+    "C12079-K1",
+    "C12690-K2"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_12_6 | safari 11.0 | 2560x1600",
+    "Windows | Windows 7 | chrome 66.0 | 1024x768"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "556794124",
+   "cards": [
+    "C01109-K2",
+    "C01166-K1",
+    "C02716-K2",
+    "C03040-K2",
+    "C03231-K2",
+    "C03318-K1",
+    "C04928-K1",
+    "C06224-K2",
+    "C07212-K2",
+    "C07762-K1",
+    "C08256-K2",
+    "C08489-K2",
+    "C09165-K2",
+    "C09533-K1",
+    "C09933-K2",
+    "C11000-K2",
+    "C11413-K1",
+    "C11951-K1"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_11_6 | safari generic | 2560x1600"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "567286290",
+   "cards": [
+    "C01155-K2",
+    "C01588-K1",
+    "C02480-K1",
+    "C04046-K2",
+    "C04108-K2",
+    "C05025-K1",
+    "C07518-K2",
+    "C07612-K1",
+    "C08783-K1",
+    "C08954-K1",
+    "C08989-K2",
+    "C08999-K1",
+    "C09562-K1",
+    "C10193-K2",
+    "C11600-K1",
+    "C12585-K1",
+    "C12897-K1"
+   ],
+   "devices": [
+    "iOS Device | iOS 11.2.2 | mobile safari 11.0 | 1334x750",
+    "SM-N950U Build/R16NW | Android 8.0.0 | chrome 66.0 for android | 2220x1081"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "571474633",
+   "cards": [
+    "C00358-K1",
+    "C00768-K2",
+    "C01155-K2",
+    "C01494-K1",
+    "C02079-K1",
+    "C02716-K2",
+    "C04316-K1",
+    "C04965-K2",
+    "C06208-K1",
+    "C06224-K2",
+    "C06552-K2",
+    "C07917-K1",
+    "C08972-K2",
+    "C09902-K2",
+    "C10835-K2",
+    "C10955-K2"
+   ],
+   "devices": [
+    "Windows | Windows 8.1 | chrome 65.0 | 1600x900",
+    "Windows | Windows 8.1 | chrome 66.0 | 1600x900",
+    "iOS Device | iOS 11.2.0 | mobile safari 11.0 | 1136x640"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "548409800",
+   "cards": [
+    "C00681-K1",
+    "C02231-K1",
+    "C03552-K1",
+    "C04754-K1",
+    "C05290-K2",
+    "C05704-K2",
+    "C06224-K2",
+    "C07149-K2",
+    "C07180-K1",
+    "C07612-K1",
+    "C07925-K1",
+    "C08010-K2",
+    "C09249-K1",
+    "C11143-K1",
+    "C11413-K1",
+    "C13070-K1"
+   ],
+   "devices": [
+    "Windows | Windows 10 | edge 17.0 | 1920x1080"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "567281558",
+   "cards": [
+    "C01155-K2",
+    "C02231-K1",
+    "C03019-K2",
+    "C03047-K2",
+    "C03490-K1",
+    "C04285-K1",
+    "C05560-K2",
+    "C06947-K2",
+    "C07033-K1",
+    "C08776-K1",
+    "C09301-K2",
+    "C09666-K2",
+    "C10675-K1",
+    "C11599-K1",
+    "C12897-K1",
+    "C12942-K2"
+   ],
+   "devices": [
+    "Windows | Windows 10 | edge 16.0 | 1919x1079"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "548406315",
+   "cards": [
+    "C01137-K1",
+    "C01155-K2",
+    "C01267-K1",
+    "C01350-K1",
+    "C01458-K1",
+    "C02686-K1",
+    "C03997-K1",
+    "C06208-K1",
+    "C06835-K2",
+    "C09800-K2",
+    "C09884-K1",
+    "C10295-K1",
+    "C11309-K1",
+    "C11464-K2",
+    "C13332-K1"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_13_4 | safari 11.0 | 2560x1440"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "556795616",
+   "cards": [
+    "C00779-K1",
+    "C01155-K2",
+    "C02134-K2",
+    "C02804-K1",
+    "C03040-K2",
+    "C03318-K1",
+    "C04108-K2",
+    "C07102-K1",
+    "C07858-K2",
+    "C08943-K2",
+    "C09163-K1",
+    "C09241-K2",
+    "C12389-K1",
+    "C12697-K1",
+    "C13125-K1"
+   ],
+   "devices": [
+    "Trident/7.0 | Windows 10 | ie 11.0 for desktop | 1280x1024"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "548405667",
+   "cards": [
+    "C00571-K1",
+    "C00750-K2",
+    "C01828-K2",
+    "C01983-K1",
+    "C02502-K2",
+    "C03318-K1",
+    "C06147-K2",
+    "C08943-K2",
+    "C09026-K1",
+    "C09800-K2",
+    "C09868-K1",
+    "C11309-K1",
+    "C12166-K2",
+    "C12896-K1"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_11_5 | safari generic | 2560x1600",
+    "iOS Device | iOS 11.2.1 | mobile safari generic | 1334x750"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "559941030",
+   "cards": [
+    "C00395-K1",
+    "C00681-K1",
+    "C01987-K1",
+    "C02354-K2",
+    "C03838-K1",
+    "C05347-K1",
+    "C06224-K2",
+    "C07212-K2",
+    "C07518-K2",
+    "C07612-K1",
+    "C08135-K1",
+    "C09420-K2",
+    "C09471-K2",
+    "C13521-K1"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_13_3 | safari generic | 2560x1600"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "556800418",
+   "cards": [
+    "C00854-K2",
+    "C03474-K1",
+    "C05560-K2",
+    "C06220-K1",
+    "C06874-K1",
+    "C07102-K1",
+    "C08918-K2",
+    "C08943-K2",
+    "C09249-K1",
+    "C09586-K2",
+    "C09778-K1",
+    "C11000-K2",
+    "C11539-K2",
+    "C12942-K2"
+   ],
+   "devices": [
+    "Windows | Windows 10 | edge 17.0 | 1280x1024",
+    "Windows | Windows 10 | edge 16.0 | 1280x1024"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "567282532",
+   "cards": [
+    "C00631-K1",
+    "C01154-K1",
+    "C02716-K2",
+    "C03675-K1",
+    "C03885-K1",
+    "C04077-K1",
+    "C04118-K2",
+    "C06224-K2",
+    "C06630-K2",
+    "C09873-K1",
+    "C11000-K2",
+    "C12094-K2",
+    "C12983-K1",
+    "C13515-K1"
+   ],
+   "devices": [
+    "Windows | Windows 10 | chrome 65.0 | 1920x1200"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "556797088",
+   "cards": [
+    "C00450-K1",
+    "C01138-K2",
+    "C01155-K2",
+    "C02483-K1",
+    "C03266-K1",
+    "C03598-K2",
+    "C06220-K1",
+    "C06224-K2",
+    "C06821-K1",
+    "C08557-K1",
+    "C09933-K2",
+    "C11000-K2",
+    "C12427-K1",
+    "C13440-K2"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_10_5 | chrome generic | 1280x800",
+    "Windows | Windows 10 | chrome generic | 2560x1440",
+    "iOS Device | iOS 10.3.3 | mobile safari generic | 1334x750"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "548408736",
+   "cards": [
+    "C01155-K2",
+    "C02342-K1",
+    "C02393-K2",
+    "C02810-K1",
+    "C03556-K1",
+    "C06224-K2",
+    "C06542-K1",
+    "C07185-K2",
+    "C08269-K1",
+    "C09445-K1",
+    "C09863-K1",
+    "C10273-K1",
+    "C13328-K1"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_13_3 | chrome 65.0 | 1920x1080"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "548406609",
+   "cards": [
+    "C00015-K1",
+    "C01952-K1",
+    "C03047-K2",
+    "C03066-K1",
+    "C03598-K2",
+    "C04108-K2",
+    "C05245-K2",
+    "C05530-K2",
+    "C05704-K2",
+    "C07212-K2",
+    "C07437-K1",
+    "C08945-K2",
+    "C11000-K2"
+   ],
+   "devices": [
+    "SM-G950U Build/NRD90M | Android 7.0 | chrome 65.0 for android | 2220x1080",
+    "Trident/7.0 | Windows 10 | ie 11.0 for desktop | 1366x767"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "559945185",
+   "cards": [
+    "C00694-K1",
+    "C00773-K2",
+    "C02219-K2",
+    "C03040-K2",
+    "C04125-K2",
+    "C05347-K1",
+    "C06224-K2",
+    "C07212-K2",
+    "C07518-K2",
+    "C07724-K1",
+    "C10777-K1",
+    "C11499-K1",
+    "C13448-K1"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_11_6 | safari 11.0 | 1920x1200",
+    "MacOS | Mac OS X 10_11_6 | safari 11.0 | 2880x1800",
+    "MacOS | Mac OS X 10_11_6 | safari generic | 2880x1800"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "548406643",
+   "cards": [
+    "C00854-K2",
+    "C01983-K1",
+    "C03047-K2",
+    "C05860-K2",
+    "C06224-K2",
+    "C07185-K2",
+    "C07612-K1",
+    "C07987-K2",
+    "C09206-K2",
+    "C09634-K1",
+    "C11496-K2",
+    "C12897-K1"
+   ],
+   "devices": [
+    "Windows | Windows 7 | chrome 62.0 | 1366x768",
+    "Windows | Windows 7 | chrome 62.0 | 1680x1050",
+    "MacOS | Mac OS X 10_12_6 | safari generic | 2560x1600"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "548409342",
+   "cards": [
+    "C00854-K2",
+    "C01744-K2",
+    "C02656-K1",
+    "C03040-K2",
+    "C03722-K1",
+    "C05036-K1",
+    "C06224-K2",
+    "C07025-K1",
+    "C07311-K1",
+    "C07505-K1",
+    "C07593-K1",
+    "C12942-K2"
+   ],
+   "devices": [
+    "Pixel 2 XL Build/OPM2.171019.029.B1 | Android 8.1.0 | chrome 66.0 for android | 2880x1442",
+    "MacOS | Mac OS X 10_11_6 | safari 11.0 | 1920x1080"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "556797040",
+   "cards": [
+    "C00246-K1",
+    "C01155-K2",
+    "C02141-K1",
+    "C03218-K2",
+    "C06168-K1",
+    "C06224-K2",
+    "C07360-K1",
+    "C09165-K2",
+    "C09606-K1",
+    "C10973-K1",
+    "C11475-K1",
+    "C13500-K1"
+   ],
+   "devices": [
+    "Windows | Windows 7 | firefox 59.0 | 1366x768"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "559945363",
+   "cards": [
+    "C00995-K1",
+    "C02716-K2",
+    "C04965-K2",
+    "C05245-K2",
+    "C05704-K2",
+    "C06814-K1",
+    "C06835-K2",
+    "C07867-K2",
+    "C09481-K1",
+    "C10139-K1",
+    "C12897-K1",
+    "C13303-K1"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_13_4 | safari 11.0 | 1280x800"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "559944376",
+   "cards": [
+    "C01040-K2",
+    "C03019-K2",
+    "C03449-K1",
+    "C05039-K1",
+    "C06147-K2",
+    "C06224-K2",
+    "C06588-K1",
+    "C07612-K1",
+    "C08755-K2",
+    "C09241-K2",
+    "C11000-K2",
+    "C11426-K1"
+   ],
+   "devices": [
+    "iOS Device | iOS 11.3.0 | mobile safari generic | 2732x2048"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "570428482",
+   "cards": [
+    "C00854-K2",
+    "C03236-K1",
+    "C04114-K1",
+    "C04125-K2",
+    "C05704-K2",
+    "C06067-K2",
+    "C06224-K2",
+    "C08315-K1",
+    "C09933-K2",
+    "C10520-K1",
+    "C10633-K1"
+   ],
+   "devices": [
+    "iOS Device | iOS 11.2.6 | chrome 65.0 for ios | 2048x1536",
+    "iOS Device | iOS 11.3.0 | chrome | 2048x1536",
+    "iOS Device | iOS 11.3.0 | chrome 65.0 for ios | 2048x1536"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "579867461",
+   "cards": [
+    "C01948-K1",
+    "C02245-K2",
+    "C02309-K2",
+    "C03218-K2",
+    "C05362-K1",
+    "C09331-K1",
+    "C10821-K1",
+    "C11464-K2",
+    "C11889-K2",
+    "C12036-K2"
+   ],
+   "devices": [
+    "rv:11.0 | Windows 7 | ie 11.0 for desktop | 1280x1024"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "548407807",
+   "cards": [
+    "C01033-K1",
+    "C02716-K2",
+    "C03218-K2",
+    "C03411-K2",
+    "C04965-K2",
+    "C05704-K2",
+    "C08918-K2",
+    "C08943-K2",
+    "C11709-K2",
+    "C12897-K1"
+   ],
+   "devices": [
+    "SM-G930V Build/NRD90M | Android 7.0 | chrome 65.0 for android | 1920x1080"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "556794709",
+   "cards": [
+    "C01155-K2",
+    "C02475-K1",
+    "C02716-K2",
+    "C03040-K2",
+    "C05704-K2",
+    "C05753-K1",
+    "C08410-K1",
+    "C09490-K2",
+    "C10935-K1",
+    "C12455-K1"
+   ],
+   "devices": [
+    "Windows NT 6.1 | Windows 7 | ie | 1920x1080",
+    "iOS Device | iOS 9.3.5 | mobile safari generic | 1024x768"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "570430883",
+   "cards": [
+    "C00903-K1",
+    "C01347-K2",
+    "C02480-K1",
+    "C03341-K2",
+    "C03538-K1",
+    "C03575-K2",
+    "C04118-K2",
+    "C07164-K1",
+    "C10902-K1",
+    "C11003-K2"
+   ],
+   "devices": [
+    "iOS Device | iOS 11.1.2 | mobile safari generic | 2208x1242"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "559942531",
+   "cards": [
+    "C02764-K1",
+    "C03218-K2",
+    "C04948-K1",
+    "C05704-K2",
+    "C06224-K2",
+    "C08997-K1",
+    "C09165-K2",
+    "C10037-K1",
+    "C12983-K1"
+   ],
+   "devices": [
+    "Windows | Windows 7 | chrome generic | 1600x900"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "556800598",
+   "cards": [
+    "C00750-K2",
+    "C01155-K2",
+    "C02716-K2",
+    "C06224-K2",
+    "C07494-K1",
+    "C07612-K1",
+    "C07648-K2",
+    "C09165-K2",
+    "C12517-K2"
+   ],
+   "devices": [
+    "iOS Device | iOS 11.1.2 | mobile safari generic | 1334x750"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "567281830",
+   "cards": [
+    "C01155-K2",
+    "C04046-K2",
+    "C04108-K2",
+    "C05292-K1",
+    "C09165-K2",
+    "C09231-K1",
+    "C09405-K1",
+    "C11092-K2",
+    "C12320-K1"
+   ],
+   "devices": [
+    "iOS Device | iOS 11.2.6 | mobile safari generic | 2732x2048"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "556798765",
+   "cards": [
+    "C00688-K1",
+    "C01909-K2",
+    "C02354-K2",
+    "C04089-K1",
+    "C05560-K2",
+    "C08489-K2",
+    "C08841-K1",
+    "C09165-K2",
+    "C09691-K1"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_10_5 | safari 10.0 | 2560x1600"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "567281034",
+   "cards": [
+    "C01605-K1",
+    "C01905-K1",
+    "C04865-K1",
+    "C07518-K2",
+    "C09241-K2",
+    "C10127-K2",
+    "C11309-K1",
+    "C12267-K2",
+    "C13410-K1"
+   ],
+   "devices": [
+    "Windows | Windows 10 | firefox 57.0 | 1366x768",
+    "Windows | Windows 10 | firefox 60.0 | 1366x768"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "580917311",
+   "cards": [
+    "C00805-K1",
+    "C00854-K2",
+    "C02079-K1",
+    "C03285-K2",
+    "C05560-K2",
+    "C09501-K1",
+    "C10637-K1",
+    "C13067-K1"
+   ],
+   "devices": [
+    "SM-G965U Build/R16NW | Android 8.0.0 | chrome 66.0 for android | 2220x1081"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "559943061",
+   "cards": [
+    "C01155-K2",
+    "C02483-K1",
+    "C05245-K2",
+    "C06026-K2",
+    "C07872-K2",
+    "C07881-K1",
+    "C11743-K2",
+    "C12961-K2"
+   ],
+   "devices": [
+    "SM-G955U Build/R16NW | Android 8.0.0 | chrome 66.0 for android | 2220x1081"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "579866341",
+   "cards": [
+    "C00750-K2",
+    "C02502-K2",
+    "C03312-K1",
+    "C03389-K1",
+    "C08010-K2",
+    "C08119-K1",
+    "C08256-K2",
+    "C08269-K1"
+   ],
+   "devices": [
+    "SM-G930V Build/NRD90M | Android 7.0 | chrome 66.0 for android | 1920x1080"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "571476979",
+   "cards": [
+    "C00854-K2",
+    "C03211-K1",
+    "C04538-K1",
+    "C05704-K2",
+    "C06224-K2",
+    "C07360-K1",
+    "C11309-K1",
+    "C13026-K1"
+   ],
+   "devices": [
+    "Windows | Windows 10 | chrome 65.0 | 2160x1440",
+    "Windows | Windows 10 | chrome generic | 2160x1440",
+    "Windows | Windows 10 | chrome 66.0 | 2160x1440"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "548406766",
+   "cards": [
+    "C02000-K2",
+    "C02342-K1",
+    "C03040-K2",
+    "C04097-K1",
+    "C04125-K2",
+    "C06224-K2",
+    "C09174-K1",
+    "C12797-K1"
+   ],
+   "devices": [
+    "SAMSUNG SM-G930A Build/NRD90M | Android 7.0 | samsung browser 6.4 | 1920x1080",
+    "Windows | Windows 7 | chrome 65.0 | 1024x768"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "548405438",
+   "cards": [
+    "C00426-K2",
+    "C02147-K2",
+    "C02797-K1",
+    "C03524-K1",
+    "C04034-K2",
+    "C04597-K2",
+    "C09657-K2",
+    "C13364-K1"
+   ],
+   "devices": [
+    "|  | firefox 52.0 |"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "571479307",
+   "cards": [
+    "C01155-K2",
+    "C02231-K1",
+    "C03066-K1",
+    "C04108-K2",
+    "C08989-K2",
+    "C09933-K2",
+    "C10346-K1",
+    "C11294-K2"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_10_5 | safari 10.0 | 1920x1080"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "548408994",
+   "cards": [
+    "C01109-K2",
+    "C02897-K1",
+    "C04697-K1",
+    "C07212-K2",
+    "C08478-K1",
+    "C10245-K1",
+    "C12166-K2",
+    "C13259-K1"
+   ],
+   "devices": [
+    "Windows | Windows 10 | edge 16.0 | 2736x1824"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "548405411",
+   "cards": [
+    "C00197-K1",
+    "C00329-K2",
+    "C03318-K1",
+    "C04097-K1",
+    "C05704-K2",
+    "C06224-K2",
+    "C08989-K2",
+    "C11385-K1"
+   ],
+   "devices": [
+    "rv:11.0 | Windows 7 | ie 11.0 for desktop | 1680x1050"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "571479225",
+   "cards": [
+    "C01688-K1",
+    "C02354-K2",
+    "C02502-K2",
+    "C03341-K2",
+    "C10422-K2",
+    "C11464-K2",
+    "C12061-K2",
+    "C12942-K2"
+   ],
+   "devices": [
+    "iOS Device | iOS 11.2.1 | mobile safari generic | 2208x1242"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "556794111",
+   "cards": [
+    "C00854-K2",
+    "C01109-K2",
+    "C01967-K1",
+    "C03279-K1",
+    "C03997-K1",
+    "C06224-K2",
+    "C09165-K2",
+    "C12818-K1"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_13_4 | chrome 65.0 | 2880x1800",
+    "MacOS | Mac OS X 10_13_4 | chrome 65.0 | 3440x1440"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "571477071",
+   "cards": [
+    "C01109-K2",
+    "C01155-K2",
+    "C06224-K2",
+    "C09363-K2",
+    "C11000-K2",
+    "C11312-K1",
+    "C11792-K1",
+    "C12942-K2"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_13_4 | safari generic | 2560x1440"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "559942487",
+   "cards": [
+    "C02515-K2",
+    "C02575-K2",
+    "C05402-K1",
+    "C06336-K1",
+    "C06343-K1",
+    "C08893-K1",
+    "C09165-K2",
+    "C13284-K1"
+   ],
+   "devices": [
+    "FRD-L09 Build/HUAWEIFRD-L09 | Android 7.0 | chrome 66.0 for android | 1920x1080"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "571474585",
+   "cards": [
+    "C00938-K1",
+    "C02716-K2",
+    "C03019-K2",
+    "C03474-K1",
+    "C06198-K1",
+    "C11309-K1",
+    "C11413-K1",
+    "C12897-K1"
+   ],
+   "devices": [
+    "| Linux | chrome generic | 2220x1080",
+    "Windows | Windows 8.1 | chrome 65.0 | 1440x900",
+    "| Linux | chrome 65.0 | 2220x1080"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "584063170",
+   "cards": [
+    "C01519-K1",
+    "C02222-K1",
+    "C04367-K1",
+    "C06224-K2",
+    "C07146-K1",
+    "C12418-K1",
+    "C13190-K2",
+    "C13303-K1"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_9_5 | chrome 66.0 | 1280x800",
+    "iOS Device | iOS 10.0.2 | mobile safari 10.0 | 1136x640"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "556799100",
+   "cards": [
+    "C01155-K2",
+    "C06224-K2",
+    "C06320-K1",
+    "C06872-K1",
+    "C08411-K1",
+    "C09187-K1",
+    "C11936-K1",
+    "C12166-K2"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_12_6 | chrome 66.0 | 2560x1440",
+    "MacOS | Mac OS X 10_12_6 | chrome 65.0 | 2560x1440"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "559946164",
+   "cards": [
+    "C02716-K2",
+    "C02780-K2",
+    "C05245-K2",
+    "C05791-K2",
+    "C06224-K2",
+    "C10390-K1",
+    "C12897-K1",
+    "C12952-K1"
+   ],
+   "devices": [
+    "iOS Device | iOS 10.3.1 | mobile safari 10.0 | 1334x750",
+    "iOS Device | iOS 11.3.1 | google | 2208x1242",
+    "iOS Device | iOS 10.3.1 | mobile safari generic | 1334x750"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "548410614",
+   "cards": [
+    "C03552-K1",
+    "C06438-K1",
+    "C08489-K2",
+    "C09206-K2",
+    "C11309-K1",
+    "C11413-K1",
+    "C12598-K2"
+   ],
+   "devices": [
+    "rv:59.0 | Mac OS X 10.13 | firefox 59.0 | 2560x1600"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "567281833",
+   "cards": [
+    "C00750-K2",
+    "C03278-K2",
+    "C04108-K2",
+    "C05245-K2",
+    "C07827-K1",
+    "C09213-K1",
+    "C09873-K1"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_13_3 | chrome 65.0 | 2560x1600"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "548407020",
+   "cards": [
+    "C00777-K1",
+    "C04196-K2",
+    "C04767-K1",
+    "C07299-K2",
+    "C08482-K1",
+    "C11159-K1",
+    "C12897-K1"
+   ],
+   "devices": [
+    "Windows | Windows 7 | firefox 59.0 | 1600x900"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "548409114",
+   "cards": [
+    "C00750-K2",
+    "C01155-K2",
+    "C01333-K2",
+    "C03856-K1",
+    "C06224-K2",
+    "C07917-K1",
+    "C12103-K1"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_13_4 | chrome generic | 2880x1800"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "559939653",
+   "cards": [
+    "C00519-K1",
+    "C05245-K2",
+    "C05551-K2",
+    "C08489-K2",
+    "C09301-K2",
+    "C12124-K2",
+    "C13354-K2"
+   ],
+   "devices": [
+    "SAMSUNG SM-N950U Build/R16NW | Android 8.0.0 | samsung browser 7.0 | 2220x1081"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "548406355",
+   "cards": [
+    "C01219-K1",
+    "C04125-K2",
+    "C04984-K2",
+    "C10846-K2",
+    "C10847-K1",
+    "C11001-K1",
+    "C11543-K2"
+   ],
+   "devices": [
+    "Windows | Windows 10 | chrome 66.0 | 3840x2160"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "567283833",
+   "cards": [
+    "C03615-K1",
+    "C05704-K2",
+    "C07518-K2",
+    "C07858-K2",
+    "C08635-K1",
+    "C11000-K2",
+    "C11873-K2"
+   ],
+   "devices": [
+    "iOS Device | iOS 11.3.0 | mobile safari generic | 2224x1668"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "559945033",
+   "cards": [
+    "C00750-K2",
+    "C02250-K2",
+    "C02716-K2",
+    "C04185-K2",
+    "C05704-K2",
+    "C06224-K2",
+    "C11551-K1"
+   ],
+   "devices": [
+    "Pixel Build/OPM4.171019.016.B1 | Android 8.1.0 | chrome 66.0 for android | 1921x1081",
+    "Pixel XL Build/OPM4.171019.016.B1 | Android 8.1.0 | chrome 66.0 for android | 2562x1442",
+    "Pixel Build/OPM2.171019.029 | Android 8.1.0 | chrome 65.0 for android | 1921x1081"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "567286096",
+   "cards": [
+    "C02354-K2",
+    "C05670-K1",
+    "C09043-K1",
+    "C09149-K1",
+    "C09823-K1",
+    "C12150-K1",
+    "C12983-K1"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_11_6 | chrome 66.0 | 1920x1080"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "556796321",
+   "cards": [
+    "C00750-K2",
+    "C04108-K2",
+    "C04391-K1",
+    "C07212-K2",
+    "C08450-K2",
+    "C11464-K2",
+    "C12208-K1"
+   ],
+   "devices": [
+    "SM-N950U Build/R16NW | Android 8.0.0 | chrome 65.0 for android | 2220x1081"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "556797888",
+   "cards": [
+    "C00385-K1",
+    "C02019-K1",
+    "C05047-K1",
+    "C07648-K2",
+    "C08865-K1",
+    "C09461-K1",
+    "C11413-K1"
+   ],
+   "devices": [
+    "iOS Device | iOS 10.0.2 | mobile safari generic | 2048x1536",
+    "MacOS | Mac OS X 10_9_5 | safari generic | 1440x900"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "570428052",
+   "cards": [
+    "C05522-K1",
+    "C05560-K2",
+    "C05704-K2",
+    "C06908-K1",
+    "C07185-K2",
+    "C08374-K1",
+    "C12690-K2"
+   ],
+   "devices": [
+    "iOS Device | iOS 11.2.6 | mobile safari 11.0 | 1136x640"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "576722232",
+   "cards": [
+    "C05342-K1",
+    "C07687-K1",
+    "C09933-K2",
+    "C10287-K1",
+    "C11000-K2",
+    "C11244-K1",
+    "C12552-K1"
+   ],
+   "devices": [
+    "rv:59.0 | Mac OS X 10.12 | firefox 59.0 | 2560x1440"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "570427024",
+   "cards": [
+    "C00854-K2",
+    "C03040-K2",
+    "C05704-K2",
+    "C06947-K2",
+    "C07523-K1",
+    "C11000-K2",
+    "C11496-K2"
+   ],
+   "devices": [
+    "Windows | Windows 10 | chrome 65.0 | 3200x1800",
+    "Windows | Windows 10 | chrome 65.0 | 1024x768"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "567283728",
+   "cards": [
+    "C00844-K1",
+    "C01918-K1",
+    "C04108-K2",
+    "C06962-K2",
+    "C07648-K2",
+    "C10666-K1",
+    "C11005-K1"
+   ],
+   "devices": [
+    "Windows | Windows 8.1 | chrome generic | 1920x1080"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "559945914",
+   "cards": [
+    "C06224-K2",
+    "C07212-K2",
+    "C07925-K1",
+    "C08918-K2",
+    "C11704-K1",
+    "C13005-K1",
+    "C13328-K1"
+   ],
+   "devices": [
+    "Trident/7.0 | Windows 7 | ie 11.0 for desktop | 1599x900"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "571478913",
+   "cards": [
+    "C02716-K2",
+    "C02875-K1",
+    "C04108-K2",
+    "C07612-K1",
+    "C08450-K2",
+    "C08773-K1",
+    "C10127-K2"
+   ],
+   "devices": [
+    "iOS Device | iOS 11.3.1 | google search application 48.0 | 1334x750"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "548406406",
+   "cards": [
+    "C01492-K1",
+    "C02740-K1",
+    "C08102-K1",
+    "C09679-K1",
+    "C11014-K1",
+    "C13328-K1"
+   ],
+   "devices": [
+    "SM-G955U Build/NRD90M | Android 7.0 | chrome 65.0 for android | 2220x1080",
+    "SM-N950U Build/R16NW | Android 8.0.0 | chrome 65.0 for android | 2220x1080",
+    "SM-G955U Build/NRD90M | Android 7.0 | android webview 4.0 | 2220x1080"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "571479376",
+   "cards": [
+    "C00452-K2",
+    "C01155-K2",
+    "C04984-K2",
+    "C10553-K1",
+    "C11143-K1",
+    "C12230-K1"
+   ],
+   "devices": [
+    "iOS Device | iOS 11.0.3 | mobile safari generic | 2001x1125"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "567280092",
+   "cards": [
+    "C02354-K2",
+    "C05192-K2",
+    "C06067-K2",
+    "C06708-K2",
+    "C07212-K2",
+    "C12961-K2"
+   ],
+   "devices": [
+    "iOS Device | iOS 11.1.2 | mobile safari generic | 2048x1536",
+    "iOS Device | iOS 10.2.1 | mobile safari generic | 1334x750"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "584060016",
+   "cards": [
+    "C01863-K1",
+    "C06224-K2",
+    "C09165-K2",
+    "C10365-K1",
+    "C11000-K2",
+    "C12942-K2"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_9_5 | safari 9.0 | 1440x900"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "548407359",
+   "cards": [
+    "C03040-K2",
+    "C03405-K2",
+    "C05560-K2",
+    "C08841-K1",
+    "C10683-K1",
+    "C12586-K1"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_10_5 | chrome 65.0 | 2560x1600"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "548405467",
+   "cards": [
+    "C00510-K1",
+    "C02247-K1",
+    "C02287-K1",
+    "C02538-K1",
+    "C05381-K2",
+    "C12258-K2"
+   ],
+   "devices": [
+    "VTR-L09 Build/HUAWEIVTR-L09 |  | chrome 66.0 for android |",
+    "SAMSUNG SM-G930F Build/NRD90M |  | samsung browser 6.4 |"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "586160253",
+   "cards": [
+    "C01155-K2",
+    "C02716-K2",
+    "C03341-K2",
+    "C05292-K1",
+    "C12897-K1",
+    "C13190-K2"
+   ],
+   "devices": [
+    "iOS Device | iOS 10.3.2 | mobile safari generic | 1334x750"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "567286054",
+   "cards": [
+    "C02545-K2",
+    "C06630-K2",
+    "C09657-K2",
+    "C10837-K2",
+    "C12680-K1",
+    "C13372-K1"
+   ],
+   "devices": [
+    "SM-G9650 Build/R16NW |  | chrome generic for android |"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "588253007",
+   "cards": [
+    "C01104-K2",
+    "C01909-K2",
+    "C02342-K1",
+    "C03405-K2",
+    "C06224-K2",
+    "C07267-K1"
+   ],
+   "devices": [
+    "iOS Device | iOS 11.2.1 | mobile safari 11.0 | 2436x1125"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "588257772",
+   "cards": [
+    "C00854-K2",
+    "C01349-K2",
+    "C04105-K2",
+    "C12136-K2",
+    "C12517-K2",
+    "C13489-K1"
+   ],
+   "devices": [
+    "Windows | Windows 7 | chrome generic | 1440x900"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "587206911",
+   "cards": [
+    "C00750-K2",
+    "C05192-K2",
+    "C05530-K2",
+    "C07612-K1",
+    "C09165-K2",
+    "C11615-K1"
+   ],
+   "devices": [
+    "iOS Device | iOS 11.2.2 | mobile safari generic | 2208x1242"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "559940278",
+   "cards": [
+    "C00942-K2",
+    "C01213-K1",
+    "C02716-K2",
+    "C05385-K2",
+    "C06862-K1",
+    "C07555-K1"
+   ],
+   "devices": [
+    "iOS Device | iOS | mobile safari generic | 1334x750"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "556799925",
+   "cards": [
+    "C01828-K2",
+    "C03125-K2",
+    "C04108-K2",
+    "C07919-K2",
+    "C10883-K1",
+    "C12961-K2"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_13_3 | safari generic | 3360x2100"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "585109678",
+   "cards": [
+    "C01155-K2",
+    "C02966-K1",
+    "C07212-K2",
+    "C07729-K1",
+    "C09606-K1",
+    "C10162-K1"
+   ],
+   "devices": [
+    "iOS Device | iOS 11.2.5 | mobile safari generic | 2048x1536"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "576719738",
+   "cards": [
+    "C02134-K2",
+    "C03237-K1",
+    "C05704-K2",
+    "C07847-K2",
+    "C12901-K1",
+    "C13328-K1"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_13_3 | chrome 65.0 | 1440x900"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "576717712",
+   "cards": [
+    "C02231-K1",
+    "C02716-K2",
+    "C05530-K2",
+    "C06955-K1",
+    "C07360-K1",
+    "C08466-K1"
+   ],
+   "devices": [
+    "SAMSUNG SM-G955U Build/R16NW | Android 8.0.0 | samsung browser 7.0 | 2220x1081"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "556795228",
+   "cards": [
+    "C01828-K2",
+    "C02480-K1",
+    "C06224-K2",
+    "C06631-K1",
+    "C08209-K1",
+    "C11451-K1"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_13_3 | safari generic | 4096x2304"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "567284939",
+   "cards": [
+    "C00750-K2",
+    "C06218-K1",
+    "C07212-K2",
+    "C09757-K1",
+    "C11000-K2",
+    "C11633-K1"
+   ],
+   "devices": [
+    "KFDOWI Build/LVY48F | Android 5.1.1 | chrome generic | 1280x800"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "576721342",
+   "cards": [
+    "C01812-K1",
+    "C06224-K2",
+    "C09206-K2",
+    "C09343-K1",
+    "C10981-K1",
+    "C12016-K1"
+   ],
+   "devices": [
+    "iOS Device | iOS 11.2.6 | mobile safari generic | 2224x1668"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "556796579",
+   "cards": [
+    "C01155-K2",
+    "C06224-K2",
+    "C06708-K2",
+    "C10519-K1",
+    "C11000-K2",
+    "C12961-K2"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_12_6 | chrome 65.0 | 2560x1600",
+    "MacOS | Mac OS X 10_12_6 | chrome 64.0 | 2560x1600"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "571475881",
+   "cards": [
+    "C00750-K2",
+    "C01996-K2",
+    "C04124-K1",
+    "C04576-K1",
+    "C10320-K1",
+    "C10734-K1"
+   ],
+   "devices": [
+    "Windows | Windows 7 | chrome 66.0 | 1280x800",
+    "Windows | Windows 7 | chrome 65.0 | 1280x800"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "559942881",
+   "cards": [
+    "C01154-K1",
+    "C05786-K2",
+    "C06224-K2",
+    "C09663-K1",
+    "C10390-K1",
+    "C11686-K1"
+   ],
+   "devices": [
+    "iOS Device | iOS 9.3.5 | mobile safari generic | 2048x1536"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "585107677",
+   "cards": [
+    "C00942-K2",
+    "C03040-K2",
+    "C03170-K1",
+    "C03412-K1",
+    "C05289-K2",
+    "C06947-K2"
+   ],
+   "devices": [
+    "Windows | Windows 10 | chrome 66.0 | 1024x768",
+    "Windows | Windows 10 | chrome generic | 1024x768"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "587205025",
+   "cards": [
+    "C02716-K2",
+    "C04112-K1",
+    "C09241-K2",
+    "C09573-K1",
+    "C12961-K2"
+   ],
+   "devices": [
+    "Trident/7.0 | Windows 10 | ie 11.0 for tablet | 1366x767"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "571474742",
+   "cards": [
+    "C02923-K1",
+    "C08299-K1",
+    "C11496-K2",
+    "C11539-K2",
+    "C12267-K2"
+   ],
+   "devices": [
+    "iOS Device | iOS 9.3.5 | mobile safari 9.0 | 1024x768"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "576717200",
+   "cards": [
+    "C01824-K1",
+    "C03040-K2",
+    "C03871-K1",
+    "C06224-K2",
+    "C06504-K1"
+   ],
+   "devices": [
+    "Windows | Windows 10 | chrome 66.0 | 3200x1800"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "594549381",
+   "cards": [
+    "C04105-K2",
+    "C04108-K2",
+    "C04776-K1",
+    "C08450-K2",
+    "C13067-K1"
+   ],
+   "devices": [
+    "iOS Device | iOS 11.1.2 | mobile safari generic | 2001x1125"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "559942967",
+   "cards": [
+    "C02342-K1",
+    "C03040-K2",
+    "C04278-K1",
+    "C06026-K2",
+    "C08877-K1"
+   ],
+   "devices": [
+    "SM-N950U Build/R16NW | Android 8.0.0 | chrome generic for android | 2220x1081"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "579866591",
+   "cards": [
+    "C00805-K1",
+    "C00992-K1",
+    "C03312-K1",
+    "C06224-K2",
+    "C07620-K1"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_13_2 | safari generic | 2880x1800"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "570427462",
+   "cards": [
+    "C03598-K2",
+    "C05704-K2",
+    "C08933-K1",
+    "C09442-K1",
+    "C10955-K2"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_13_2 | safari 11.0 | 1440x900"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "586155966",
+   "cards": [
+    "C03341-K2",
+    "C04139-K1",
+    "C05290-K2",
+    "C07196-K2",
+    "C12686-K1"
+   ],
+   "devices": [
+    "iOS Device | iOS 11.2.2 | mobile safari generic | 2436x1125"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "586158914",
+   "cards": [
+    "C03218-K2",
+    "C03278-K2",
+    "C04759-K1",
+    "C09442-K1",
+    "C11716-K1"
+   ],
+   "devices": [
+    "SM-G930T Build/NRD90M | Android 7.0 | chrome 66.0 for android | 1920x1080"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "588253607",
+   "cards": [
+    "C04125-K2",
+    "C06224-K2",
+    "C08943-K2",
+    "C10365-K1",
+    "C11092-K2"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_12_6 | chrome 65.0 | 1280x800"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "579864112",
+   "cards": [
+    "C01104-K2",
+    "C01983-K1",
+    "C06224-K2",
+    "C07987-K2",
+    "C11309-K1"
+   ],
+   "devices": [
+    "Windows | other | chrome 61.0 | 1280x720"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "548405558",
+   "cards": [
+    "C01138-K2",
+    "C02695-K1",
+    "C03218-K2",
+    "C04108-K2",
+    "C05704-K2"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_12_6 | chrome 65.0 | 1920x1080"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "567280304",
+   "cards": [
+    "C00731-K1",
+    "C02716-K2",
+    "C08489-K2",
+    "C11092-K2",
+    "C12897-K1"
+   ],
+   "devices": [
+    "Windows | Windows 10 | edge 16.0 | 1024x768"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "548406869",
+   "cards": [
+    "C00952-K1",
+    "C05175-K1",
+    "C05704-K2",
+    "C07149-K2",
+    "C11309-K1"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_9_5 | chrome 65.0 | 1440x900"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "548409629",
+   "cards": [
+    "C03856-K1",
+    "C05783-K1",
+    "C07212-K2",
+    "C08008-K1",
+    "C09365-K2"
+   ],
+   "devices": [
+    "SM-G960U Build/R16NW | Android 8.0.0 | chrome 66.0 for android | 2220x1080"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "559945542",
+   "cards": [
+    "C03040-K2",
+    "C06208-K1",
+    "C08260-K1",
+    "C10955-K2",
+    "C11000-K2"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_12_6 | chrome 65.0 | 3360x2100"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "548409352",
+   "cards": [
+    "C00513-K1",
+    "C05690-K1",
+    "C07578-K1",
+    "C07901-K1",
+    "C10390-K1"
+   ],
+   "devices": [
+    "Windows | Windows 10 | edge 17.0 | 1366x768"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "548407325",
+   "cards": [
+    "C01155-K2",
+    "C03043-K1",
+    "C03738-K2",
+    "C03838-K1",
+    "C05128-K1"
+   ],
+   "devices": [
+    "MacOS | Mac | chrome 65.0 | 1440x900"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "580911656",
+   "cards": [
+    "C02231-K1",
+    "C02653-K1",
+    "C05560-K2",
+    "C07212-K2",
+    "C09468-K2"
+   ],
+   "devices": [
+    "Windows | Windows 10 | chrome 66.0 | 3440x1440"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "548406113",
+   "cards": [
+    "C03016-K1",
+    "C03040-K2",
+    "C05288-K1",
+    "C07518-K2",
+    "C11309-K1"
+   ],
+   "devices": [
+    "Windows | Windows 7 | firefox 59.0 | 1920x1200"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "556794614",
+   "cards": [
+    "C03019-K2",
+    "C04108-K2",
+    "C06399-K1",
+    "C07872-K2",
+    "C09187-K1"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_13_1 | safari generic | 2880x1800"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "556796263",
+   "cards": [
+    "C03185-K1",
+    "C04108-K2",
+    "C05704-K2",
+    "C08945-K2",
+    "C10981-K1"
+   ],
+   "devices": [
+    "iOS Device | iOS 11.1.1 | mobile safari generic | 1334x750"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "556799948",
+   "cards": [
+    "C01155-K2",
+    "C01441-K1",
+    "C06224-K2",
+    "C09149-K1",
+    "C09800-K2"
+   ],
+   "devices": [
+    "| Android | chrome 65.0 | 1366x768"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "592447414",
+   "cards": [
+    "C00443-K1",
+    "C02716-K2",
+    "C04125-K2",
+    "C08587-K1",
+    "C13241-K1"
+   ],
+   "devices": [
+    "Trident/7.0 | Windows 10 | ie 11.0 for desktop | 1365x768"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "571476393",
+   "cards": [
+    "C01138-K2",
+    "C04125-K2",
+    "C04400-K1",
+    "C12961-K2",
+    "C12983-K1"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_10_5 | chrome 66.0 | 1280x800"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "589306541",
+   "cards": [
+    "C02342-K1",
+    "C06224-K2",
+    "C08489-K2",
+    "C09274-K1",
+    "C12150-K1"
+   ],
+   "devices": [
+    "Windows | Windows 8.1 | firefox 59.0 | 1366x768",
+    "Windows | Windows 7 | firefox 57.0 | 1920x1080"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "576723202",
+   "cards": [
+    "C03005-K1",
+    "C05492-K1",
+    "C06462-K1",
+    "C07385-K1",
+    "C13440-K2"
+   ],
+   "devices": [
+    "SM-N950U Build/R16NW | Android 8.0.0 | chrome 66.0 for android | 2220x1080"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "580917885",
+   "cards": [
+    "C00667-K1",
+    "C06127-K1",
+    "C07867-K2",
+    "C12320-K1",
+    "C12942-K2"
+   ],
+   "devices": [
+    "Windows | Windows 10 | chrome 65.0 | 2560x1080"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "556798125",
+   "cards": [
+    "C02773-K1",
+    "C03999-K1",
+    "C04246-K1",
+    "C07490-K1",
+    "C13553-K1"
+   ],
+   "devices": [
+    "Windows | Windows Vista | chrome 49.0 | 1280x800"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "556794643",
+   "cards": [
+    "C03040-K2",
+    "C04108-K2",
+    "C05786-K2",
+    "C11000-K2",
+    "C11309-K1"
+   ],
+   "devices": [
+    "iOS Device | iOS 11.3.1 | google search application 49.0 | 1334x750"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "571475505",
+   "cards": [
+    "C00832-K1",
+    "C00952-K1",
+    "C06026-K2",
+    "C08348-K1",
+    "C11000-K2"
+   ],
+   "devices": [
+    "Windows | Windows 7 | chrome 60.0 | 1920x1080"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "589300062",
+   "cards": [
+    "C02667-K1",
+    "C03517-K1",
+    "C04108-K2",
+    "C07913-K2",
+    "C10045-K1"
+   ],
+   "devices": [
+    "SM-G920V Build/NRD90M | Android 7.0 | chrome 65.0 for android | 2560x1440"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "567280899",
+   "cards": [
+    "C01155-K2",
+    "C02354-K2",
+    "C03040-K2",
+    "C05560-K2",
+    "C07801-K1"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_11_6 | chrome 66.0 | 2880x1800"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "548405357",
+   "cards": [
+    "C05128-K1",
+    "C05245-K2",
+    "C07919-K2",
+    "C09471-K2",
+    "C11319-K1"
+   ],
+   "devices": [
+    "SM-N950U Build/NMF26X | Android 7.1.1 | chrome 66.0 for android | 2220x1081",
+    "| Android | chrome 65.0 | 1920x1080"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "570428506",
+   "cards": [
+    "C01162-K1",
+    "C02749-K1",
+    "C05061-K1",
+    "C07741-K2"
+   ],
+   "devices": [
+    "SM-N950U Build/NMF26X | Android 7.1.1 | chrome 65.0 for android | 2220x1081"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "586159282",
+   "cards": [
+    "C02575-K2",
+    "C09439-K1",
+    "C11131-K1",
+    "C11965-K1"
+   ],
+   "devices": [
+    "Windows | Windows 10 | chrome 58.0 | 1366x768"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "596641507",
+   "cards": [
+    "C00750-K2",
+    "C09301-K2",
+    "C11413-K1",
+    "C13086-K2"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_10_5 | chrome 65.0 | 1920x1080"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "579862636",
+   "cards": [
+    "C00606-K1",
+    "C05567-K1",
+    "C06079-K1",
+    "C10585-K2"
+   ],
+   "devices": [
+    "rv:59.0 | Mac OS X 10.13 | firefox 59.0 | 3360x2100"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "570427469",
+   "cards": [
+    "C03040-K2",
+    "C04277-K1",
+    "C05360-K1",
+    "C06208-K1"
+   ],
+   "devices": [
+    "iOS Device | iOS 11.2.2 | mobile safari generic | 2048x1536"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "576721936",
+   "cards": [
+    "C01138-K2",
+    "C11653-K1",
+    "C11777-K1",
+    "C12961-K2"
+   ],
+   "devices": [
+    "iOS Device | iOS 10.3.3 | mobile safari generic | 2001x1125",
+    "SM-G935V Build/NRD90M | Android 7.0 | chrome 65.0 for android | 1920x1080"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "570427835",
+   "cards": [
+    "C01155-K2",
+    "C04108-K2",
+    "C04125-K2",
+    "C07212-K2"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_11_6 | safari generic | 1366x768"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "556800577",
+   "cards": [
+    "C00728-K2",
+    "C05106-K1",
+    "C06130-K1",
+    "C12570-K1"
+   ],
+   "devices": [
+    "iOS Device | iOS 11.2.1 | mobile safari generic | 2048x1536"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "570429758",
+   "cards": [
+    "C01755-K2",
+    "C07149-K2",
+    "C12136-K2",
+    "C13440-K2"
+   ],
+   "devices": [
+    "LM-X210(G | Android 7.1.2 | chrome generic | 1280x720"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "559942942",
+   "cards": [
+    "C03834-K1",
+    "C05724-K1",
+    "C06036-K1",
+    "C10932-K1"
+   ],
+   "devices": [
+    "SAMSUNG SM-J530F Build/NRD90M |  | samsung browser 6.4 |",
+    "GT-I9505 Build/LRX22C |  | opera |"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "584057652",
+   "cards": [
+    "C02502-K2",
+    "C02960-K1",
+    "C03047-K2",
+    "C04108-K2"
+   ],
+   "devices": [
+    "Windows | Windows 8.1 | chrome 66.0 | 1368x768"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "571479277",
+   "cards": [
+    "C05560-K2",
+    "C07867-K2",
+    "C07901-K1",
+    "C11309-K1"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_13_3 | chrome 65.0 | 3360x2100"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "586155725",
+   "cards": [
+    "C00750-K2",
+    "C00854-K2",
+    "C03047-K2",
+    "C12887-K1"
+   ],
+   "devices": [
+    "iOS Device | iOS 11.2.6 | mobile safari 11.0 | 2001x1125"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "594548989",
+   "cards": [
+    "C00938-K1",
+    "C03040-K2",
+    "C09442-K1",
+    "C13134-K1"
+   ],
+   "devices": [
+    "iOS Device | iOS 11.3.1 | chrome 66.0 for ios | 2048x1536"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "599785797",
+   "cards": [
+    "C02673-K2",
+    "C05385-K2",
+    "C08623-K2",
+    "C09430-K2"
+   ],
+   "devices": [
+    "iOS Device | iOS 11.2.6 | mobile safari 11.0 | 2732x2048"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "584057832",
+   "cards": [
+    "C01377-K1",
+    "C04172-K2",
+    "C06224-K2",
+    "C10127-K2"
+   ],
+   "devices": [
+    "Moto Z (2 | Android 8.0.0 | chrome generic | 2560x1440"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "548410603",
+   "cards": [
+    "C00424-K1",
+    "C03019-K2",
+    "C09468-K2",
+    "C11309-K1"
+   ],
+   "devices": [
+    "KFDOWI Build/LVY48F | Android 5.1.1 | chrome 66.0 for android | 1280x800"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "576720050",
+   "cards": [
+    "C01719-K1",
+    "C05560-K2",
+    "C07925-K1",
+    "C08945-K2"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_13_4 | chrome 65.0 | 2560x1440"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "559940726",
+   "cards": [
+    "C01155-K2",
+    "C06224-K2",
+    "C08250-K1",
+    "C11929-K2"
+   ],
+   "devices": [
+    "rv:11.0 | Windows 7 | ie 11.0 for desktop | 1600x900"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "559944273",
+   "cards": [
+    "C03278-K2",
+    "C06224-K2",
+    "C07212-K2",
+    "C08662-K1"
+   ],
+   "devices": [
+    "rv:52.0 | Windows 7 | firefox 52.0 | 1920x1080"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "567285071",
+   "cards": [
+    "C01155-K2",
+    "C02716-K2",
+    "C07936-K2",
+    "C11269-K1"
+   ],
+   "devices": [
+    "Windows | Windows 10 | chrome 66.0 | 2048x1152"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "559941427",
+   "cards": [
+    "C03302-K1",
+    "C04568-K1",
+    "C06224-K2",
+    "C12219-K1"
+   ],
+   "devices": [
+    "Pixel | Android 8.1.0 | chrome 66.0 for android | 1921x1081"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "559943746",
+   "cards": [
+    "C01166-K1",
+    "C03696-K1",
+    "C07360-K1",
+    "C12897-K1"
+   ],
+   "devices": [
+    "iOS Device | iOS 11.3.1 | chrome 66.0 for ios | 2436x1125"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "585109728",
+   "cards": [
+    "C01828-K2",
+    "C07212-K2",
+    "C09227-K1",
+    "C11227-K2"
+   ],
+   "devices": [
+    "SM-T580 Build/NRD90M | Android 7.0 | chrome 65.0 for android | 1920x1200"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "579869233",
+   "cards": [
+    "C00416-K1",
+    "C06300-K2",
+    "C06552-K2",
+    "C12403-K1"
+   ],
+   "devices": [
+    "SAMSUNG SM-N950U Build/NMF26X | Android 7.1.1 | samsung browser 6.4 | 2220x1081"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "567279687",
+   "cards": [
+    "C00294-K2",
+    "C02181-K2",
+    "C04386-K1",
+    "C06988-K1"
+   ],
+   "devices": [
+    "BLADE V8Q Build/N2G47H |  | chrome generic for android |"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "556798110",
+   "cards": [
+    "C03470-K1",
+    "C03938-K1",
+    "C07296-K1",
+    "C09988-K1"
+   ],
+   "devices": [
+    "SAMSUNG SM-A310F Build/NRD90M |  | samsung browser 6.4 |"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "588256773",
+   "cards": [
+    "C01377-K1",
+    "C04615-K1",
+    "C06224-K2",
+    "C11965-K1"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_12_6 | safari generic | 5120x2880"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "559943958",
+   "cards": [
+    "C05551-K2",
+    "C06224-K2",
+    "C09290-K1",
+    "C10553-K1"
+   ],
+   "devices": [
+    "Windows | Windows 10 | chrome 66.0 | 3000x2000"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "559942493",
+   "cards": [
+    "C03047-K2",
+    "C05772-K1",
+    "C06320-K1",
+    "C08819-K1"
+   ],
+   "devices": [
+    "Trident/7.0 | Windows 10 | ie 11.0 for desktop | 2560x1440",
+    "Windows | Windows 7 | ie 11.0 for desktop | 2560x1440"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "571474178",
+   "cards": [
+    "C03231-K2",
+    "C06515-K1",
+    "C11064-K1",
+    "C12939-K1"
+   ],
+   "devices": [
+    "Pixel |  | chrome 66.0 for android |"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "548408537",
+   "cards": [
+    "C01155-K2",
+    "C06544-K1",
+    "C08804-K1",
+    "C10137-K2"
+   ],
+   "devices": [
+    "MacOS | Mac | safari generic | 1366x768"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "556799191",
+   "cards": [
+    "C00889-K2",
+    "C04125-K2",
+    "C10858-K1",
+    "C11464-K2"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_13_2 | chrome 65.0 | 2880x1800"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "576723324",
+   "cards": [
+    "C01982-K2",
+    "C05551-K2",
+    "C09170-K1",
+    "C12983-K1"
+   ],
+   "devices": [
+    "XT1650 Build/NCLS26.118-23-13-6-5 | Android 7.1.1 | chrome 65.0 for android | 2560x1440"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "576718608",
+   "cards": [
+    "C00768-K2",
+    "C07717-K1",
+    "C09165-K2",
+    "C11639-K1"
+   ],
+   "devices": [
+    "Windows | Windows 10 | firefox 52.0 | 1920x1080"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "570430257",
+   "cards": [
+    "C01347-K2",
+    "C08489-K2",
+    "C10715-K2",
+    "C12598-K2"
+   ],
+   "devices": [
+    "SM-G955U Build/R16NW | Android 8.0.0 | chrome 66.0 for android | 2220x1080"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "586160765",
+   "cards": [
+    "C04033-K2",
+    "C05461-K1",
+    "C06855-K1",
+    "C12336-K1"
+   ],
+   "devices": [
+    "Windows |  | firefox 58.0 |"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "556797243",
+   "cards": [
+    "C00549-K1",
+    "C04034-K2",
+    "C04597-K2",
+    "C11919-K2"
+   ],
+   "devices": [
+    "SM-J530GM Build/NRD90M |  | chrome 65.0 for android |"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "579863744",
+   "cards": [
+    "C01155-K2",
+    "C04313-K1",
+    "C09249-K1",
+    "C12897-K1"
+   ],
+   "devices": [
+    "Trident/7.0 | Windows 10 | ie 11.0 for desktop | 1024x768"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "594548941",
+   "cards": [
+    "C01377-K1",
+    "C03933-K1",
+    "C06026-K2",
+    "C09471-K2"
+   ],
+   "devices": [
+    "rv:59.0 | Android 7.0 | Generic/Android 7.0 | 1920x1080"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "548405611",
+   "cards": [
+    "C03047-K2",
+    "C10016-K2",
+    "C11000-K2",
+    "C12897-K1"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_13_3 | chrome 66.0 | 1280x800"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "587207470",
+   "cards": [
+    "C01294-K1",
+    "C02585-K1",
+    "C08924-K2",
+    "C12810-K1"
+   ],
+   "devices": [
+    "SM-A310F Build/NRD90M |  | chrome 65.0 for android |"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "576723288",
+   "cards": [
+    "C00452-K2",
+    "C04108-K2",
+    "C13007-K1",
+    "C13124-K1"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_13_4 | safari generic | 1366x768",
+    "SAMSUNG-SM-G935A Build/NRD90M | Android 7.0 | chrome generic for android | 1920x1080"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "592446357",
+   "cards": [
+    "C02182-K1",
+    "C07212-K2",
+    "C07867-K2",
+    "C10197-K1"
+   ],
+   "devices": [
+    "SAMSUNG SM-T580 Build/NRD90M | Android 7.0 | samsung browser 6.4 | 1920x1200"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "580912427",
+   "cards": [
+    "C01755-K2",
+    "C03040-K2",
+    "C04840-K1",
+    "C11040-K1"
+   ],
+   "devices": [
+    "Windows | Windows 10 | chrome generic | 2736x1824"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "580913135",
+   "cards": [
+    "C04108-K2",
+    "C06208-K1",
+    "C06220-K1",
+    "C07316-K1"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_13_1 | safari 11.0 | 1440x900"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "556796180",
+   "cards": [
+    "C03394-K2",
+    "C06208-K1",
+    "C07011-K1",
+    "C08450-K2"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_13_3 | safari generic | 1366x768"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "586159922",
+   "cards": [
+    "C01755-K2",
+    "C02902-K2",
+    "C07256-K2",
+    "C09683-K1"
+   ],
+   "devices": [
+    "Windows | Windows Vista | chrome 49.0 | 1440x900"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "586156158",
+   "cards": [
+    "C03598-K2",
+    "C04517-K1",
+    "C05772-K1",
+    "C09900-K1"
+   ],
+   "devices": [
+    "Windows | Windows 10 | comodo | 1920x1080"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "559941235",
+   "cards": [
+    "C00854-K2",
+    "C01909-K2",
+    "C06224-K2",
+    "C09684-K1"
+   ],
+   "devices": [
+    "Windows | Windows 7 | ie 11.0 for desktop | 1920x1080"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "587206802",
+   "cards": [
+    "C00750-K2",
+    "C01155-K2",
+    "C07216-K1",
+    "C09344-K1"
+   ],
+   "devices": [
+    "Windows | Windows 10 | chrome 66.0 | 1280x800"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "596640144",
+   "cards": [
+    "C01755-K2",
+    "C02716-K2",
+    "C03040-K2",
+    "C03094-K1"
+   ],
+   "devices": [
+    "iOS Device | iOS 11.0.0 | mobile safari generic | 2208x1242"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "571474022",
+   "cards": [
+    "C00060-K1",
+    "C03318-K1",
+    "C05704-K2",
+    "C10852-K1"
+   ],
+   "devices": [
+    "Windows | Windows 7 | firefox 60.0 | 1280x1024"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "570426745",
+   "cards": [
+    "C01828-K2",
+    "C05312-K1",
+    "C08798-K1",
+    "C09445-K1"
+   ],
+   "devices": [
+    "iOS Device | iOS 10.3.1 | mobile safari 10.0 | 2048x1536"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "548409749",
+   "cards": [
+    "C01137-K1",
+    "C07033-K1",
+    "C07954-K1",
+    "C09165-K2"
+   ],
+   "devices": [
+    "iOS Device | iOS 11.3.1 | google | 2436x1125"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "559941366",
+   "cards": [
+    "C00889-K2",
+    "C05559-K1",
+    "C08450-K2",
+    "C10104-K1"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_13_3 | safari 11.0 | 2560x1600"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "588251445",
+   "cards": [
+    "C00796-K1",
+    "C03040-K2",
+    "C03211-K1",
+    "C09468-K2"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_8_5 | chrome 49.0 | 1440x900"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "598739025",
+   "cards": [
+    "C03405-K2",
+    "C03633-K1",
+    "C04514-K1",
+    "C11709-K2"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_8_5 | chrome 49.0 | 1280x800"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "589301309",
+   "cards": [
+    "C01108-K1",
+    "C01828-K2",
+    "C09241-K2",
+    "C09371-K1"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_12_6 | chrome 66.0 | 1280x800"
+   ]
+  },
+  {
+   "type": "wcc_component",
+   "component": "570425991",
+   "cards": [
+    "C01155-K2",
+    "C02460-K1",
+    "C09600-K1",
+    "C11709-K2"
+   ],
+   "devices": [
+    "MacOS | Mac OS X 10_9_5 | chrome 65.0 | 2560x1600"
+   ]
+  }
+ ]
+}

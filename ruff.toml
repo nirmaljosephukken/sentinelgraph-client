@@ -1,0 +1,13 @@
+# Lint settings used by CI (.github/workflows/ci.yml). Errors that hide bugs only: undefined names, unused imports
+# and variables, syntax, comparisons that never work. Style is not enforced.
+line-length = 130
+target-version = "py311"
+extend-exclude = ["data", "traces", "cases", "proactive", "knowledge", "mcp"]
+
+[lint]
+select = ["E9", "F", "B006", "B008", "PLE"]
+ignore = ["E402", "F841"]
+
+[lint.per-file-ignores]
+"tests/*" = ["F811"]
+"api/app.py" = ["B008"]      # FastAPI's Depends() in defaults is the framework's intended pattern

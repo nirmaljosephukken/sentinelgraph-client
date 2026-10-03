@@ -1,0 +1,40 @@
+{
+ "displayName": "SentinelGraph {{SERVICE}}: alerts waiting on the stream",
+ "severity": "ERROR",
+ "combiner": "OR",
+ "conditions": [
+  {
+   "displayName": "oldest unacknowledged alert > 10 min",
+   "conditionThreshold": {
+    "filter": "metric.type=\"pubsub.googleapis.com/subscription/oldest_unacked_message_age\" AND resource.type=\"pubsub_subscription\" AND resource.label.subscription_id=\"{{SUBSCRIPTION}}\"",
+    "aggregations": [
+     {
+      "alignmentPeriod": "60s",
+      "perSeriesAligner": "ALIGN_MAX",
+      "crossSeriesReducer": "REDUCE_MAX"
+     }
+    ],
+    "comparison": "COMPARISON_GT",
+    "thresholdValue": 600,
+    "duration": "300s",
+    "trigger": {
+     "count": 1
+    }
+   }
+  }
+ ],
+ "alertStrategy": {
+  "autoClose": "1800s"
+ },
+ "documentation": {
+  "mimeType": "text/markdown",
+  "content": "Alerts are queued but the worker is not taking them. Check Cloud Run > {{SERVICE}}-worker (errors, max instances) and the push subscription `{{SUBSCRIPTION}}`."
+ },
+ "notificationChannels": [
+  "{{CHANNEL}}"
+ ],
+ "userLabels": {
+  "app": "sentinelgraph",
+  "check": "stream-backlog"
+ }
+}

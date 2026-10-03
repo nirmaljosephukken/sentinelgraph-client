@@ -1,0 +1,539 @@
+{
+ "case": {
+  "case_id": "ALR-004",
+  "opened_at": "2016-12-29 07:53:54",
+  "trigger_type": "customer_report",
+  "trigger_text": "Customer C08106 message: 'I never made this $128.33 purchase. Please check my card.' Refers to 3583227.",
+  "flagged_txn_id": "3583227",
+  "card_id": "C08106-K1",
+  "customer_id": "C08106",
+  "risk_score": ""
+ },
+ "events": [
+  {
+   "step": 1,
+   "ts": "2016-12-29 07:53:54",
+   "kind": "trigger",
+   "title": "Customer Report: Customer C08106 message: 'I never made this $128.33 purchase. Please check my card.' Refers to 3583227.",
+   "detail": {
+    "case_id": "ALR-004",
+    "flagged_txn_id": "3583227",
+    "card_id": "C08106-K1",
+    "customer_id": "C08106",
+    "risk_score": ""
+   },
+   "elapsed_s": 0.0
+  },
+  {
+   "step": 2,
+   "ts": "2016-12-29 07:54:54",
+   "kind": "case",
+   "title": "Case CASE-2016-0004 opened for alert ALR-004 (status: investigating)",
+   "detail": {
+    "graph_case_id": "CASE-2016-0004"
+   },
+   "elapsed_s": 0.0
+  },
+  {
+   "step": 3,
+   "ts": "2016-12-29 07:55:24",
+   "kind": "tool",
+   "title": "txn_context(txn_id=3583227)",
+   "detail": {
+    "args": {
+     "txn_id": "3583227"
+    },
+    "result": {
+     "txn": 24,
+     "card": 6,
+     "customer": 2,
+     "customer_cards": 1
+    },
+    "latency_s": 0.113,
+    "transport": "mcp"
+   },
+   "elapsed_s": 0.11
+  },
+  {
+   "step": 4,
+   "ts": "2016-12-29 07:55:54",
+   "kind": "tool",
+   "title": "card_window(card_id=C08106-K1, t0=2016-08-31 01:53:54, t1=2017-01-05 01:53:54)",
+   "detail": {
+    "args": {
+     "card_id": "C08106-K1",
+     "t0": "2016-08-31 01:53:54",
+     "t1": "2017-01-05 01:53:54"
+    },
+    "result": {
+     "rows": 137
+    },
+    "latency_s": 0.159,
+    "transport": "mcp"
+   },
+   "elapsed_s": 0.27
+  },
+  {
+   "step": 5,
+   "ts": "2016-12-29 07:56:24",
+   "kind": "tool",
+   "title": "card_profile(card_id=C08106-K1, before=2016-12-29 01:53:54)",
+   "detail": {
+    "args": {
+     "card_id": "C08106-K1",
+     "before": "2016-12-29 01:53:54"
+    },
+    "result": {
+     "n": 209,
+     "amount_sum": 7380.369999999998,
+     "amount_max": 138.89,
+     "products": 1,
+     "regions": 5,
+     "devices": 77,
+     "emails": 11,
+     "channels": 1,
+     "first_ts": "2016-07-06 23:51:38",
+     "last_ts": "2016-12-28 02:21:09"
+    },
+    "latency_s": 0.114,
+    "transport": "mcp"
+   },
+   "elapsed_s": 0.39
+  },
+  {
+   "step": 6,
+   "ts": "2016-12-29 07:56:54",
+   "kind": "tool",
+   "title": "client_history(client_id=C08106-K1|-1|180)",
+   "detail": {
+    "args": {
+     "client_id": "C08106-K1|-1|180"
+    },
+    "result": {
+     "rows": 2
+    },
+    "latency_s": 0.135,
+    "transport": "mcp"
+   },
+   "elapsed_s": 0.52
+  },
+  {
+   "step": 7,
+   "ts": "2016-12-29 07:57:24",
+   "kind": "tool",
+   "title": "device_fanout(device= |  | firefox 47.0 | , t0=2016-12-19 01:53:54, t1=2017-01-08 01:53:54)",
+   "detail": {
+    "args": {
+     "device": " |  | firefox 47.0 | ",
+     "t0": "2016-12-19 01:53:54",
+     "t1": "2017-01-08 01:53:54"
+    },
+    "result": {
+     "device": 2,
+     "txns": 1
+    },
+    "latency_s": 0.13,
+    "transport": "mcp"
+   },
+   "elapsed_s": 0.65
+  },
+  {
+   "step": 8,
+   "ts": "2016-12-29 07:57:54",
+   "kind": "tool",
+   "title": "peer_txns(txn_id=3583227, t0=2016-12-27 01:53:54, t1=2016-12-31 01:53:54, lo=126.41, hi=130.25, use_email=True)",
+   "detail": {
+    "args": {
+     "txn_id": "3583227",
+     "t0": "2016-12-27 01:53:54",
+     "t1": "2016-12-31 01:53:54",
+     "lo": 126.41,
+     "hi": 130.25,
+     "use_email": true
+    },
+    "result": {
+     "rows": 1
+    },
+    "latency_s": 0.118,
+    "transport": "mcp"
+   },
+   "elapsed_s": 0.77
+  },
+  {
+   "step": 9,
+   "ts": "2016-12-29 07:58:24",
+   "kind": "tool",
+   "title": "prior_cases(customer_id=C08106)",
+   "detail": {
+    "args": {
+     "customer_id": "C08106"
+    },
+    "result": {
+     "closed_cases": 4,
+     "connected_closed_cases": 0,
+     "agent_cases": 1
+    },
+    "latency_s": 0.106,
+    "transport": "mcp"
+   },
+   "elapsed_s": 0.88
+  },
+  {
+   "step": 10,
+   "ts": "2016-12-29 07:58:54",
+   "kind": "evidence",
+   "title": "Graph evidence collected: 5 findings",
+   "detail": [
+    {
+     "claim": "Cardholder reported the transaction as unauthorised. In the bank's memory, all 4,665 cardholder-reported cases were confirmed fraud",
+     "source": "customer",
+     "ref": "trigger:customer_report",
+     "entity_ids": [
+      "C08106",
+      "3583227"
+     ],
+     "lr": 40.0,
+     "family": "trigger",
+     "direction": "fraud",
+     "step": 9
+    },
+    {
+     "claim": "Case-memory model (trained on the bank's closed cases, AUC 0.91 on an October hold-out vs 0.87 for the bank score) gives this transaction 0.003, a calibrated fraud rate of 0.5%",
+     "source": "graph",
+     "ref": "txn.model_score",
+     "entity_ids": [
+      "3583227"
+     ],
+     "lr": 1.0,
+     "family": "ml",
+     "direction": "neutral",
+     "step": 9
+    },
+    {
+     "claim": "Identity record marks the device as New for this account",
+     "source": "graph",
+     "ref": "txn_context",
+     "entity_ids": [
+      "3583227"
+     ],
+     "lr": 1.6,
+     "family": "device",
+     "direction": "fraud",
+     "step": 9
+    },
+    {
+     "claim": "Card has 3 earlier confirmed fraud case(s) (card_not_present_fraud), most recent 2016-09-21; the card was reissued each time, so this is context, not proof",
+     "source": "graph",
+     "ref": "prior_cases",
+     "entity_ids": [
+      "CC-3778",
+      "CC-1736",
+      "CC-2121"
+     ],
+     "lr": 1.3,
+     "family": "history",
+     "direction": "fraud",
+     "step": 9
+    },
+    {
+     "claim": "Card also has 1 cleared alert(s) (e.g. Case CC-0696: model scored a $13.68 transaction at 0.83. Cardholder confirmed travel to th)",
+     "source": "graph",
+     "ref": "prior_cases",
+     "entity_ids": [
+      "CC-0696"
+     ],
+     "lr": 0.85,
+     "family": "history",
+     "direction": "legit",
+     "step": 9
+    }
+   ],
+   "elapsed_s": 0.88
+  },
+  {
+   "step": 11,
+   "ts": "2016-12-29 07:59:24",
+   "kind": "tool",
+   "title": "similar_closed_cases(vec=<vector 256>, k=8)",
+   "detail": {
+    "args": {
+     "vec": "<vector 256>",
+     "k": 8
+    },
+    "result": {
+     "rows": 8
+    },
+    "latency_s": 0.062,
+    "transport": "mcp"
+   },
+   "elapsed_s": 0.94
+  },
+  {
+   "step": 12,
+   "ts": "2016-12-29 07:59:54",
+   "kind": "tool",
+   "title": "similar_agent_cases(vec=<vector 256>, k=6)",
+   "detail": {
+    "args": {
+     "vec": "<vector 256>",
+     "k": 6
+    },
+    "result": {
+     "rows": 6
+    },
+    "latency_s": 0.06,
+    "transport": "mcp"
+   },
+   "elapsed_s": 1.0
+  },
+  {
+   "step": 13,
+   "ts": "2016-12-29 08:00:24",
+   "kind": "tool",
+   "title": "policy_search(vec=<vector 256>, k=4)",
+   "detail": {
+    "args": {
+     "vec": "<vector 256>",
+     "k": 4
+    },
+    "result": {
+     "rows": 4
+    },
+    "latency_s": 0.056,
+    "transport": "mcp"
+   },
+   "elapsed_s": 1.06
+  },
+  {
+   "step": 14,
+   "ts": "2016-12-29 08:00:54",
+   "kind": "tool",
+   "title": "llm:prior_cases(customer_id=C08106)",
+   "detail": {
+    "args": {
+     "customer_id": "C08106"
+    },
+    "result": {
+     "closed_cases": 4,
+     "connected_closed_cases": 0,
+     "agent_cases": 1
+    },
+    "latency_s": 0.107,
+    "transport": "mcp"
+   },
+   "elapsed_s": 2.0
+  },
+  {
+   "step": 15,
+   "ts": "2016-12-29 08:01:24",
+   "kind": "llm",
+   "title": "LLM investigator (gemini-3.5-flash-lite): 1 extra tool call(s)",
+   "detail": {
+    "calls": [
+     {
+      "tool": "prior_cases",
+      "args": {
+       "customer_id": "C08106"
+      }
+     }
+    ],
+    "notes": "Prior cases lookup for customer C08106 confirmed three previous fraud cases on card C08106-K1 between July and September 2016, all categorized as card-not-present fraud. The current online transaction shares this exact CNP pattern and occurs on a new device profile. Although previous reissues occurred following each past fraud case, compromise of the card details appears persistent. Some uncertainty remains regarding whether static credential leakage or broader account takeover is driving the repeated unauthorized activity."
+   },
+   "elapsed_s": 3.73
+  },
+  {
+   "step": 16,
+   "ts": "2016-12-29 08:01:54",
+   "kind": "assess",
+   "title": "Fraud probability 0.25 (memory-model prior 0.00); confidence low (conflicting evidence); hypothesis card_not_present_new_device; exposure $128.33",
+   "detail": {
+    "prior": 0.0047,
+    "posterior": 0.2508,
+    "graph_only": 0.01,
+    "log_lr_by_family": {
+     "trigger": 3.689,
+     "device": 0.47,
+     "history": 0.1
+    },
+    "fraud_families": [
+     "device",
+     "trigger"
+    ],
+    "legit_families": [
+     "ml"
+    ],
+    "uncertainty": [
+     "Device ownership not established (new device for this account)",
+     "Evidence conflicts: device, trigger point to fraud; ml point to legitimate use"
+    ]
+   },
+   "elapsed_s": 3.73
+  },
+  {
+   "step": 17,
+   "ts": "2016-12-29 08:02:24",
+   "kind": "decision",
+   "title": "Initial next best action: CREATE_CASE, VERIFY_WITH_CUSTOMER, MONITOR_CARD",
+   "detail": {
+    "actions": [
+     {
+      "action": "CREATE_CASE",
+      "route": "auto",
+      "reason": "Policy 3a: probability >= 0.30, evidence requested or customer dispute"
+     },
+     {
+      "action": "VERIFY_WITH_CUSTOMER",
+      "route": "auto",
+      "reason": "R1: probability 0.25 < 0.85 and the graph evidence does not yet confirm the denial; confirm card possession and the disputed details before blocking"
+     },
+     {
+      "action": "MONITOR_CARD",
+      "route": "auto",
+      "reason": "Raise monitoring while the cardholder confirms"
+     }
+    ],
+    "request": "customer_validation",
+    "why_request": "The cardholder's report is the main evidence; the graph does not independently confirm it. Confirming possession of the card and the disputed details settles R2 vs R3.",
+    "policy_check": []
+   },
+   "elapsed_s": 3.73
+  },
+  {
+   "step": 18,
+   "ts": "2016-12-29 08:02:54",
+   "kind": "execute",
+   "title": "Executed 3 auto action(s); 0 queued for approval",
+   "detail": {
+    "executed": [
+     "CREATE_CASE",
+     "VERIFY_WITH_CUSTOMER",
+     "MONITOR_CARD"
+    ],
+    "awaiting": []
+   },
+   "elapsed_s": 3.73
+  },
+  {
+   "step": 19,
+   "ts": "2016-12-29 08:23:54",
+   "kind": "request",
+   "title": "Evidence requested: customer_validation (policy 5, auto)",
+   "detail": {
+    "why": "The cardholder's report is the main evidence; the graph does not independently confirm it. Confirming possession of the card and the disputed details settles R2 vs R3."
+   },
+   "elapsed_s": 3.73
+  },
+  {
+   "step": 20,
+   "ts": "2016-12-29 09:53:54",
+   "kind": "response",
+   "title": "Reply (denied): Assumed: the cardholder confirms they still hold the card and did not make or authorise transaction 3583227 ($128.33). Basis: the cardholder's own report, although the graph evidence alone points to normal use (graph-only probability 0.01).",
+   "detail": {
+    "lr": 8.0
+   },
+   "elapsed_s": 3.73
+  },
+  {
+   "step": 21,
+   "ts": "2016-12-29 08:04:24",
+   "kind": "assess",
+   "title": "Reassessed fraud probability 0.73 (was 0.25)",
+   "detail": {
+    "posterior": 0.7282,
+    "log_lr_by_family": {
+     "trigger": 3.689,
+     "device": 0.47,
+     "history": 0.1,
+     "customer": 2.079
+    }
+   },
+   "elapsed_s": 3.73
+  },
+  {
+   "step": 22,
+   "ts": "2016-12-29 08:04:54",
+   "kind": "decision",
+   "title": "Final next best action: BLOCK_CARD, CREATE_CASE",
+   "detail": {
+    "actions": [
+     {
+      "action": "BLOCK_CARD",
+      "route": "L1",
+      "reason": "R2: cardholder denies the activity; exposure $128.33 <= $2,500 -> L1"
+     },
+     {
+      "action": "CREATE_CASE",
+      "route": "auto",
+      "reason": "R2: record the investigation and write it to the graph"
+     }
+    ],
+    "policy_check": []
+   },
+   "elapsed_s": 3.73
+  },
+  {
+   "step": 23,
+   "ts": "2016-12-29 08:05:24",
+   "kind": "llm",
+   "title": "Case narrative written by gemini-3.5-flash-lite (3/3 fields accepted)",
+   "detail": {
+    "summary": "This case was triggered by customer C08106 reporting an unauthorized online purchase of $128.33 on transaction 3583227 using card C08106-K1 on 2016-12-29. The graph and case-memory data highlighted that the card has three earlier confirmed fraud cases between July and September 2016, and the current",
+    "sar_narrative": "",
+    "pattern_description": ""
+   },
+   "elapsed_s": 5.33
+  },
+  {
+   "step": 24,
+   "ts": "2016-12-29 08:05:54",
+   "kind": "memory",
+   "title": "Case CASE-2016-0004 written to case memory (closed_fraud, fraud, card_not_present_new_device)",
+   "detail": {
+    "edges": {
+     "txns": 1,
+     "cards": 1,
+     "devices": 0,
+     "similar_closed_cases": [
+      "CC-1123",
+      "CC-2948",
+      "CC-2753",
+      "CC-1414",
+      "CC-0232"
+     ]
+    }
+   },
+   "elapsed_s": 5.33
+  }
+ ],
+ "transport": [
+  "mcp:txn_context:0.38s",
+  "mcp:card_window:0.23s",
+  "mcp:card_profile:0.11s",
+  "mcp:client_history:0.11s",
+  "mcp:peer_txns:0.11s",
+  "mcp:prior_cases:0.11s",
+  "mcp:similar_closed_cases:0.06s",
+  "mcp:similar_agent_cases:0.06s",
+  "mcp:policy_search:0.07s",
+  "mcp:prior_cases:0.11s",
+  "restpp:upsert_case",
+  "mcp:txn_context:0.11s",
+  "mcp:card_window:0.16s",
+  "mcp:card_profile:0.11s",
+  "mcp:client_history:0.13s",
+  "mcp:device_fanout:0.13s",
+  "mcp:peer_txns:0.12s",
+  "mcp:prior_cases:0.11s",
+  "mcp:similar_closed_cases:0.06s",
+  "mcp:similar_agent_cases:0.06s",
+  "mcp:policy_search:0.06s",
+  "mcp:prior_cases:0.11s",
+  "restpp:upsert_case"
+ ],
+ "llm": {
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite",
+  "calls": 3,
+  "errors": []
+ }
+}

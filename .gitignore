@@ -1,0 +1,17 @@
+.env
+__pycache__/
+*.pyc
+data/agent_cases_local/
+.streamlit/secrets.toml
+_wheels/
+.venv/
+data/live/
+
+# local user directory and audit log (client edition)
+data/access/
+
+# client data loaded through the intake, and cases opened on it, never go to git
+data/client/
+data/agent_cases_client/
+.ruff_cache/
+.pytest_cache/

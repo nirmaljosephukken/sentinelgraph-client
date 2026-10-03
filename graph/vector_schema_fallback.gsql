@@ -1,0 +1,8 @@
+USE GRAPH FraudGraph
+CREATE SCHEMA_CHANGE JOB add_vector_lists FOR GRAPH FraudGraph {
+  ALTER VERTEX ClosedCase ADD ATTRIBUTE (emb_list LIST<DOUBLE>);
+  ALTER VERTEX FraudCase ADD ATTRIBUTE (emb_list LIST<DOUBLE>);
+  ALTER VERTEX PolicyChunk ADD ATTRIBUTE (emb_list LIST<DOUBLE>);
+}
+RUN SCHEMA_CHANGE JOB add_vector_lists
+DROP JOB add_vector_lists

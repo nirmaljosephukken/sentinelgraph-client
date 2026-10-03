@@ -1,0 +1,582 @@
+{
+ "case": {
+  "case_id": "ALR-018",
+  "opened_at": "2016-11-27 14:41:26",
+  "trigger_type": "customer_report",
+  "trigger_text": "Customer C02354 message: 'I never made this $39.08 purchase. Please check my card.' Refers to 3491361.",
+  "flagged_txn_id": "3491361",
+  "card_id": "C02354-K2",
+  "customer_id": "C02354",
+  "risk_score": ""
+ },
+ "events": [
+  {
+   "step": 1,
+   "ts": "2016-11-27 14:41:26",
+   "kind": "trigger",
+   "title": "Customer Report: Customer C02354 message: 'I never made this $39.08 purchase. Please check my card.' Refers to 3491361.",
+   "detail": {
+    "case_id": "ALR-018",
+    "flagged_txn_id": "3491361",
+    "card_id": "C02354-K2",
+    "customer_id": "C02354",
+    "risk_score": ""
+   },
+   "elapsed_s": 0.0
+  },
+  {
+   "step": 2,
+   "ts": "2016-11-27 14:42:26",
+   "kind": "case",
+   "title": "Case CASE-2016-0018 opened for alert ALR-018 (status: investigating)",
+   "detail": {
+    "graph_case_id": "CASE-2016-0018"
+   },
+   "elapsed_s": 0.0
+  },
+  {
+   "step": 3,
+   "ts": "2016-11-27 14:42:56",
+   "kind": "tool",
+   "title": "txn_context(txn_id=3491361)",
+   "detail": {
+    "args": {
+     "txn_id": "3491361"
+    },
+    "result": {
+     "txn": 24,
+     "card": 6,
+     "customer": 2,
+     "customer_cards": 2
+    },
+    "latency_s": 0.133,
+    "transport": "mcp"
+   },
+   "elapsed_s": 0.13
+  },
+  {
+   "step": 4,
+   "ts": "2016-11-27 14:43:26",
+   "kind": "tool",
+   "title": "card_window(card_id=C02354-K2, t0=2016-07-30 13:41:26, t1=2016-12-04 13:41:26)",
+   "detail": {
+    "args": {
+     "card_id": "C02354-K2",
+     "t0": "2016-07-30 13:41:26",
+     "t1": "2016-12-04 13:41:26"
+    },
+    "result": {
+     "rows": 4845
+    },
+    "latency_s": 1.122,
+    "transport": "mcp"
+   },
+   "elapsed_s": 1.26
+  },
+  {
+   "step": 5,
+   "ts": "2016-11-27 14:43:56",
+   "kind": "tool",
+   "title": "card_profile(card_id=C02354-K2, before=2016-11-27 13:41:26)",
+   "detail": {
+    "args": {
+     "card_id": "C02354-K2",
+     "before": "2016-11-27 13:41:26"
+    },
+    "result": {
+     "n": 5860,
+     "amount_sum": 827233.5900000053,
+     "amount_max": 4438.01,
+     "products": 5,
+     "regions": 39,
+     "devices": 249,
+     "emails": 27,
+     "channels": 2,
+     "first_ts": "2016-07-02 00:39:20",
+     "last_ts": "2016-11-27 12:40:20"
+    },
+    "latency_s": 0.148,
+    "transport": "mcp"
+   },
+   "elapsed_s": 1.4
+  },
+  {
+   "step": 6,
+   "ts": "2016-11-27 14:44:26",
+   "kind": "tool",
+   "title": "client_history(client_id=C02354-K2|126|-185)",
+   "detail": {
+    "args": {
+     "client_id": "C02354-K2|126|-185"
+    },
+    "result": {
+     "rows": 15
+    },
+    "latency_s": 0.121,
+    "transport": "mcp"
+   },
+   "elapsed_s": 1.52
+  },
+  {
+   "step": 7,
+   "ts": "2016-11-27 14:44:56",
+   "kind": "tool",
+   "title": "peer_txns(txn_id=3491361, t0=2016-11-25 13:41:26, t1=2016-11-29 13:41:26, lo=38.49, hi=39.67, use_email=False)",
+   "detail": {
+    "args": {
+     "txn_id": "3491361",
+     "t0": "2016-11-25 13:41:26",
+     "t1": "2016-11-29 13:41:26",
+     "lo": 38.49,
+     "hi": 39.67,
+     "use_email": false
+    },
+    "result": {
+     "rows": 0
+    },
+    "latency_s": 0.119,
+    "transport": "mcp"
+   },
+   "elapsed_s": 1.64
+  },
+  {
+   "step": 8,
+   "ts": "2016-11-27 14:45:26",
+   "kind": "tool",
+   "title": "prior_cases(customer_id=C02354)",
+   "detail": {
+    "args": {
+     "customer_id": "C02354"
+    },
+    "result": {
+     "closed_cases": 20,
+     "connected_closed_cases": 0,
+     "agent_cases": 1
+    },
+    "latency_s": 0.124,
+    "transport": "mcp"
+   },
+   "elapsed_s": 1.77
+  },
+  {
+   "step": 9,
+   "ts": "2016-11-27 14:45:56",
+   "kind": "evidence",
+   "title": "Graph evidence collected: 6 findings",
+   "detail": [
+    {
+     "claim": "Cardholder reported the transaction as unauthorised. In the bank's memory, all 4,665 cardholder-reported cases were confirmed fraud",
+     "source": "customer",
+     "ref": "trigger:customer_report",
+     "entity_ids": [
+      "C02354",
+      "3491361"
+     ],
+     "lr": 40.0,
+     "family": "trigger",
+     "direction": "fraud",
+     "step": 8
+    },
+    {
+     "claim": "Case-memory model (trained on the bank's closed cases, AUC 0.91 on an October hold-out vs 0.87 for the bank score) gives this transaction 0.193, a calibrated fraud rate of 16.9%",
+     "source": "graph",
+     "ref": "txn.model_score",
+     "entity_ids": [
+      "3491361"
+     ],
+     "lr": 1.0,
+     "family": "ml",
+     "direction": "neutral",
+     "step": 8
+    },
+    {
+     "claim": "Recurring charge: 6 earlier transactions of $39.08 (+-0.35) with the same product code W, billing region 126 and email, every ~10 days since 2016-08-21",
+     "source": "graph",
+     "ref": "card_window(recurring)",
+     "entity_ids": [
+      "3192989",
+      "3217257",
+      "3309755",
+      "3339176",
+      "3371084",
+      "3371579",
+      "3491361"
+     ],
+     "lr": 0.08,
+     "family": "behaviour",
+     "direction": "legit",
+     "step": 8
+    },
+    {
+     "claim": "Home region: this cardholder profile (client C02354-K2|126|-185) made 13 earlier card-present purchases in billing region 126",
+     "source": "graph",
+     "ref": "client_history",
+     "entity_ids": [
+      "C02354-K2|126|-185",
+      "3351986",
+      "3364912",
+      "3484403",
+      "3485990"
+     ],
+     "lr": 0.3,
+     "family": "behaviour",
+     "direction": "legit",
+     "step": 8
+    },
+    {
+     "claim": "Card has 19 earlier confirmed fraud case(s) (account_takeover, card_not_present_fraud, out_of_region_use), most recent 2016-11-01; the card was reissued each time, so this is context, not proof",
+     "source": "graph",
+     "ref": "prior_cases",
+     "entity_ids": [
+      "CC-3634",
+      "CC-1699",
+      "CC-2589",
+      "CC-2432"
+     ],
+     "lr": 1.3,
+     "family": "history",
+     "direction": "fraud",
+     "step": 8
+    },
+    {
+     "claim": "Card also has 1 cleared alert(s) (e.g. Case CC-0405: model scored a $22.30 transaction at 0.94. Cardholder confirmed travel to th)",
+     "source": "graph",
+     "ref": "prior_cases",
+     "entity_ids": [
+      "CC-0405"
+     ],
+     "lr": 0.85,
+     "family": "history",
+     "direction": "legit",
+     "step": 8
+    }
+   ],
+   "elapsed_s": 1.78
+  },
+  {
+   "step": 10,
+   "ts": "2016-11-27 14:46:26",
+   "kind": "tool",
+   "title": "similar_closed_cases(vec=<vector 256>, k=8)",
+   "detail": {
+    "args": {
+     "vec": "<vector 256>",
+     "k": 8
+    },
+    "result": {
+     "rows": 8
+    },
+    "latency_s": 0.064,
+    "transport": "mcp"
+   },
+   "elapsed_s": 1.84
+  },
+  {
+   "step": 11,
+   "ts": "2016-11-27 14:46:56",
+   "kind": "tool",
+   "title": "similar_agent_cases(vec=<vector 256>, k=6)",
+   "detail": {
+    "args": {
+     "vec": "<vector 256>",
+     "k": 6
+    },
+    "result": {
+     "rows": 6
+    },
+    "latency_s": 0.067,
+    "transport": "mcp"
+   },
+   "elapsed_s": 1.91
+  },
+  {
+   "step": 12,
+   "ts": "2016-11-27 14:47:26",
+   "kind": "tool",
+   "title": "policy_search(vec=<vector 256>, k=4)",
+   "detail": {
+    "args": {
+     "vec": "<vector 256>",
+     "k": 4
+    },
+    "result": {
+     "rows": 4
+    },
+    "latency_s": 0.063,
+    "transport": "mcp"
+   },
+   "elapsed_s": 1.97
+  },
+  {
+   "step": 13,
+   "ts": "2016-11-27 14:47:56",
+   "kind": "tool",
+   "title": "llm:prior_cases(customer_id=C02354)",
+   "detail": {
+    "args": {
+     "customer_id": "C02354"
+    },
+    "result": {
+     "closed_cases": 20,
+     "connected_closed_cases": 0,
+     "agent_cases": 1
+    },
+    "latency_s": 0.132,
+    "transport": "mcp"
+   },
+   "elapsed_s": 5.65
+  },
+  {
+   "step": 14,
+   "ts": "2016-11-27 14:48:26",
+   "kind": "llm",
+   "title": "LLM investigator (gemini-3.5-flash-lite): 1 extra tool call(s)",
+   "detail": {
+    "calls": [
+     {
+      "tool": "prior_cases",
+      "args": {
+       "customer_id": "C02354"
+      }
+     }
+    ],
+    "notes": "Prior customer lookup confirmed 19 prior fraud cases on card C02354-K2, predominantly involving account takeover and out-of-region use. The current transaction matches a recurring charge pattern running every ~10 days since August 2016 in the home region. Despite the extensive fraud history and cardholder dispute, the recurring periodicity strongly points to a legitimate subscription. Uncertainty remains regarding whether the subscription was initially established by the genuine cardholder or an unauthorized third party."
+   },
+   "elapsed_s": 6.95
+  },
+  {
+   "step": 15,
+   "ts": "2016-11-27 14:48:56",
+   "kind": "assess",
+   "title": "Fraud probability 0.42 (memory-model prior 0.17); confidence low (conflicting evidence); hypothesis account_takeover; exposure $39.08",
+   "detail": {
+    "prior": 0.1693,
+    "posterior": 0.4188,
+    "graph_only": 0.0177,
+    "log_lr_by_family": {
+     "trigger": 3.689,
+     "behaviour": -2.526,
+     "history": 0.1
+    },
+    "fraud_families": [
+     "trigger"
+    ],
+    "legit_families": [
+     "behaviour"
+    ],
+    "uncertainty": [
+     "Evidence conflicts: trigger point to fraud; behaviour point to legitimate use"
+    ]
+   },
+   "elapsed_s": 6.95
+  },
+  {
+   "step": 16,
+   "ts": "2016-11-27 14:49:26",
+   "kind": "decision",
+   "title": "Initial next best action: CREATE_CASE, VERIFY_WITH_CUSTOMER, WARN_CUSTOMER",
+   "detail": {
+    "actions": [
+     {
+      "action": "CREATE_CASE",
+      "route": "auto",
+      "reason": "R7 and 3a: a customer dispute always opens a case"
+     },
+     {
+      "action": "VERIFY_WITH_CUSTOMER",
+      "route": "auto",
+      "reason": "R7: charge matches the cardholder's own recurring pattern; confirm before any block"
+     },
+     {
+      "action": "WARN_CUSTOMER",
+      "route": "auto",
+      "reason": "R7: send a recurring-charge reminder"
+     }
+    ],
+    "request": "customer_validation",
+    "why_request": "The disputed charge repeats the cardholder's own recurring pattern (same amount, product, region), which conflicts with the denial. R7 says verify and do not block.",
+    "policy_check": []
+   },
+   "elapsed_s": 6.95
+  },
+  {
+   "step": 17,
+   "ts": "2016-11-27 14:49:56",
+   "kind": "execute",
+   "title": "Executed 3 auto action(s); 0 queued for approval",
+   "detail": {
+    "executed": [
+     "CREATE_CASE",
+     "VERIFY_WITH_CUSTOMER",
+     "WARN_CUSTOMER"
+    ],
+    "awaiting": []
+   },
+   "elapsed_s": 6.95
+  },
+  {
+   "step": 18,
+   "ts": "2016-11-27 15:11:26",
+   "kind": "request",
+   "title": "Evidence requested: customer_validation (policy 5, auto)",
+   "detail": {
+    "why": "The disputed charge repeats the cardholder's own recurring pattern (same amount, product, region), which conflicts with the denial. R7 says verify and do not block."
+   },
+   "elapsed_s": 6.95
+  },
+  {
+   "step": 19,
+   "ts": "2016-11-27 16:41:26",
+   "kind": "response",
+   "title": "Reply (confirmed): Assumed: shown the every ~10 days history of identical $39.08 charges, the cardholder recognises the recurring merchant charge and withdraws the dispute. Basis: the recurring pattern in the graph (R7).",
+   "detail": {
+    "lr": 0.03
+   },
+   "elapsed_s": 6.95
+  },
+  {
+   "step": 20,
+   "ts": "2016-11-27 14:51:26",
+   "kind": "assess",
+   "title": "Reassessed fraud probability 0.02 (was 0.42)",
+   "detail": {
+    "posterior": 0.0212,
+    "log_lr_by_family": {
+     "trigger": 3.689,
+     "behaviour": -2.526,
+     "history": 0.1,
+     "customer": -3.507
+    }
+   },
+   "elapsed_s": 6.95
+  },
+  {
+   "step": 21,
+   "ts": "2016-11-27 14:51:56",
+   "kind": "decision",
+   "title": "Final next best action: CREATE_CASE, WARN_CUSTOMER, CLOSE_NO_FRAUD",
+   "detail": {
+    "actions": [
+     {
+      "action": "CREATE_CASE",
+      "route": "auto",
+      "reason": "R7/R3: dispute recorded; charge matches the cardholder's recurring pattern"
+     },
+     {
+      "action": "WARN_CUSTOMER",
+      "route": "auto",
+      "reason": "R7: recurring-charge reminder sent to the cardholder"
+     },
+     {
+      "action": "CLOSE_NO_FRAUD",
+      "route": "auto",
+      "reason": "R3: cardholder recognised the recurring charge; confirmation noted in the case"
+     }
+    ],
+    "policy_check": []
+   },
+   "elapsed_s": 6.95
+  },
+  {
+   "step": 22,
+   "ts": "2016-11-27 14:52:26",
+   "kind": "llm",
+   "title": "Case narrative written by gemini-flash-lite-latest (3/3 fields accepted)",
+   "detail": {
+    "summary": "This case was triggered by a customer report regarding transaction 3491361 for $39.08. The graph and case evidence showed a recurring charge pattern of 6 earlier transactions of $39.08 with the same product code W, billing region 126, and email every ~10 days since 2016-08-21, alongside 13 earlier c",
+    "sar_narrative": "",
+    "pattern_description": ""
+   },
+   "elapsed_s": 21.37
+  },
+  {
+   "step": 23,
+   "ts": "2016-11-27 14:52:56",
+   "kind": "memory",
+   "title": "Case CASE-2016-0018 written to case memory (closed_legitimate, legitimate, none)",
+   "detail": {
+    "edges": {
+     "txns": 1,
+     "cards": 1,
+     "devices": 0,
+     "similar_closed_cases": [
+      "CC-0405",
+      "CC-0413",
+      "CC-0010",
+      "CC-1887",
+      "CC-5262"
+     ]
+    }
+   },
+   "elapsed_s": 21.37
+  }
+ ],
+ "transport": [
+  "mcp:card_profile:0.12s",
+  "mcp:client_history:0.12s",
+  "mcp:device_fanout:0.12s",
+  "mcp:device_cases:0.12s",
+  "mcp:peer_txns:0.13s",
+  "mcp:prior_cases:0.12s",
+  "mcp:similar_closed_cases:0.07s",
+  "mcp:similar_agent_cases:0.08s",
+  "mcp:policy_search:0.07s",
+  "mcp:card_window:0.14s",
+  "restpp:upsert_case",
+  "mcp:txn_context:0.13s",
+  "mcp:card_window:0.15s",
+  "mcp:card_profile:0.12s",
+  "mcp:client_history:0.12s",
+  "mcp:device_fanout:0.12s",
+  "mcp:peer_txns:0.17s",
+  "mcp:prior_cases:0.13s",
+  "mcp:amount_band_scan:0.16s",
+  "mcp:similar_closed_cases:0.07s",
+  "mcp:similar_agent_cases:0.07s",
+  "mcp:policy_search:0.07s",
+  "mcp:device_fanout:0.12s",
+  "restpp:upsert_case",
+  "mcp:txn_context:0.13s",
+  "mcp:card_window:0.15s",
+  "mcp:card_profile:0.12s",
+  "mcp:client_history:0.13s",
+  "mcp:device_fanout:0.13s",
+  "mcp:device_cases:0.13s",
+  "mcp:peer_txns:0.15s",
+  "mcp:prior_cases:0.13s",
+  "mcp:similar_closed_cases:0.07s",
+  "mcp:similar_agent_cases:0.07s",
+  "mcp:policy_search:0.06s",
+  "mcp:prior_cases:0.14s",
+  "restpp:upsert_case",
+  "mcp:txn_context:0.12s",
+  "mcp:card_window:0.13s",
+  "mcp:card_profile:0.12s",
+  "mcp:client_history:0.12s",
+  "mcp:peer_txns:0.24s",
+  "mcp:prior_cases:0.12s",
+  "mcp:similar_closed_cases:0.07s",
+  "mcp:similar_agent_cases:0.08s",
+  "mcp:policy_search:0.07s",
+  "mcp:prior_cases:0.12s",
+  "mcp:card_window:0.12s",
+  "restpp:upsert_case",
+  "mcp:txn_context:0.13s",
+  "mcp:card_window:1.09s",
+  "mcp:card_profile:0.15s",
+  "mcp:client_history:0.12s",
+  "mcp:peer_txns:0.12s",
+  "mcp:prior_cases:0.12s",
+  "mcp:similar_closed_cases:0.06s",
+  "mcp:similar_agent_cases:0.07s",
+  "mcp:policy_search:0.06s",
+  "mcp:prior_cases:0.13s",
+  "restpp:upsert_case"
+ ],
+ "llm": {
+  "provider": "gemini",
+  "model": "gemini-flash-lite-latest",
+  "calls": 11,
+  "errors": []
+ }
+}
