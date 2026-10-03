@@ -32,6 +32,18 @@ class IngestError(RuntimeError):
     pass
 
 
+def _v(x):
+    """A mapped cell as a plain value: None for empty or missing (pandas 3 gives NaN where pandas 2 gave None)."""
+    if x is None:
+        return None
+    try:
+        if pd.isna(x):
+            return None
+    except (TypeError, ValueError):
+        pass
+    return None if isinstance(x, str) and not x.strip() else x
+
+
 def _now() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
@@ -202,22 +214,22 @@ def ingest_alerts(g, raw: pd.DataFrame, m: M.Mapping, actor: dict, source: str, 
                 rep.rejected.append({"row": int(i) + 2, "field": "flagged_txn_id", "value": r["flagged_txn_id"],
                                      "problem": "transaction not found: load the transaction before its alert"})
                 continue
-            rs = r["risk_score"] if pd.notna(r["risk_score"]) else x.get("risk_score")
-            text, _pii = mask(r["trigger_text"] or "")
+            rs = _v(r["risk_score"]) if _v(r["risk_score"]) is not None else x.get("risk_score")
+            text, _pii = mask(_v(r["trigger_text"]) or "")
             sf = check(text)
-            trig = r["trigger_type"]
+            trig = _v(r["trigger_type"]) or "risk_score"
             if sf["flagged"]:
                 text = (f"{text} (alert text flagged for possible manipulation: {'; '.join(sf['reasons'][:3])}; "
                         f"routed to an analyst)")
                 trig = "analyst_request" if trig == "customer_report" else trig
                 A.audit(actor.get("email", "?"), actor.get("role", "?"), "input_flagged", str(r["case_id"]),
                         {"source": f"alert batch {bid}", "reasons": sf["reasons"]})
-            alert = {"case_id": str(r["case_id"]), "opened_at": r["opened_at"] or now,
+            alert = {"case_id": str(r["case_id"]), "opened_at": _v(r["opened_at"]) or now,
                      "trigger_type": trig, "safety": {**sf, "pii_masked": _pii},
                      "trigger_text": text or f"Client alert on transaction {x['id']} "
                                              f"({x['amount']:,.2f}, {x['channel'] or 'unknown channel'})",
-                     "flagged_txn_id": x["id"], "card_id": r["card_id"] or x["card_id"],
-                     "customer_id": r["customer_id"] or x.get("customer_id", ""),
+                     "flagged_txn_id": x["id"], "card_id": _v(r["card_id"]) or x["card_id"],
+                     "customer_id": _v(r["customer_id"]) or x.get("customer_id", ""),
                      "risk_score": "" if rs is None else f"{float(rs):.2f}"}
             publish(alert, f"{source} · batch {bid}")
             queued.append(alert["case_id"])
