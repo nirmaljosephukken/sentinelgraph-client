@@ -14,7 +14,7 @@
 #      subscription for the live alert stream
 #   6. deploys the same image as the client intake API (public URL, every call needs an API key)
 #
-# Client data goes into its own TigerGraph graph. Create it once (python graph/setup_graph.py --empty with
+# Client data goes into its own TigerGraph graph. Create it once (python -m graph.setup_graph --empty with
 # TG_GRAPH=<name> in .env), then deploy with -ClientGraph <name>. Without it the deployment runs on the demo graph
 # and the intake refuses to load client data.
 # Re-running is safe: existing secrets get a new version, existing roles are kept.

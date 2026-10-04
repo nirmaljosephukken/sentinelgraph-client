@@ -1,5 +1,7 @@
 // Client data intake (agent/ingest/load.py): after new transactions are upserted, recount the degree attributes
 // the investigation queries rely on (device_ring_scan reads DeviceProfile.n_txns) for the touched vertices only.
+USE GRAPH FraudGraph
+
 CREATE OR REPLACE QUERY refresh_counts(SET<STRING> cards, SET<STRING> devs, SET<STRING> custs) FOR GRAPH FraudGraph {
   SumAccum<INT> @n;
   C = to_vertex_set(cards, "Card");

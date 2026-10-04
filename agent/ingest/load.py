@@ -119,7 +119,7 @@ def _to_tigergraph(g, df: pd.DataFrame, chunk: int = 5000) -> dict:
     tg = g.tg
     if tg.graph == DEMO_GRAPH and os.getenv("INGEST_TO_DEMO_GRAPH") != "1":
         raise IngestError(f"TG_GRAPH is the demo graph {DEMO_GRAPH!r}. Create a separate graph for this client "
-                          f"(python graph/setup_graph.py --empty with TG_GRAPH set) before loading client data.")
+                          f"(python -m graph.setup_graph --empty with TG_GRAPH set) before loading client data.")
     for start in range(0, len(df), chunk):
         v, e = _tg_payload(df.iloc[start:start + chunk])
         tg.upsert(vertices=v)

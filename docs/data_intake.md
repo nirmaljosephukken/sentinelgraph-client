@@ -135,7 +135,7 @@ demo graph. Set the client graph up once:
 
 ```powershell
 # in .env: TG_GRAPH=AcmeBankGraph
-python graph/setup_graph.py --empty          # schema, policy knowledge and queries, no demo data
+python -m graph.setup_graph --empty          # schema, policy knowledge and queries, no demo data
 .\deploy\deploy.ps1 -Project <gcp-project> -ClientGraph AcmeBankGraph
 ```
 
