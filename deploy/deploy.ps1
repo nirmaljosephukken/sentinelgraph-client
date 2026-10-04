@@ -195,9 +195,12 @@ gcloud run deploy $api --image $image --region $Region --service-account $sa `
 if ($LASTEXITCODE -ne 0) { throw "API deploy failed (see the error above). Running the script again is safe." }
 $apiUrl = gcloud run services describe $api --region $Region --format="value(status.url)"
 
-$url = gcloud run services describe $Service --region $Region --format="value(status.url)"
+# Cloud Run answers on two addresses; the project-number one is stable and is the one registered for sign-in
+$url = "https://$Service-$number.$Region.run.app"
+$workerUrl = "https://$worker-$number.$Region.run.app"
+$apiUrl = "https://$api-$number.$Region.run.app"
 Write-Host ""
-Write-Host "Deployed: $url"
+Write-Host "Console:  $url   (open this one: Google sign-in is registered for it)"
 Write-Host "Worker:   $workerUrl (private, fed by Pub/Sub topic $topic)"
 Write-Host "API:      $apiUrl/docs (create a key on the console's Team & access page)"
 if (-not $ClientGraph) { Write-Host "Note: running on the demo graph; client data loads are refused until you deploy with -ClientGraph." }
