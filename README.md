@@ -243,3 +243,7 @@ SentinelGraph grew out of an earlier agentic fraud prototype on TigerGraph, buil
 - The dataset is the public IEEE-CIS card data with the fraud label removed, plus a bank risk score, closed investigations and a fraud policy provided with the dataset. No real customer data is used.
 - Customer, step-up and analyst replies are not available in the data. The engine assumes the reply the evidence supports, never a hidden label, and writes the assumption into the case.
 - Gemini never sets a probability or an action. If you find a reply where it appears to, that is a bug we want to hear about.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
