@@ -268,7 +268,7 @@ release:
   script:
     - |
       SVC="$SERVICE$DEPLOY_SUFFIX"; AR="$GCP_REGION-docker.pkg.dev/$GCP_PROJECT_ID/sentinelgraph/app:$IMAGE_TAG"
-      COMMON="--image $AR --region $GCP_REGION --platform managed --update-labels env=$DEPLOY_ENV,sha=$CI_COMMIT_SHORT_SHA --quiet"
+      COMMON="--image $AR --region $GCP_REGION --platform managed --update-labels env=$DEPLOY_ENV,sha=$CI_COMMIT_SHORT_SHA --quiet ${GCP_RUNTIME_SA:+--service-account $GCP_RUNTIME_SA}"
       ENVV="GIT_SHA=$CI_COMMIT_SHA,APP_ENV=$DEPLOY_ENV"
       if [ "$DEPLOY_ENV" = "staging" ]; then ENVV="$ENVV,LLM_PROVIDER=none,GRAPH_BACKEND=local,LIVE_BACKEND=local,AUTH_MODE=dev,ALLOW_DEV_AUTH=1,ACCESS_PREFIX=$SVC"; fi
       gcloud run deploy "$SVC"        $COMMON --update-env-vars "$ENVV" --allow-unauthenticated --session-affinity --timeout 3600 --cpu 2 --memory 2Gi --max-instances 2 --concurrency 20
