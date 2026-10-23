@@ -1,6 +1,6 @@
 # Governance: these paths need the owner's approval before merge. The approval rule in the project settings
 # makes it binding; the Release Scribe flow runs only after that approval.
-[Decisions & policy] @NEKKU
+[Decisions & policy] @nirmaljosephukken
 agent/policy.py
 agent/policy_config.py
 agent/signals.py
@@ -8,11 +8,11 @@ agent/safety.py
 config/policy.yaml
 tests/golden/
 
-[Deployment & CI] @NEKKU
+[Deployment & CI] @nirmaljosephukken
 .gitlab-ci.yml
 .gitlab/
 Dockerfile
 deploy/
 
-[Everything else] @NEKKU
+[Everything else] @nirmaljosephukken
 *
