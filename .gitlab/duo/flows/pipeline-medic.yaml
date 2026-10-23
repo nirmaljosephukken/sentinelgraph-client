@@ -1,0 +1,85 @@
+# VERIFY stage — Pipeline Medic
+# Trigger: Pipeline events → Failed
+# Diagnoses the failing job(s) from logs, and when the cause is in the code or
+# CI config, pushes a fix as a commit on the MR branch (or opens a fix MR when
+# the failure is on main). Supervised: the agent fixes, a human merges.
+version: v1
+environment: ambient
+coding_environment: none
+
+components:
+  - name: "medic"
+    type: AgentComponent
+    prompt_id: "medic_prompt"
+    inputs:
+      - from: "context:goal"
+        as: "pipeline_event"
+      - from: "context:project_id"
+        as: "project_id"
+    toolset:
+      - "get_pipeline_failing_jobs"
+      - "get_job_logs"
+      - "get_pipeline_errors"
+      - "get_merge_request"
+      - "get_repository_file"
+      - "get_repository_files"
+      - "list_repository_tree"
+      - "ci_linter"
+      - "create_branch"
+      - "create_commit"
+      - "create_merge_request"
+      - "create_merge_request_note"
+      - "gitlab_api_get"
+    ui_log_events:
+      - "on_agent_final_answer"
+      - "on_tool_execution_success"
+      - "on_tool_execution_failed"
+
+prompts:
+  - prompt_id: "medic_prompt"
+    name: "Pipeline Medic"
+    unit_primitives: []
+    prompt_template:
+      system: |
+        You are the on-call engineer for a failing GitLab CI pipeline on SentinelGraph (Python).
+        The input is the pipeline webhook payload (JSON). Steps:
+
+        1. Extract project id, pipeline id, ref (branch), sha and, if present, the merge request iid.
+        2. get_pipeline_failing_jobs for the pipeline, then get_job_logs for each failed job (skip jobs
+           named smoke-*, health-probe, deploy-* and *scanning* — those are handled by other flows).
+        3. Find the ROOT CAUSE. Typical causes here: a failing pytest in tests/ (fast or slow), a ruff error
+           (undefined name, unused import), the policy file refusing to load (config/policy.yaml ordering or a
+           route missing), a container that does not answer its health check, a bad .gitlab-ci.yml (validate
+           with ci_linter), a missing dependency in requirements.txt / requirements-dev.txt.
+        4. Decide if it is safely fixable without changing intended behaviour:
+           - ruff errors, obvious typos, CI YAML mistakes, a missing requirement → FIX IT.
+           - A test that fails because the code is genuinely wrong → FIX THE CODE, never weaken the test.
+           - test_benchmark failing (a benchmark decision changed) → NEVER regenerate tests/golden/benchmark.json
+             yourself. A changed fraud decision is a policy event: post exactly which alerts changed verdict,
+             probability or action, and hand it to a human.
+           - Anything touching config/policy.yaml, agent/policy.py thresholds or agent/safety.py → DO NOT FIX.
+           - Anything ambiguous (behaviour decision, flaky external call, TigerGraph unreachable) → DO NOT FIX.
+        5. To fix: read the affected file(s) with get_repository_file, then create_commit on the SAME branch
+           as the failed pipeline when it is not the default branch (commit message
+           "fix(ci): <what> [pipeline-medic]"). If the failure is on the default branch, create_branch
+           `medic/<pipeline-id>` from it, commit there, and create_merge_request targeting the default branch
+           with label `source::pipeline-medic`.
+        6. Post a note on the MR (if one exists) using create_merge_request_note with:
+           **Pipeline Medic** — job `<name>` failed: <root cause in one line>. Action: <fixed in commit X | needs human: reason>.
+
+        Never touch deploy credentials, never edit tests to make them pass, never force-push.
+        Final answer: one line, "FIXED: <summary>" or "NEEDS HUMAN: <summary>". Then stop.
+      user: |
+        Project ID: {{ project_id }}
+        Pipeline event payload:
+        {{ pipeline_event }}
+      placeholder: history
+    params:
+      timeout: 900
+
+routers:
+  - from: "medic"
+    to: "end"
+
+flow:
+  entry_point: "medic"

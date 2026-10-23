@@ -1,0 +1,337 @@
+# SentinelGraph — Life After Code
+# Post-code DevSecOps lifecycle run by GitLab CI/CD + GitLab Duo flows (.gitlab/duo/flows/).
+#
+#   verify   secret scan · ruff · policy file check · fast tests · slow tests (benchmark + console pages)
+#   package  image → GitLab Container Registry; the same image starts console, worker and API (health-checked)
+#   secure   SAST · secret detection · dependency scanning · container scanning  (+ Security Gate flow)
+#   release  semantic tag + GitLab Release with notes written by the Release Scribe flow
+#   deploy   Cloud Run staging (automatic) → production (one human approval); keyless OIDC, no JSON keys
+#   monitor  smoke tests after every deploy with auto-rollback · hourly health probe (+ Incident Responder flow)
+#   govern   DCO sign-off · license allowlist · CODEOWNERS · approval rules · append-only audit (in the app)
+# plan / create stages are owned by the Issue Triage and MR Reviewer flows.
+
+stages:
+  - verify
+  - package
+  - secure
+  - test        # default stage of the included scanner templates not pinned below
+  - release
+  - deploy
+  - monitor
+
+variables:
+  PY_IMAGE: python:3.11-slim
+  IMAGE: $CI_REGISTRY_IMAGE
+  IMAGE_TAG: $CI_COMMIT_SHORT_SHA
+  PIP_CACHE_DIR: $CI_PROJECT_DIR/.pip-cache
+  # everything in CI runs offline: local graph mirror, no LLM, no Google Cloud, no secrets
+  LLM_PROVIDER: none
+  GRAPH_BACKEND: local
+  LIVE_BACKEND: local
+  AUTH_MODE: dev
+  ALLOW_DEV_AUTH: "1"
+  PYTHONUNBUFFERED: "1"
+  # Google Cloud target — set as protected CI/CD variables (see README "Pipeline setup")
+  GCP_REGION: asia-south1
+  SERVICE: sentinelgraph
+  # scanner tuning
+  SAST_EXCLUDED_PATHS: "tests, data, traces, cases, proactive, knowledge, samples"
+  SECRET_DETECTION_EXCLUDED_PATHS: "data, traces, cases, proactive"
+  CS_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA
+
+include:
+  - template: Jobs/SAST.gitlab-ci.yml
+  - template: Jobs/Secret-Detection.gitlab-ci.yml
+  - template: Jobs/Dependency-Scanning.gitlab-ci.yml
+  - template: Jobs/Container-Scanning.gitlab-ci.yml
+
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_COMMIT_TAG
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+    - if: $CI_PIPELINE_SOURCE == "web"
+
+default:
+  interruptible: true
+
+.not-scheduled:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: never
+    - when: on_success
+
+.py:
+  image: $PY_IMAGE
+  cache:
+    key:
+      files: [requirements.txt, requirements-dev.txt]
+    paths: [.pip-cache/]
+  before_script:
+    - pip install -q -r requirements.txt -r requirements-dev.txt
+
+# ---------------------------------------------------------------- verify
+no-secrets-in-repo:
+  stage: verify
+  image: alpine/git:latest
+  script:
+    - test ! -f .env || { echo "::error::.env must never be committed"; exit 1; }
+    - |
+      if git grep -nE 'AIza[0-9A-Za-z_-]{35}|sk-ant-[A-Za-z0-9_-]{20,}|-----BEGIN (RSA |EC )?PRIVATE KEY-----|sgk_[0-9a-f]{8}_[A-Za-z0-9_-]{20,}' -- . ':!tests/*'; then
+        echo "::error::something that looks like a key is committed"; exit 1; fi
+  rules: !reference [.not-scheduled, rules]
+
+lint:
+  extends: [.py, .not-scheduled]
+  stage: verify
+  script:
+    - ruff check . --output-format gitlab > gl-code-quality-report.json || true
+    - ruff check .
+  artifacts:
+    reports:
+      codequality: gl-code-quality-report.json
+    expire_in: 1 week
+
+policy-file:
+  extends: [.py, .not-scheduled]
+  stage: verify
+  script:
+    - python -c "from agent.policy_config import POLICY; print(POLICY.label, POLICY.mode, POLICY.fingerprint)"
+
+test-fast:
+  extends: [.py, .not-scheduled]
+  stage: verify
+  script:
+    - pip install -q pytest-cov
+    - pytest -m "not slow" -q --junitxml=reports/junit-fast.xml --cov=agent --cov=api --cov=worker --cov=ui --cov-report=xml:coverage.xml --cov-report=term
+  coverage: '/TOTAL.*\s+(\d+%)$/'
+  artifacts:
+    when: always
+    reports:
+      junit: reports/junit-fast.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage.xml
+    expire_in: 1 week
+
+# The 20 benchmark alerts must give exactly the decisions in tests/golden/benchmark.json, and every console
+# page must render. Runs on MRs too: a decision drift is the one thing an agent must never "fix" silently.
+test-slow:
+  extends: [.py, .not-scheduled]
+  stage: verify
+  timeout: 30m
+  script:
+    - pytest -m slow -q --junitxml=reports/junit-slow.xml
+    - GRAPH_BACKEND=local python validate_answers.py
+  artifacts:
+    when: always
+    reports:
+      junit: reports/junit-slow.xml
+    expire_in: 1 week
+
+license-check:
+  extends: [.py, .not-scheduled]
+  stage: verify
+  script:
+    - pip install -q pip-licenses
+    - pip-licenses --format=markdown --order=license > licenses.md
+    - pip-licenses --fail-on="GPL;GPLv2;GPLv3;AGPL;AGPLv3;LGPLv3;SSPL" --allow-only="MIT License;MIT;BSD License;BSD-3-Clause;BSD-2-Clause;Apache Software License;Apache 2.0;Apache-2.0;ISC License (ISCL);ISC;Python Software Foundation License;Mozilla Public License 2.0 (MPL 2.0);MPL-2.0;The Unlicense (Unlicense);Public Domain;Zero-Clause BSD;0BSD;UNKNOWN;Apache Software License; BSD License;MIT License; Mozilla Public License 2.0 (MPL 2.0);BSD;Apache License 2.0;Apache License, Version 2.0;Historical Permission Notice and Disclaimer (HPND);PSF-2.0;Apache-2.0 OR BSD-3-Clause;MIT AND Python-2.0;LGPL-2.1-or-later;GNU Library or Lesser General Public License (LGPL);Dual License;MIT OR Apache-2.0"
+  artifacts:
+    paths: [licenses.md]
+    expire_in: 1 week
+  allow_failure: true
+
+dco-check:
+  stage: verify
+  image: alpine/git:latest
+  script:
+    - |
+      git fetch -q origin "$CI_DEFAULT_BRANCH" || true
+      if [ -n "$CI_MERGE_REQUEST_DIFF_BASE_SHA" ]; then RANGE="$CI_MERGE_REQUEST_DIFF_BASE_SHA..$CI_COMMIT_SHA"; else RANGE="$CI_COMMIT_SHA~1..$CI_COMMIT_SHA"; fi
+      bad=0
+      for c in $(git rev-list --no-merges "$RANGE" 2>/dev/null); do
+        author=$(git log -1 --format=%ae "$c")
+        case "$author" in *noreply*|*bot*|*service_account*|*gitlab.com*) continue;; esac
+        git log -1 --format=%B "$c" | grep -q "^Signed-off-by:" || { echo "::error::commit $c by $author lacks Signed-off-by"; bad=1; }
+      done
+      exit $bad
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+# ---------------------------------------------------------------- package
+build-image:
+  stage: package
+  image: docker:27
+  services: [docker:27-dind]
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  needs: [test-fast, lint]
+  script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+    - docker build --pull -t "$IMAGE:$IMAGE_TAG" .
+    - docker push "$IMAGE:$IMAGE_TAG"
+    - |
+      [ "$CI_COMMIT_BRANCH" = "$CI_DEFAULT_BRANCH" ] && docker tag "$IMAGE:$IMAGE_TAG" "$IMAGE:latest" && docker push "$IMAGE:latest" || true
+      [ -n "$CI_COMMIT_TAG" ] && docker tag "$IMAGE:$IMAGE_TAG" "$IMAGE:$CI_COMMIT_TAG" && docker push "$IMAGE:$CI_COMMIT_TAG" || true
+  rules: !reference [.not-scheduled, rules]
+
+# The built image must start all three services and answer their health checks (ported from GitHub Actions).
+container-health:
+  stage: package
+  image: docker:27
+  services: [docker:27-dind]
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  needs: [build-image]
+  script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+    - docker pull -q "$IMAGE:$IMAGE_TAG"
+    - |
+      common="-e LLM_PROVIDER=none -e GRAPH_BACKEND=local -e LIVE_BACKEND=local -e AUTH_MODE=dev -e ALLOW_DEV_AUTH=1"
+      docker run -d --name console $common "$IMAGE:$IMAGE_TAG"
+      docker run -d --name worker  $common "$IMAGE:$IMAGE_TAG" uvicorn worker.app:app --host 0.0.0.0 --port 8080
+      docker run -d --name api     $common "$IMAGE:$IMAGE_TAG" uvicorn api.app:app --host 0.0.0.0 --port 8080
+      check() { for i in $(seq 1 60); do docker exec "$1" python -c "import urllib.request,sys; urllib.request.urlopen('http://127.0.0.1:8080$2', timeout=3); sys.exit(0)" 2>/dev/null && { echo "ok $1 $2"; return 0; }; sleep 3; done; echo "::error::$1 not healthy"; for c in console worker api; do echo "== $c"; docker logs --tail 60 $c; done; return 1; }
+      check console /_stcore/health
+      check worker /healthz
+      check api /v1/health
+  rules: !reference [.not-scheduled, rules]
+
+# ---------------------------------------------------------------- secure
+semgrep-sast:
+  stage: secure
+  rules: !reference [.not-scheduled, rules]
+
+secret_detection:
+  stage: secure
+  rules: !reference [.not-scheduled, rules]
+
+container_scanning:
+  stage: secure
+  needs: [build-image]
+  variables:
+    CS_REGISTRY_USER: $CI_REGISTRY_USER
+    CS_REGISTRY_PASSWORD: $CI_REGISTRY_PASSWORD
+  rules: !reference [.not-scheduled, rules]
+
+# ---------------------------------------------------------------- release
+release:
+  stage: release
+  image: node:22-alpine
+  needs: [build-image, container-health, semgrep-sast, secret_detection]
+  before_script:
+    - apk add --no-cache git
+    - npm i -g release-it@17 @release-it/conventional-changelog@8 >/dev/null
+  script:
+    - git config user.email "release-bot@noreply.gitlab.com" && git config user.name "Release Bot"
+    - git remote set-url origin "https://oauth2:${RELEASE_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git"
+    - npx release-it --ci --no-npm --git.requireCleanWorkingDir=false --git.commitMessage="chore(release): v\${version} [skip ci]" --github.release=false --gitlab.release=true --gitlab.tokenRef=RELEASE_TOKEN --gitlab.releaseNotes="node .gitlab/scripts/release-notes.js" --plugins.@release-it/conventional-changelog.preset=angular --plugins.@release-it/conventional-changelog.infile=false
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $RELEASE_TOKEN
+
+# ---------------------------------------------------------------- deploy
+# Keyless: the job's OIDC ID token is exchanged for the deploy service account through Workload Identity
+# Federation. No service-account JSON anywhere. Secrets (TG_SECRET …) stay in Secret Manager, created once
+# by deploy/deploy.ps1; CI only re-points the services at a new image.
+.gcloud:
+  image: google/cloud-sdk:slim
+  id_tokens:
+    GCP_ID_TOKEN:
+      aud: https://iam.googleapis.com/projects/$GCP_PROJECT_NUMBER/locations/global/workloadIdentityPools/$GCP_WIF_POOL/providers/$GCP_WIF_PROVIDER
+  before_script:
+    - echo "$GCP_ID_TOKEN" > /tmp/gitlab_jwt
+    - gcloud iam workload-identity-pools create-cred-config
+      "projects/$GCP_PROJECT_NUMBER/locations/global/workloadIdentityPools/$GCP_WIF_POOL/providers/$GCP_WIF_PROVIDER"
+      --service-account="$GCP_DEPLOY_SA" --output-file=/tmp/cred.json --credential-source-file=/tmp/gitlab_jwt
+    - gcloud auth login --cred-file=/tmp/cred.json --quiet
+    - gcloud config set project "$GCP_PROJECT_ID"
+    - apt-get update -qq && apt-get install -y -qq skopeo >/dev/null
+    - AR="$GCP_REGION-docker.pkg.dev/$GCP_PROJECT_ID/sentinelgraph/app"
+    - skopeo copy --src-creds "$CI_REGISTRY_USER:$CI_REGISTRY_PASSWORD" --dest-creds "oauth2accesstoken:$(gcloud auth print-access-token)" "docker://$IMAGE:$IMAGE_TAG" "docker://$AR:$IMAGE_TAG"
+  variables:
+    GIT_STRATEGY: fetch
+
+.deploy-trio:
+  # $1 = environment suffix ("-staging" or ""), rolls the console, the private worker and the intake API.
+  script:
+    - |
+      SFX="$DEPLOY_SUFFIX"; SVC="$SERVICE$SFX"; AR="$GCP_REGION-docker.pkg.dev/$GCP_PROJECT_ID/sentinelgraph/app:$IMAGE_TAG"
+      LBL="--update-labels env=${DEPLOY_ENV},sha=$CI_COMMIT_SHORT_SHA"
+      gcloud run deploy "$SVC"        --image "$AR" --region "$GCP_REGION" $LBL --update-env-vars "GIT_SHA=$CI_COMMIT_SHA,APP_ENV=$DEPLOY_ENV" --quiet
+      gcloud run deploy "$SVC-worker" --image "$AR" --region "$GCP_REGION" $LBL --update-env-vars "GIT_SHA=$CI_COMMIT_SHA,APP_ENV=$DEPLOY_ENV" --quiet
+      gcloud run deploy "$SVC-api"    --image "$AR" --region "$GCP_REGION" $LBL --update-env-vars "GIT_SHA=$CI_COMMIT_SHA,APP_ENV=$DEPLOY_ENV" --quiet
+      URL=$(gcloud run services describe "$SVC" --region "$GCP_REGION" --format 'value(status.url)')
+      API=$(gcloud run services describe "$SVC-api" --region "$GCP_REGION" --format 'value(status.url)')
+      echo "${DEPLOY_VAR}_URL=$URL" >> deploy.env; echo "${DEPLOY_VAR}_API_URL=$API" >> deploy.env
+      echo "Deployed $SVC → $URL  (api $API)"
+  artifacts:
+    reports:
+      dotenv: deploy.env
+
+deploy-staging:
+  extends: [.gcloud, .deploy-trio]
+  stage: deploy
+  needs: [build-image, container-health, container_scanning]
+  variables:
+    DEPLOY_SUFFIX: "-staging"
+    DEPLOY_ENV: staging
+    DEPLOY_VAR: STAGING
+  environment:
+    name: staging
+    url: $STAGING_URL
+    deployment_tier: staging
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $GCP_PROJECT_ID
+
+deploy-production:
+  extends: [.gcloud, .deploy-trio]
+  stage: deploy
+  needs: [deploy-staging, smoke-staging]
+  variables:
+    DEPLOY_SUFFIX: ""
+    DEPLOY_ENV: production
+    DEPLOY_VAR: PROD
+  environment:
+    name: production
+    url: $PROD_URL
+    deployment_tier: production
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $GCP_PROJECT_ID
+      when: manual            # the one human gate (Supervised autonomy)
+      allow_failure: false
+
+# ---------------------------------------------------------------- monitor
+smoke-staging:
+  stage: monitor
+  image: $PY_IMAGE
+  needs: [deploy-staging]
+  script:
+    - python .gitlab/scripts/smoke.py "$STAGING_URL" "$STAGING_API_URL"
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $GCP_PROJECT_ID
+
+smoke-production:
+  extends: .gcloud
+  stage: monitor
+  needs: [deploy-production]
+  script:
+    - |
+      if python3 .gitlab/scripts/smoke.py "$PROD_URL" "$PROD_API_URL"; then echo "production healthy"; else
+        echo "::error::smoke failed — rolling back console, worker and api to the previous revision"
+        for s in "$SERVICE" "$SERVICE-worker" "$SERVICE-api"; do
+          PREV=$(gcloud run revisions list --service "$s" --region "$GCP_REGION" --format 'value(name)' --sort-by '~createdTime' | sed -n 2p)
+          [ -n "$PREV" ] && gcloud run services update-traffic "$s" --region "$GCP_REGION" --to-revisions "$PREV=100" --quiet
+        done; exit 1; fi
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $GCP_PROJECT_ID
+
+# Hourly schedule. A failure is a Pipeline-Failed trigger for the Incident Responder flow.
+health-probe:
+  stage: monitor
+  image: $PY_IMAGE
+  script:
+    - python .gitlab/scripts/smoke.py "$PROD_URL" "$PROD_API_URL"
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule" && $PROD_URL

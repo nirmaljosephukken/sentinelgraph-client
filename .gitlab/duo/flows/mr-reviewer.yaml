@@ -1,0 +1,118 @@
+# CREATE/VERIFY stage — MR Reviewer
+# Trigger: Merge request → Created, and Mention (@ai-mr-reviewer-… "re-review")
+# Reviews the diff against the project's conventions, checks that every behaviour
+# change has a test, leaves inline comments, and submits a verdict. A second
+# OneOff step then labels the MR so the Supervised gate (human approval) has a
+# clear signal of what the agent found.
+version: v1
+environment: ambient
+coding_environment: none
+
+components:
+  - name: "reviewer"
+    type: AgentComponent
+    prompt_id: "review_prompt"
+    inputs:
+      - from: "context:goal"
+        as: "event"
+      - from: "context:project_id"
+        as: "project_id"
+    toolset:
+      - "get_merge_request"
+      - "list_merge_request_diffs"
+      - "list_mr_discussions"
+      - "get_repository_file"
+      - "list_repository_tree"
+      - "get_pipeline_errors"
+      - "build_review_merge_request_context"
+      - "create_merge_request_diff_note"
+      - "submit_mr_review"
+    ui_log_events:
+      - "on_agent_final_answer"
+      - "on_tool_execution_success"
+      - "on_tool_execution_failed"
+
+  - name: "labeler"
+    type: OneOffComponent
+    prompt_id: "label_prompt"
+    inputs:
+      - from: "context:reviewer.final_answer"
+        as: "verdict"
+      - from: "context:goal"
+        as: "event"
+    toolset:
+      - "update_merge_request"
+      - "create_merge_request_note"
+    ui_log_events:
+      - "on_tool_call_input"
+      - "on_tool_execution_success"
+      - "on_tool_execution_failed"
+
+prompts:
+  - prompt_id: "review_prompt"
+    name: "MR Review Agent"
+    unit_primitives: []
+    prompt_template:
+      system: |
+        You are a senior reviewer for SentinelGraph, a Python agentic fraud investigator for banks. Review the merge request
+        identified in the input. Procedure:
+
+        1. Load the MR and its diffs (get_merge_request, list_merge_request_diffs). Use
+           build_review_merge_request_context when available for richer context.
+        2. If the latest pipeline failed, pull get_pipeline_errors and mention the root cause.
+        3. Check, concretely:
+           - The trust boundary (non-negotiable): verdicts, fraud probabilities, next best actions, approval routes
+             and SAR decisions must come only from agent/signals.py + agent/policy.py. Any change that lets Gemini
+             (agent/llm.py, sentinel_adk/agent.py, agent/intake.py) set a probability, pick a transaction or
+             execute an action is a REQUEST_CHANGES on its own.
+           - Benchmark integrity: if the diff touches tests/golden/benchmark.json, the MR description must explain
+             the decision change; if it touches agent/signals.py or agent/policy.py without updating the golden
+             file, say which benchmark alerts might shift.
+           - Input safety: new text that reaches Gemini must pass through agent/safety.py mask/check; new outsider
+             text fields must be flagged as data, not instructions.
+           - Correctness: policy thresholds in config/policy.yaml stay ordered, approval routes stay enforced
+             server-side (agent/access.py), audit entries stay append-only.
+           - Tests: every behaviour change has a matching test under tests/. Name the missing test.
+           - Security: secrets in code, personal data in logs (agent/obs.py), unauthenticated API routes.
+           - Conventions: ruff.toml (line length 130, errors only), no style nits.
+        4. Leave at most 6 inline comments with create_merge_request_diff_note, each specific and
+           actionable (what, why, suggested fix). Do not comment on style nits already enforced by lint.
+        5. Submit the review with submit_mr_review: verdict `approve` only if there are no correctness,
+           test or security findings; otherwise `request_changes`. Include a 3–6 line summary.
+
+        Your final answer must be exactly one line: `VERDICT: approve` or `VERDICT: request_changes — <reason>`.
+        After the review is submitted you are done; do not loop.
+      user: |
+        Project ID: {{ project_id }}
+        {{ event }}
+      placeholder: history
+    params:
+      timeout: 600
+
+  - prompt_id: "label_prompt"
+    name: "MR Labeler"
+    unit_primitives: []
+    prompt_template:
+      system: |
+        You apply labels to a merge request based on a review verdict. Make exactly the tool calls needed:
+        - If the verdict starts with "VERDICT: approve": call update_merge_request to add the label
+          `review::ai-approved`.
+        - Otherwise: call update_merge_request to add the label `review::changes-requested`.
+        Then call create_merge_request_note with a single line:
+        "🤖 Automated review complete — <verdict>. A human must still approve before merge (Supervised mode)."
+        Do not remove existing labels. No other actions.
+      user: |
+        Verdict: {{ verdict }}
+        {{ event }}
+      placeholder: history
+    params:
+      timeout: 120
+
+routers:
+  - from: "reviewer"
+    to: "labeler"
+  - from: "labeler"
+    to: "end"
+
+flow:
+  entry_point: "reviewer"

@@ -1,0 +1,79 @@
+# MONITOR/GOVERN stage — Incident Responder
+# Trigger: Pipeline events → Failed, filtered inside the prompt to the scheduled
+# health-probe and smoke-production jobs. When production health fails, the
+# agent opens an Incident work item with the evidence, the suspected change,
+# and the rollback status, and pings the author of the last deploy.
+version: v1
+environment: ambient
+coding_environment: none
+
+components:
+  - name: "responder"
+    type: AgentComponent
+    prompt_id: "incident_prompt"
+    inputs:
+      - from: "context:goal"
+        as: "pipeline_event"
+      - from: "context:project_id"
+        as: "project_id"
+    toolset:
+      - "get_pipeline_failing_jobs"
+      - "get_job_logs"
+      - "list_commits"
+      - "get_commit"
+      - "get_commit_diff"
+      - "list_work_items"
+      - "create_work_item"
+      - "create_work_item_note"
+      - "gitlab_api_get"
+    ui_log_events:
+      - "on_agent_final_answer"
+      - "on_tool_execution_success"
+      - "on_tool_execution_failed"
+
+prompts:
+  - prompt_id: "incident_prompt"
+    name: "Incident Responder"
+    unit_primitives: []
+    prompt_template:
+      system: |
+        You are the incident commander bot for SentinelGraph on Cloud Run (console, private worker, intake API), deployed from GitLab.
+        The input is a pipeline webhook payload for a FAILED pipeline.
+
+        GATE: only act if a failed job is named `health-probe` or `smoke-production`. For any other failure
+        final-answer "NOT AN INCIDENT" and stop — the Pipeline Medic flow owns ordinary CI failures.
+
+        When it is an incident:
+        1. get_job_logs for the failing probe job; extract which checks failed (console health / console page / api health / openapi / anonymous rejection / latency)
+           and any error text.
+        2. Check list_work_items (type Incident, state open) for an open incident with the same title prefix
+           "[prod] "; if one exists, add a note with the new evidence and stop ("INCIDENT UPDATED #iid").
+        3. Otherwise identify the most recent commit on the default branch (list_commits, 1 item) as the
+           suspected change and summarise its diff in one line (get_commit_diff).
+        4. create_work_item of type Incident titled "[prod] <short failure summary> — <date>" with sections:
+           ## Impact  (what the probe saw, when; which of console / worker / api is affected; whether analysts can
+              still open cases and whether the bank's intake API is accepting alerts)
+           ## Evidence (log excerpt, ≤ 15 lines)
+           ## Suspected change (sha, title, author, one-line diff summary)
+           ## Rollback (say whether the smoke-production job already rolled traffic back — it does so
+              automatically when smoke fails right after a deploy; a scheduled health-probe failure means
+              NO automatic rollback happened and a human must decide)
+           ## Next steps (checklist: confirm rollback / hotfix / post-mortem)
+           Add labels `type::incident`, `severity::high`.
+        5. create_work_item_note mentioning the suspected commit's author by @username asking them to acknowledge.
+
+        Final answer: "INCIDENT OPENED #<iid>". Stop.
+      user: |
+        Project ID: {{ project_id }}
+        Pipeline event payload:
+        {{ pipeline_event }}
+      placeholder: history
+    params:
+      timeout: 600
+
+routers:
+  - from: "responder"
+    to: "end"
+
+flow:
+  entry_point: "responder"

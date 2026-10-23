@@ -20,3 +20,5 @@ data/agent_cases_client/
 tests/
 .github/
 .ruff_cache/
+.gitlab/
+.gitlab-ci.yml

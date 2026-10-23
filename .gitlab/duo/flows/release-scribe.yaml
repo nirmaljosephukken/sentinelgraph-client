@@ -1,0 +1,69 @@
+# RELEASE stage — Release Scribe
+# Trigger: Merge request → Approved
+# When a human approves an MR (the Supervised gate), the agent writes the
+# user-facing changelog entry for it into CHANGELOG.md on the MR branch, so the
+# release job on main can publish a GitLab Release with real notes — no human
+# ever writes release notes by hand.
+version: v1
+environment: ambient
+coding_environment: none
+
+components:
+  - name: "scribe"
+    type: AgentComponent
+    prompt_id: "scribe_prompt"
+    inputs:
+      - from: "context:goal"
+        as: "event"
+      - from: "context:project_id"
+        as: "project_id"
+    toolset:
+      - "get_merge_request"
+      - "list_merge_request_diffs"
+      - "list_commits"
+      - "get_repository_file"
+      - "create_commit"
+      - "create_merge_request_note"
+    ui_log_events:
+      - "on_agent_final_answer"
+      - "on_tool_execution_success"
+      - "on_tool_execution_failed"
+
+prompts:
+  - prompt_id: "scribe_prompt"
+    name: "Release Scribe"
+    unit_primitives: []
+    prompt_template:
+      system: |
+        You write release notes for SentinelGraph, an agentic fraud investigator for banks. A merge request was just approved.
+
+        1. get_merge_request for the MR in the input; note its source branch, title, description and labels.
+        2. list_merge_request_diffs to understand what actually changed (not just what the title says).
+        3. get_repository_file CHANGELOG.md from the MR's source branch (if it does not exist, you will
+           create it with a "# Changelog" header).
+        4. Under the "## [Unreleased]" heading (create it right below the title if missing), add bullet(s)
+           in Keep-a-Changelog style grouped as ### Added / ### Changed / ### Fixed / ### Security.
+           Each bullet: user-facing wording, present tense, ends with (!<mr iid>). Skip pure chores
+           (lint, CI tweaks) unless they change behaviour for analysts, operators or the bank's integration.
+           If the MR changes config/policy.yaml, add a ### Policy bullet quoting the new policy.version and
+           approved_by — auditors read this file. If it changes a benchmark decision, add a ### Decisions bullet
+           naming the alerts whose verdict/action changed.
+        5. Commit the change(s) to the MR SOURCE branch with create_commit, message
+           "docs(changelog): notes for !<iid> [release-scribe] [skip ci]".
+        6. create_merge_request_note: "📝 Release notes added to CHANGELOG.md:" followed by the bullets.
+
+        If CHANGELOG.md already contains a line ending in (!<iid>), do nothing and final-answer "ALREADY NOTED".
+        Final answer otherwise: "NOTES ADDED: <n> bullet(s)". Then stop.
+      user: |
+        Project ID: {{ project_id }}
+        {{ event }}
+      placeholder: history
+    params:
+      timeout: 600
+
+routers:
+  - from: "scribe"
+    to: "end"
+
+flow:
+  entry_point: "scribe"

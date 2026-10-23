@@ -1,0 +1,14 @@
+# Execution environment for Duo flows that run with coding_environment: full (none of the shipped flows need
+# it; they are API-only). Kept so a future flow can run the test suite before committing a fix.
+image: python:3.11-slim
+
+setup_script:
+  - pip install -q -r requirements.txt -r requirements-dev.txt
+
+cache:
+  key:
+    files:
+      - requirements.txt
+      - requirements-dev.txt
+  paths:
+    - .pip-cache/

@@ -1,5 +1,9 @@
 # SentinelGraph (client edition)
 
+> **GitLab Transcend Hackathon — Life After Code · Path B (Bring Your Own) · Autonomy: Supervised.**
+> Original project: https://github.com/nirmaljosephukken/sentinelgraph-client (MIT). This GitLab project adds
+> everything that happens *after* the code is written: see [Life After Code](#life-after-code) below.
+
 **An agentic fraud investigator for banks, built with Google's Agent Development Kit and Gemini, running on Cloud Run.**
 
 This is the client edition: the investigation engine plus work-account sign-in, roles (viewer, analyst, team lead,
@@ -243,6 +247,39 @@ SentinelGraph grew out of an earlier agentic fraud prototype on TigerGraph, buil
 - The dataset is the public IEEE-CIS card data with the fraud label removed, plus a bank risk score, closed investigations and a fraud policy provided with the dataset. No real customer data is used.
 - Customer, step-up and analyst replies are not available in the data. The engine assumes the reply the evidence supports, never a hidden label, and writes the assumption into the case.
 - Gemini never sets a probability or an action. If you find a reply where it appears to, that is a bug we want to hear about.
+
+## Life After Code
+
+What this project gained by moving from GitHub Actions to GitLab's full lifecycle platform, with GitLab Duo
+agents owning the post-code work. The only human actions left are **approve the merge request** and **click
+`deploy-production`**.
+
+| Stage | Before (GitHub) | After (GitLab + Duo) |
+|---|---|---|
+| plan | issues triaged by hand | **Issue Triage flow**: type/severity labels, duplicate check, acceptance criteria, implementation sketch |
+| create | manual review | **MR Reviewer flow**: inline review that enforces the trust boundary (Gemini never decides) and benchmark integrity, submits a verdict, labels the MR; Duo Developer implements issues |
+| verify | lint + fast tests on PR; slow on main | ruff (as Code Quality), fast + slow tests on every MR, JUnit + coverage in the MR, policy-file check; **Pipeline Medic flow** reads failed job logs and pushes the fix — but refuses to regenerate the golden benchmark |
+| package | image built, not kept | image in the Container Registry; console, worker and API started from it and health-checked |
+| secure | regex secret grep | SAST · secret detection · dependency scanning · container scanning; **Security Gate flow** triages findings against what matters for a bank, opens issues, blocks/clears the MR |
+| release | none | conventional-commit semver tags + GitLab Releases; **Release Scribe flow** writes the changelog on approval, including policy version/approver and any decision change |
+| configure | `deploy.ps1` run by hand from a laptop | staging auto-deploy of console + worker + API via keyless OIDC (Workload Identity Federation); production behind one approval |
+| monitor | Cloud Monitoring alerts (kept) | smoke test after every deploy with automatic traffic rollback; hourly health probe |
+| govern | branch protection | CODEOWNERS on decisions/policy/deploy, approval rule, DCO sign-off and license allowlist in CI; **Incident Responder flow** opens an Incident work item with evidence, suspected commit and rollback status |
+
+Flows live in `.gitlab/duo/flows/`; agent instructions in `AGENTS.md`.
+
+### Pipeline setup (protected CI/CD variables)
+
+| Variable | Purpose |
+|---|---|
+| `GCP_PROJECT_ID`, `GCP_PROJECT_NUMBER`, `GCP_REGION` | Google Cloud target (the services were first created by `deploy/deploy.ps1`; CI rolls new images onto them) |
+| `GCP_WIF_POOL`, `GCP_WIF_PROVIDER`, `GCP_DEPLOY_SA` | Workload Identity Federation: GitLab's OIDC token → deploy service account, no JSON keys |
+| `RELEASE_TOKEN` | project access token (`api`, `write_repository`) for the release job |
+| `PROD_URL`, `PROD_API_URL` | set after the first production deploy; used by the hourly `health-probe` schedule |
+
+Triggers (AI → Flows → Enable): Issue Triage on *Work item created*; MR Reviewer on *Merge request created* and
+*Mention*; Pipeline Medic and Incident Responder on *Pipeline events: failed*; Security Gate on *Pipeline events:
+passed*; Release Scribe on *Merge request approved*.
 
 ## License
 
