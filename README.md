@@ -3,6 +3,11 @@
 > **GitLab Transcend Hackathon — Life After Code · Path B (Bring Your Own) · Autonomy: Supervised.**
 > Original project: https://github.com/nirmaljosephukken/sentinelgraph-client (MIT). This GitLab project adds
 > everything that happens *after* the code is written: see [Life After Code](#life-after-code) below.
+> Live: [staging console](https://sentinelgraph-staging-539369061797.asia-south1.run.app) ·
+> [staging intake API](https://sentinelgraph-staging-api-539369061797.asia-south1.run.app/docs) ·
+> [releases](https://gitlab.com/nekku-solo/sentinelgraph-client/-/releases) ·
+> [agent sessions](https://gitlab.com/nekku-solo/sentinelgraph-client/-/automate/agent-sessions) ·
+> [the review conversation on !1](https://gitlab.com/nekku-solo/sentinelgraph-client/-/merge_requests/1)
 
 **An agentic fraud investigator for banks, built with Google's Agent Development Kit and Gemini, running on Cloud Run.**
 
@@ -261,7 +266,7 @@ agents owning the post-code work. The only human actions left are **approve the 
 | verify | lint + fast tests on PR; slow on main | ruff (as Code Quality), fast + slow tests on every MR, JUnit + coverage in the MR, policy-file check; **Pipeline Medic flow** reads failed job logs and pushes the fix — but refuses to regenerate the golden benchmark |
 | package | image built, not kept | image in the Container Registry; console, worker and API started from it and health-checked |
 | secure | regex secret grep | SAST · secret detection · dependency scanning · container scanning; **Security Gate flow** triages findings against what matters for a bank, opens issues, blocks/clears the MR |
-| release | none | conventional-commit semver tags + GitLab Releases; **Release Scribe flow** writes the changelog on approval, including policy version/approver and any decision change |
+| release | none | keyless semantic releases (job token, Conventional Commits) + GitLab Releases; **Release Scribe flow** writes the changelog on approval, including policy version/approver and any decision change |
 | configure | `deploy.ps1` run by hand from a laptop | staging auto-deploy of console + worker + API via keyless OIDC (Workload Identity Federation); production behind one approval |
 | monitor | Cloud Monitoring alerts (kept) | smoke test after every deploy with automatic traffic rollback; hourly health probe |
 | govern | branch protection | CODEOWNERS on decisions/policy/deploy, approval rule, DCO sign-off and license allowlist in CI; **Incident Responder flow** opens an Incident work item with evidence, suspected commit and rollback status |
