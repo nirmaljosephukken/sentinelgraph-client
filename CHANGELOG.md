@@ -14,6 +14,11 @@ into a tagged release by the release job on `main`.
 - `AGENTS.md` with the trust boundary and the golden-benchmark rule for agents; `CODEOWNERS` on decisions,
   policy and deployment.
 - MIT license.
+- `GET /v1/alerts/{id}` always reports the `policy` (name, version, approved_by, fingerprint, mode) and a new `policy_source` field (`active` or `case_record`), so auditors can tell which settings produced a decision at any point in the alert's life. (!1)
+
+### Changed
+- Alerts that are queued, investigating, awaiting the cardholder or resuming report the active policy, marked `policy_source: active`; finished alerts report only the policy recorded with their own decision (`null` if none was recorded), marked `case_record`. (!1)
+- Errored alerts report no policy, so a stale first-pass answer is never presented as a decision. (!1)
 
 ## [1.0.0] — 2026-10-04
 

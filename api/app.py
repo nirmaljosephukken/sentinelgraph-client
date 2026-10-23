@@ -154,10 +154,22 @@ def alert_status(alert_id: str, rec: dict = Depends(key_for("read"))):
                                    "pattern", "exposure_usd", "case_status", "final_actions", "sar", "graph_case_id",
                                    "request_type", "request_why", "reply_due", "error") if doc.get(k) is not None}
     out["mode"] = POLICY.mode
-    if doc.get("answer"):
-        ans = json.loads(doc["answer"])
+    ans = json.loads(doc["answer"]) if doc.get("answer") else None
+    if ans:
         out.update(summary=ans["case"].get("summary"), evidence_requests=ans.get("evidence_requests"),
-                   actions=ans["next_best_actions"]["final"], policy=ans.get("policy"))
+                   actions=ans["next_best_actions"]["final"])
+    # Auditors need the policy on every read-back, attributed by the alert's STATE, never by what happens to be
+    # stored. Until the case is finished (queued, investigating, awaiting_reply, resuming) the ACTIVE policy is
+    # reported and marked provisional: a waiting case is re-investigated under whatever policy is active when the
+    # answer arrives. A done case reports only its own record - the policy that produced the decision, None if it
+    # was never recorded - so a later policy change can never be misattributed to an old decision. An errored case
+    # produced no decision at all, so it reports no policy: a stale first-pass answer must not be dressed up as one.
+    if doc.get("status") == "done":
+        out.update(policy=(ans or {}).get("policy"), policy_source="case_record")
+    elif doc.get("status") == "error":
+        out.update(policy=None, policy_source="case_record")
+    else:
+        out.update(policy=POLICY.summary(), policy_source="active")
     return out
 
 
