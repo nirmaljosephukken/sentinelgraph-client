@@ -261,18 +261,23 @@ release:
     GIT_STRATEGY: fetch
 
 .deploy-trio:
-  # $1 = environment suffix ("-staging" or ""), rolls the console, the private worker and the intake API.
+  # Rolls the console, the private worker and the intake API onto the new image.
+  # Staging is created by CI on first run in OFFLINE mode (local graph mirror, no LLM, dev sign-in): it needs no
+  # secrets and is safe to expose. Production services were created by deploy/deploy.ps1 with Secret Manager,
+  # Vertex AI and the bank's settings; CI only swaps their image (--update-env-vars keeps everything else).
   script:
     - |
-      SFX="$DEPLOY_SUFFIX"; SVC="$SERVICE$SFX"; AR="$GCP_REGION-docker.pkg.dev/$GCP_PROJECT_ID/sentinelgraph/app:$IMAGE_TAG"
-      LBL="--update-labels env=${DEPLOY_ENV},sha=$CI_COMMIT_SHORT_SHA"
-      gcloud run deploy "$SVC"        --image "$AR" --region "$GCP_REGION" $LBL --update-env-vars "GIT_SHA=$CI_COMMIT_SHA,APP_ENV=$DEPLOY_ENV" --quiet
-      gcloud run deploy "$SVC-worker" --image "$AR" --region "$GCP_REGION" $LBL --update-env-vars "GIT_SHA=$CI_COMMIT_SHA,APP_ENV=$DEPLOY_ENV" --quiet
-      gcloud run deploy "$SVC-api"    --image "$AR" --region "$GCP_REGION" $LBL --update-env-vars "GIT_SHA=$CI_COMMIT_SHA,APP_ENV=$DEPLOY_ENV" --quiet
+      SVC="$SERVICE$DEPLOY_SUFFIX"; AR="$GCP_REGION-docker.pkg.dev/$GCP_PROJECT_ID/sentinelgraph/app:$IMAGE_TAG"
+      COMMON="--image $AR --region $GCP_REGION --platform managed --update-labels env=$DEPLOY_ENV,sha=$CI_COMMIT_SHORT_SHA --quiet"
+      ENVV="GIT_SHA=$CI_COMMIT_SHA,APP_ENV=$DEPLOY_ENV"
+      if [ "$DEPLOY_ENV" = "staging" ]; then ENVV="$ENVV,LLM_PROVIDER=none,GRAPH_BACKEND=local,LIVE_BACKEND=local,AUTH_MODE=dev,ALLOW_DEV_AUTH=1,ACCESS_PREFIX=$SVC"; fi
+      gcloud run deploy "$SVC"        $COMMON --update-env-vars "$ENVV" --allow-unauthenticated --session-affinity --timeout 3600 --cpu 2 --memory 2Gi --max-instances 2 --concurrency 20
+      gcloud run deploy "$SVC-worker" $COMMON --update-env-vars "$ENVV" --no-allow-unauthenticated --command uvicorn --args "worker.app:app,--host,0.0.0.0,--port,8080" --timeout 600 --cpu 2 --memory 2Gi --max-instances 3 --concurrency 1
+      gcloud run deploy "$SVC-api"    $COMMON --update-env-vars "$ENVV" --allow-unauthenticated --command uvicorn --args "api.app:app,--host,0.0.0.0,--port,8080" --timeout 900 --cpu 2 --memory 2Gi --max-instances 2 --concurrency 4
       URL=$(gcloud run services describe "$SVC" --region "$GCP_REGION" --format 'value(status.url)')
       API=$(gcloud run services describe "$SVC-api" --region "$GCP_REGION" --format 'value(status.url)')
       echo "${DEPLOY_VAR}_URL=$URL" >> deploy.env; echo "${DEPLOY_VAR}_API_URL=$API" >> deploy.env
-      echo "Deployed $SVC → $URL  (api $API)"
+      echo "Deployed $SVC -> $URL  (api $API)"
   artifacts:
     reports:
       dotenv: deploy.env
@@ -323,6 +328,13 @@ smoke-production:
   extends: .gcloud
   stage: monitor
   needs: [deploy-production]
+  before_script:
+    - echo "$GCP_ID_TOKEN" > /tmp/gitlab_jwt
+    - gcloud iam workload-identity-pools create-cred-config
+      "projects/$GCP_PROJECT_NUMBER/locations/global/workloadIdentityPools/$GCP_WIF_POOL/providers/$GCP_WIF_PROVIDER"
+      --service-account="$GCP_DEPLOY_SA" --output-file=/tmp/cred.json --credential-source-file=/tmp/gitlab_jwt
+    - gcloud auth login --cred-file=/tmp/cred.json --quiet
+    - gcloud config set project "$GCP_PROJECT_ID"
   script:
     - |
       if python3 .gitlab/scripts/smoke.py "$PROD_URL" "$PROD_API_URL"; then echo "production healthy"; else

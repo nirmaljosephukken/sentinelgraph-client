@@ -270,6 +270,10 @@ Flows live in `.gitlab/duo/flows/`; agent instructions in `AGENTS.md`.
 
 ### Pipeline setup (protected CI/CD variables)
 
+Run `.\deploy\gitlab-wif-setup.ps1 -Project <gcp-project> -GitLabProjectPath <group/project>` once (creates the Workload
+Identity pool, the GitLab OIDC provider, a least-privilege deploy service account and the Artifact Registry repo), then add
+the variables it prints:
+
 | Variable | Purpose |
 |---|---|
 | `GCP_PROJECT_ID`, `GCP_PROJECT_NUMBER`, `GCP_REGION` | Google Cloud target (the services were first created by `deploy/deploy.ps1`; CI rolls new images onto them) |
