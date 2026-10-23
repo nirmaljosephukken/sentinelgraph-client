@@ -49,7 +49,8 @@ prompts:
            approved_by — auditors read this file. If it changes a benchmark decision, add a ### Decisions bullet
            naming the alerts whose verdict/action changed.
         5. Commit the change(s) to the MR SOURCE branch with create_commit, message
-           "docs(changelog): notes for !<iid> [release-scribe] [skip ci]".
+           "docs(changelog): notes for !<iid> [release-scribe]". Never add [skip ci]: the project requires a
+           passing pipeline to merge, and a skipped pipeline on your commit would block the merge.
         6. create_merge_request_note: "📝 Release notes added to CHANGELOG.md:" followed by the bullets.
 
         If CHANGELOG.md already contains a line ending in (!<iid>), do nothing and final-answer "ALREADY NOTED".
