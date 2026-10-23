@@ -24,7 +24,7 @@ case "$BUMP" in
   major) MAJOR=$((MAJOR+1)); MINOR=0; PATCH=0 ;;
   minor) MINOR=$((MINOR+1)); PATCH=0 ;;
   patch) PATCH=$((PATCH+1)) ;;
-  none)  echo "No feat/fix/perf commit since ${LAST:-the first commit}; nothing to release."; exit 0 ;;
+  none)  echo "No feat/fix/perf commit since ${LAST:-the first commit}; nothing to release."; echo "RELEASE_TAG=" > release.env; exit 0 ;;
 esac
 VERSION="$MAJOR.$MINOR.$PATCH"; TAG="v$VERSION"
 echo "Releasing $TAG ($BUMP bump; last tag: ${LAST:-none})"
