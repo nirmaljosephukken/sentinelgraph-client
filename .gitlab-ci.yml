@@ -16,7 +16,9 @@ stages:
   - secure
   - test        # default stage of the included scanner templates not pinned below
   - release
-  - deploy
+  - deploy-staging
+  - verify-staging
+  - deploy-production
   - monitor
 
 variables:
@@ -272,7 +274,7 @@ release:
 
 deploy-staging:
   extends: [.gcloud, .deploy-trio]
-  stage: deploy
+  stage: deploy-staging
   needs: [build-image, container-health, container_scanning]
   variables:
     DEPLOY_SUFFIX: "-staging"
@@ -287,7 +289,7 @@ deploy-staging:
 
 deploy-production:
   extends: [.gcloud, .deploy-trio]
-  stage: deploy
+  stage: deploy-production
   needs: [deploy-staging, smoke-staging]
   variables:
     DEPLOY_SUFFIX: ""
@@ -304,7 +306,7 @@ deploy-production:
 
 # ---------------------------------------------------------------- monitor
 smoke-staging:
-  stage: monitor
+  stage: verify-staging
   image: $PY_IMAGE
   needs: [deploy-staging]
   script:
