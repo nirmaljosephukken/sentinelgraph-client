@@ -37,7 +37,7 @@ fi
 echo "3/5 Deploy service account (least privilege) ..."
 gcloud iam service-accounts describe "$SA" >/dev/null 2>&1 ||
   gcloud iam service-accounts create "$SA_NAME" --display-name="GitLab CI deploy" >/dev/null
-for ROLE in roles/run.developer roles/artifactregistry.writer roles/iam.serviceAccountUser; do
+for ROLE in roles/run.admin roles/artifactregistry.writer roles/iam.serviceAccountUser; do
   gcloud projects add-iam-policy-binding "$PROJECT" --member="serviceAccount:$SA" --role="$ROLE" --condition=None >/dev/null
 done
 # The Cloud Run services run as the app's own service account (created by deploy.ps1); the deployer must be allowed to use it.
