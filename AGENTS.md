@@ -30,6 +30,8 @@ Any change that lets model output set a number, pick a transaction or trigger an
 - Do not touch deploy jobs (`.gcloud`, `deploy-*`) or `deploy/` scripts without a human.
 - Prefer small single-purpose commits, Conventional Commits (`feat:`, `fix:`, `docs:`, `ci:`, `chore:`), and a
   `Signed-off-by:` trailer on human commits (DCO).
+- Never put a CI-skipping marker in a commit message or its body: merging requires a passing pipeline, and a
+  skipped pipeline blocks the merge for everyone.
 
 ## Commands
 `pip install -r requirements.txt -r requirements-dev.txt` · `ruff check .` · `pytest -m "not slow"` (10 s) ·
