@@ -1,0 +1,19 @@
+{
+  "git": {
+    "requireCleanWorkingDir": false,
+    "requireUpstream": false,
+    "commitMessage": "chore(release): v${version} [skip ci]",
+    "tagAnnotation": "Release v${version}",
+    "push": true
+  },
+  "npm": { "publish": false, "ignoreVersion": true },
+  "github": { "release": false },
+  "gitlab": {
+    "release": true,
+    "tokenRef": "RELEASE_TOKEN",
+    "releaseNotes": "node .gitlab/scripts/release-notes.js"
+  },
+  "plugins": {
+    "@release-it/conventional-changelog": { "preset": "angular", "infile": false }
+  }
+}

@@ -227,7 +227,7 @@ release:
   script:
     - git config user.email "release-bot@noreply.gitlab.com" && git config user.name "Release Bot"
     - git remote set-url origin "https://oauth2:${RELEASE_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git"
-    - npx release-it --ci --no-npm --git.requireCleanWorkingDir=false --git.commitMessage="chore(release): v\${version} [skip ci]" --github.release=false --gitlab.release=true --gitlab.tokenRef=RELEASE_TOKEN --gitlab.releaseNotes="node .gitlab/scripts/release-notes.js" --plugins.@release-it/conventional-changelog.preset=angular --plugins.@release-it/conventional-changelog.infile=false
+    - npx release-it --ci   # configured in .release-it.json
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $RELEASE_TOKEN
 
