@@ -225,18 +225,23 @@ container_scanning:
 
 # ---------------------------------------------------------------- release
 release:
+  # Keyless: the job's own CI_JOB_TOKEN creates the tag and the GitLab Release through the Releases API.
+  # Version comes from Conventional Commits since the last v* tag; notes come from the CHANGELOG section the
+  # Release Scribe flow wrote on approval. Docs/ci-only merges release nothing.
   stage: release
-  image: node:22-alpine
-  needs: [build-image, container-health, semgrep-sast, secret_detection]
+  image: alpine:3.20
+  needs: [build-image, container-health, test-slow, semgrep-sast, secret_detection]
+  variables:
+    GIT_DEPTH: 0            # full history: the bump is decided from every commit since the last tag
   before_script:
-    - apk add --no-cache git
-    - npm i -g release-it@17 @release-it/conventional-changelog@8 >/dev/null
+    - apk add --no-cache git curl jq >/dev/null
   script:
-    - git config user.email "release-bot@noreply.gitlab.com" && git config user.name "Release Bot"
-    - git remote set-url origin "https://oauth2:${RELEASE_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git"
-    - npx release-it --ci   # configured in .release-it.json
+    - sh .gitlab/scripts/release.sh
+  artifacts:
+    reports:
+      dotenv: release.env
   rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $RELEASE_TOKEN
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 
 # ---------------------------------------------------------------- deploy
 # Keyless: the job's OIDC ID token is exchanged for the deploy service account through Workload Identity

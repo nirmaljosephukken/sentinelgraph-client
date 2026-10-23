@@ -279,8 +279,10 @@ the variables it prints:
 | `GCP_PROJECT_ID`, `GCP_PROJECT_NUMBER`, `GCP_REGION` | Google Cloud target (the services were first created by `deploy/deploy.ps1`; CI rolls new images onto them) |
 | `GCP_WIF_POOL`, `GCP_WIF_PROVIDER`, `GCP_DEPLOY_SA` | Workload Identity Federation: GitLab's OIDC token → deploy service account, no JSON keys |
 | `GCP_RUNTIME_SA` | optional: the service account the Cloud Run services run as (`sentinelgraph-run@…`); the setup script grants the deployer actAs on it |
-| `RELEASE_TOKEN` | project access token (`api`, `write_repository`) for the release job |
 | `PROD_URL`, `PROD_API_URL` | set after the first production deploy; used by the hourly `health-probe` schedule |
+
+Releases need no token: the `release` job tags and publishes through the Releases API with its own short-lived
+`CI_JOB_TOKEN`, bumping the version from Conventional Commits since the last tag.
 
 Triggers (AI → Flows → Enable): Issue Triage on *Work item created*; MR Reviewer on *Merge request created* and
 *Mention*; Pipeline Medic and Incident Responder on *Pipeline events: failed*; Security Gate on *Pipeline events:
