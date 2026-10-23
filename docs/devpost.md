@@ -39,7 +39,7 @@ and **click `deploy-production`**.
 | verify | lint + fast tests | ruff as Code Quality, fast + slow pytest (20 benchmark alerts must reproduce exactly), coverage and JUnit in the MR; **Pipeline Medic flow** reads failed job logs and pushes the fix — and refuses to touch the golden file |
 | package | image built, discarded | image in the Container Registry; console, worker and intake API started from it and health-checked |
 | secure | a regex for keys | SAST, secret detection, dependency scanning, container scanning; **Security Gate flow** triages findings for what matters in a bank, opens issues, blocks/clears the MR |
-| release | none | semver tags + GitLab Releases; **Release Scribe flow** writes the changelog on approval, including policy version/approver and any decision change |
+| release | none | keyless semantic releases: the job tags and publishes with its own `CI_JOB_TOKEN`, version from Conventional Commits; **Release Scribe flow** writes the changelog on approval, including policy version/approver and any decision change |
 | configure | `deploy.ps1` from a laptop | staging deploy of three Cloud Run services via keyless OIDC (Workload Identity Federation); production behind one approval |
 | monitor | Cloud Monitoring alerts (kept) | smoke tests after every deploy with automatic traffic rollback; hourly health probe |
 | govern | branch protection | CODEOWNERS on decisions/policy/deploy, approval rule, DCO and license gates in CI; **Incident Responder flow** opens an Incident work item with evidence, suspected commit and rollback status |
@@ -54,6 +54,8 @@ and **click `deploy-production`**.
   regenerate `tests/golden/benchmark.json`* — a changed fraud decision is a policy event for a human.
 - **A 19-job pipeline** with the four scanner templates, a three-service container health check, keyless Cloud Run
   deploys (`id_tokens` → WIF → deploy service account, no JSON keys anywhere) and rollback.
+- **No long-lived credential anywhere**: deploys use OIDC federation, releases use the job token, agents use
+  GitLab's own service accounts. There is nothing in this project a leaked CI variable could give away.
 - **Governance as code:** CODEOWNERS, DCO sign-off check, copyleft license gate, approval rule, protected `main`.
 
 ## What the agents actually did (watch issue #1 and !1)
@@ -70,6 +72,10 @@ and **click `deploy-production`**.
   guard fix to the branch on its own (`f8116ca1`), without touching the golden benchmark. The human commit that
   followed built on it.
 
+- On approval, **Release Scribe** read the final diff and wrote the Keep-a-Changelog entry for !1 into
+  `CHANGELOG.md` itself; on merge, the release job turned that entry into the `v1.1.0` GitLab Release and the
+  post-merge pipeline rolled the image onto staging without anyone touching a cloud console.
+
 That is the Supervised model working: agents found real defects and fixed the mechanical one themselves; a human
 decided what the audit semantics should be; nothing merged on its own.
 
@@ -80,6 +86,10 @@ decided what the audit semantics should be; nothing merged on its own.
 - Getting the dependency between `deploy-production` and the staging smoke test right needed explicit stages
   (`deploy-staging → verify-staging → deploy-production`), because `needs:` cannot look forward.
 - A pure SPDX allowlist for licenses is whack-a-mole; a copyleft denylist is what a bank actually wants.
+- Release Scribe's first changelog commit carried a skip-CI marker, which the "pipeline must succeed" merge rule
+  correctly refused. The governance caught the agent; the fix went into the flow *and* into `AGENTS.md`.
+- GitLab's shared runners sit on another continent from Mumbai, so a 1.5 s p95 smoke budget failed on pure
+  round-trip time. The budget is now explicit (`SMOKE_P95_SECONDS`) rather than a magic number.
 
 ## Accomplishments
 
