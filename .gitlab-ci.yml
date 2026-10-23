@@ -76,7 +76,9 @@ default:
 # ---------------------------------------------------------------- verify
 no-secrets-in-repo:
   stage: verify
-  image: alpine/git:latest
+  image:
+    name: alpine/git:latest
+    entrypoint: [""]
   script:
     - test ! -f .env || { echo "::error::.env must never be committed"; exit 1; }
     - |
@@ -146,7 +148,9 @@ license-check:
 
 dco-check:
   stage: verify
-  image: alpine/git:latest
+  image:
+    name: alpine/git:latest
+    entrypoint: [""]
   script:
     - |
       git fetch -q origin "$CI_DEFAULT_BRANCH" || true
