@@ -1,6 +1,9 @@
-# Execution environment for Duo flows that run with coding_environment: full (none of the shipped flows need
-# it; they are API-only). Kept so a future flow can run the test suite before committing a fix.
-image: python:3.11-slim
+# Execution environment for Duo flows that run in CI/CD.
+# The image must contain `curl` (the runner downloads the Duo CLI with it) and, for flows that use
+# coding_environment: full, the project's toolchain. All six shipped flows are API-only
+# (coding_environment: none) so setup_script is skipped for them, but a future "run the tests before
+# committing" flow gets a ready Python environment from it.
+image: python:3.11-bookworm
 
 setup_script:
   - pip install -q -r requirements.txt -r requirements-dev.txt
