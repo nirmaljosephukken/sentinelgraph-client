@@ -91,6 +91,15 @@ decided what the audit semantics should be; nothing merged on its own.
 - GitLab's shared runners sit on another continent from Mumbai, so a 1.5 s p95 smoke budget failed on pure
   round-trip time. The budget is now explicit (`SMOKE_P95_SECONDS`) rather than a magic number.
 
+## Known limits (so you don't have to find them)
+
+- Container scanning reports HIGH CVEs in the Debian base of `python:3.11-slim` with no upstream fix yet; the
+  Security Gate flow tracks them and does not block on them. We rebuild on every base-image refresh.
+- This is a solo project, so the approval rule necessarily allows the author to approve; CODEOWNERS, the DCO and
+  license gates, protected `main` and the audit trail of agent sessions are what keep that honest.
+- Staging runs the offline mode (local graph mirror, no model calls) so it can be public and cost nothing;
+  production is the full stack and sits behind the manual gate.
+
 ## Accomplishments
 
 Nine lifecycle stages covered by a mix of CI and six agents; a review conversation between an agent and a human that

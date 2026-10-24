@@ -16,8 +16,8 @@ fraud manager, admin), enforced approvals, an append-only audit trail, decision 
 a data intake (console upload and API with per-client keys) that maps a client's own export format, shadow and
 assist modes with a signed action webhook, real cardholder replies (never assumed on client data), an Outcomes
 page that checks the agent against what really happened before go-live, and input safety (personal data masked
-before Gemini, manipulation attempts flagged, model output checked before use), with a 123-test suite, GitHub
-Actions CI and Cloud Monitoring alerts. Setup is in
+before Gemini, manipulation attempts flagged, model output checked before use), with a 129-test suite, the GitLab
+CI/CD + Duo-agent lifecycle described under [Life After Code](#life-after-code), and Cloud Monitoring alerts. Setup is in
 [docs/production.md](docs/production.md). The hackathon submission is kept separately and unchanged.
 
 | | |
@@ -56,7 +56,7 @@ SentinelGraph works an alert the way a careful analyst would, and shows its work
 | **Pub/Sub** | The live alert stream (`fraud-alerts`). Customer disputes and the bank's own alerts are published to it; a push subscription delivers each one to the worker with an OIDC token. |
 | **Firestore** | The live queue: every alert's stage (queued, investigating, done) and its result, read by the console as it updates. |
 | **Secret Manager** | Holds the graph credential, injected at deploy time. Nothing secret is in the image or the repo. |
-| **Cloud Build + Artifact Registry** | `gcloud run deploy --source .` builds the `Dockerfile` and stores the image. |
+| **Artifact Registry** | GitLab CI builds the `Dockerfile`, scans the image and copies it here; Cloud Run pulls it (`deploy.ps1` builds with Cloud Build for a first manual deploy). |
 | **IAM** | One dedicated service account: Secret Manager access, `aiplatform.user`, `pubsub.publisher`, `datastore.user`, and `run.invoker` on the private worker only. |
 
 The graph itself lives on TigerGraph Savanna and is reached through the official TigerGraph MCP server.
@@ -281,10 +281,10 @@ the variables it prints:
 
 | Variable | Purpose |
 |---|---|
-| `GCP_PROJECT_ID`, `GCP_PROJECT_NUMBER`, `GCP_REGION` | Google Cloud target (the services were first created by `deploy/deploy.ps1`; CI rolls new images onto them) |
+| `GCP_PROJECT_ID`, `GCP_PROJECT_NUMBER`, `GCP_REGION` | Google Cloud target. Staging services (`sentinelgraph-staging*`) are created by CI; production (`sentinelgraph-client*`, set by `PROD_SERVICE`) was first created by `deploy/deploy.ps1` and CI only rolls new images onto it |
 | `GCP_WIF_POOL`, `GCP_WIF_PROVIDER`, `GCP_DEPLOY_SA` | Workload Identity Federation: GitLab's OIDC token → deploy service account, no JSON keys |
 | `GCP_RUNTIME_SA` | optional: the service account the Cloud Run services run as (`sentinelgraph-run@…`); the setup script grants the deployer actAs on it |
-| `PROD_URL`, `PROD_API_URL` | set after the first production deploy; used by the hourly `health-probe` schedule |
+| `STAGING_URL`, `STAGING_API_URL`, `PROD_URL`, `PROD_API_URL` | targets of the hourly `health-probe` schedule (a failure triggers the Incident Responder flow) |
 
 Releases need no token: the `release` job tags and publishes through the Releases API with its own short-lived
 `CI_JOB_TOKEN`, bumping the version from Conventional Commits since the last tag.

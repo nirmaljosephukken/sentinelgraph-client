@@ -35,7 +35,8 @@ variables:
   PYTHONUNBUFFERED: "1"
   # Google Cloud target — set as protected CI/CD variables (see README "Pipeline setup")
   GCP_REGION: asia-south1
-  SERVICE: sentinelgraph
+  SERVICE: sentinelgraph              # staging services are $SERVICE-staging{,-worker,-api}
+  PROD_SERVICE: sentinelgraph-client  # the client-edition services deploy/deploy.ps1 created (console, -worker, -api)
   # scanner tuning
   SAST_EXCLUDED_PATHS: "tests, data, traces, cases, proactive, knowledge, samples"
   SECRET_DETECTION_EXCLUDED_PATHS: "data, traces, cases, proactive"
@@ -145,7 +146,6 @@ license-check:
   artifacts:
     paths: [licenses.md]
     expire_in: 1 week
-  allow_failure: true
 
 dco-check:
   stage: verify
@@ -307,6 +307,7 @@ deploy-production:
   stage: deploy-production
   needs: [deploy-staging, smoke-staging]
   variables:
+    SERVICE: $PROD_SERVICE
     DEPLOY_SUFFIX: ""
     DEPLOY_ENV: production
     DEPLOY_VAR: PROD
@@ -333,6 +334,8 @@ smoke-production:
   extends: .gcloud
   stage: monitor
   needs: [deploy-production]
+  variables:
+    SERVICE: $PROD_SERVICE
   before_script:
     - echo "$GCP_ID_TOKEN" > /tmp/gitlab_jwt
     - gcloud iam workload-identity-pools create-cred-config
@@ -351,11 +354,16 @@ smoke-production:
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $GCP_PROJECT_ID
 
-# Hourly schedule. A failure is a Pipeline-Failed trigger for the Incident Responder flow.
+# Hourly schedule: probes every environment whose URL is set as a CI variable (STAGING_URL today, PROD_URL once
+# production exists). A failure is a Pipeline-Failed trigger for the Incident Responder flow.
 health-probe:
   stage: monitor
   image: $PY_IMAGE
   script:
-    - python .gitlab/scripts/smoke.py "$PROD_URL" "$PROD_API_URL"
+    - |
+      rc=0
+      [ -n "$STAGING_URL" ] && { echo "== staging"; python .gitlab/scripts/smoke.py "$STAGING_URL" "$STAGING_API_URL" || rc=1; }
+      [ -n "$PROD_URL" ] && { echo "== production"; python .gitlab/scripts/smoke.py "$PROD_URL" "$PROD_API_URL" || rc=1; }
+      exit $rc
   rules:
-    - if: $CI_PIPELINE_SOURCE == "schedule" && $PROD_URL
+    - if: $CI_PIPELINE_SOURCE == "schedule" && ($PROD_URL || $STAGING_URL)
