@@ -164,6 +164,8 @@ dco-check:
       done
       exit $bad
   rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: never
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 
@@ -241,6 +243,8 @@ release:
     reports:
       dotenv: release.env
   rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: never
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 
 # ---------------------------------------------------------------- deploy
@@ -300,6 +304,8 @@ deploy-staging:
     url: $STAGING_URL
     deployment_tier: staging
   rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: never
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $GCP_PROJECT_ID
 
 deploy-production:
@@ -316,6 +322,8 @@ deploy-production:
     url: $PROD_URL
     deployment_tier: production
   rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: never
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $GCP_PROJECT_ID
       when: manual            # the one human gate (Supervised autonomy)
       allow_failure: false
@@ -328,6 +336,8 @@ smoke-staging:
   script:
     - python .gitlab/scripts/smoke.py "$STAGING_URL" "$STAGING_API_URL"
   rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: never
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $GCP_PROJECT_ID
 
 smoke-production:
@@ -352,6 +362,8 @@ smoke-production:
           [ -n "$PREV" ] && gcloud run services update-traffic "$s" --region "$GCP_REGION" --to-revisions "$PREV=100" --quiet
         done; exit 1; fi
   rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: never
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $GCP_PROJECT_ID
 
 # Hourly schedule: probes every environment whose URL is set as a CI variable (STAGING_URL today, PROD_URL once
