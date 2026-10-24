@@ -44,6 +44,22 @@ and **click `deploy-production`**.
 | monitor | Cloud Monitoring alerts (kept) | smoke tests after every deploy with automatic traffic rollback; hourly health probe |
 | govern | branch protection | CODEOWNERS on decisions/policy/deploy, approval rule, DCO and license gates in CI; **Incident Responder flow** opens an Incident work item with evidence, suspected commit and rollback status |
 
+## What was added during the submission period (Path B)
+
+SentinelGraph itself (the fraud engine, the Gemini/ADK agent, the console, the intake API, the TigerGraph schema)
+predates this hackathon and is the MIT project linked above. **Everything below was created on or after 5 October
+2026, for this hackathon**, and is visible in the GitLab project history:
+
+- the import to GitLab and the whole `.gitlab-ci.yml` pipeline (19 jobs: verify, package, secure, release,
+  deploy-staging, verify-staging, deploy-production, monitor);
+- the six custom GitLab Duo flows in `.gitlab/duo/flows/`, their triggers, and `AGENTS.md`;
+- `CODEOWNERS`, the approval rule, DCO and license gates, MR and issue templates, `CHANGELOG.md`;
+- the keyless Google Cloud deployment: Workload Identity Federation setup scripts (`deploy/gitlab-wif-setup.*`),
+  the Artifact Registry copy, the three `sentinelgraph-staging*` Cloud Run services, smoke tests with rollback,
+  and the hourly health-probe schedule;
+- the keyless release job (`.gitlab/scripts/release.sh`) and release `v1.1.0`;
+- the feature in MR !1 (`policy` / `policy_source` on the alert read-back), reviewed, fixed and merged with the agents.
+
 ## How we built it
 
 - **Six custom flows** (`.gitlab/duo/flows/`), each a single `AgentComponent` (MR Reviewer adds a `OneOffComponent`
