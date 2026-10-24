@@ -10,7 +10,7 @@ Path: **B — Bring Your Own** · Autonomy: **Supervised** · Lifecycle stages t
 - Pipeline history: https://gitlab.com/nekku-solo/sentinelgraph-client/-/pipelines
 - Agent sessions: https://gitlab.com/nekku-solo/sentinelgraph-client/-/automate/agent-sessions
 - Live demo of the agents at work: issue #1 and merge request !1
-- Video: <YouTube link>
+- Video: https://youtu.be/DIg0ib6bDI0
 
 ---
 

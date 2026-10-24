@@ -7,7 +7,8 @@
 > [staging intake API](https://sentinelgraph-staging-api-539369061797.asia-south1.run.app/docs) ·
 > [releases](https://gitlab.com/nekku-solo/sentinelgraph-client/-/releases) ·
 > [agent sessions](https://gitlab.com/nekku-solo/sentinelgraph-client/-/automate/agent-sessions) ·
-> [the review conversation on !1](https://gitlab.com/nekku-solo/sentinelgraph-client/-/merge_requests/1)
+> [the review conversation on !1](https://gitlab.com/nekku-solo/sentinelgraph-client/-/merge_requests/1) ·
+> [demo video (2:36)](https://youtu.be/DIg0ib6bDI0)
 
 **An agentic fraud investigator for banks, built with Google's Agent Development Kit and Gemini, running on Cloud Run.**
 
